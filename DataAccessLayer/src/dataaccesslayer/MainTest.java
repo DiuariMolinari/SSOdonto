@@ -6,6 +6,7 @@
 package dataaccesslayer;
 import domain.Pais;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -17,10 +18,12 @@ public class MainTest {
     public static void main(String[] args) throws SQLException
     {
         PaisDAL paisdal = new PaisDAL();
-        String result = paisdal.insert(new Pais("Teste 3"));
-        Pais pais = paisdal.getLastRegister();
-        System.out.println(result);
-        System.out.println(pais.getNome());
+        for (int i = 0; i < 5; i++) {
+            paisdal.insert(new Pais("PAIS " + i ));
+        }
+        
+        ArrayList<Pais> paises = paisdal.getAll();
+        System.out.println(paises.size());
 
     }
 }

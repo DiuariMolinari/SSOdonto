@@ -56,16 +56,16 @@ public class PaisDAL {
         }
     }
      
-     /*public ArrayList<Pais> getAll() throws SQLException{
+     public ArrayList<Pais> getAll() throws SQLException{
         try 
         {
-            ArrayList<Pais> paises;
-            PreparedStatement pst = conexao.getConexao().prepareStatement("SELECT * FROM PAIS ORDER BY IDPAIS DESC LIMIT 1", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            ArrayList<Pais> paises = new ArrayList<>();
+            PreparedStatement pst = conexao.getConexao().prepareStatement("SELECT * FROM PAIS ORDER BY IDPAIS", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
             ResultSet rs = pst.executeQuery();
-            while (rs.next()) {                
-                rs.
-            }
-            return new Pais(rs.getInt("IDPAIS"), rs.getString("NOMEPAIS"));
+            while (rs.next())               
+                paises.add(new Pais(rs.getInt("IDPAIS"), rs.getString("NOMEPAIS")));
+            
+            return paises;
         } 
         
         catch (Exception e) {
@@ -76,7 +76,7 @@ public class PaisDAL {
         {
             conexao.close();
         }
-    }*/
+    }
     
     public String insert(Pais pais) throws SQLException{
         try 
