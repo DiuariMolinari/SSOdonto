@@ -95,7 +95,7 @@ public class Colaborador {
         this.clinica = clinica;
     }
 
-    public boolean isFerias() {
+    public boolean getFerias() {
         return ferias;
     }
 

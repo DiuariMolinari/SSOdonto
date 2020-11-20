@@ -15,4 +15,44 @@ public class Contato {
     private FoneTipo foneTipo;
     private String email;
     private Paciente paciente;
+    
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getFone() {
+        return fone;
+    }
+
+    public void setFone(String fone) {
+        this.fone = fone;
+    }
+
+    public FoneTipo getFoneTipo() {
+        return foneTipo;
+    }
+
+    public void setFoneTipo(FoneTipo foneTipo) {
+        this.foneTipo = foneTipo;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Paciente getPaciente() {
+        return paciente;
+    }
+
+    public void setPaciente(Paciente paciente) {
+        this.paciente = paciente;
+    }
 }
