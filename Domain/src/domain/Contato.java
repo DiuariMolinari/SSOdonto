@@ -7,16 +7,15 @@ package domain;
 
 /**
  *
- * @author Diuari e Marciele
+ * @author Diuari
  */
 public class Contato {
-
     private int id;
     private String fone;
     private FoneTipo foneTipo;
     private String email;
     private Paciente paciente;
-
+    
     public int getId() {
         return id;
     }
