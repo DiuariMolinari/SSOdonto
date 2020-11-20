@@ -4,3 +4,7 @@
 /PresentationLayer/nbproject/private/
 /BusinessLogicalLayer/dist/
 /BusinessLogicalLayer/build/
+/Domain/build/
+/DataAccessLayer/dist/
+/DataAccessLayer/build/
+/Domain/dist/
