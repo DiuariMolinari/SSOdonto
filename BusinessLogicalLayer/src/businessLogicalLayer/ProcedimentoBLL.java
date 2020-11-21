@@ -29,12 +29,12 @@ public class ProcedimentoBLL {
             builder.append("O nome do procedimento não pode conter mais que 60 caracteres.");
         }
         
-//        if (procedimento.getDescricaoProcedimento().isEmpty() || procedimento.getDescricaoProcedimento().isBlank() || procedimento.getDescricaoProcedimento().length() == 0) {
-//            builder.append("A descrição do procedimento deve ser informado.");
-//        }
-//        if (procedimento.getDescricaoProcedimento().length() > 60) {
-//            builder.append("A descrição do procedimento não pode conter mais que 60 caracteres. ");
-//        };
+        if (procedimento.getDescricaoProcedimento().isEmpty() || procedimento.getDescricaoProcedimento().isBlank() || procedimento.getDescricaoProcedimento().length() == 0) {
+            builder.append("A descrição do procedimento deve ser informado.");
+        }
+        if (procedimento.getDescricaoProcedimento().length() > 60) {
+            builder.append("A descrição do procedimento não pode conter mais que 60 caracteres. ");
+        };
 
         if (builder.length() != 0) {
             return builder.toString();
@@ -59,12 +59,12 @@ public class ProcedimentoBLL {
             builder.append("O nome do procedimento não pode conter mais que 60 caracteres. ");
         }
 
-//        if (procedimento.getDescricaoProcedimento().isEmpty() || procedimento.getDescricaoProcedimento().isBlank() || procedimento.getDescricaoProcedimento().length() == 0) {
-//            builder.append("A descrição do procedimento deve ser informado.");
-//        }
-//        if (procedimento.getDescricaoProcedimento().length() > 60) {
-//            builder.append("A descrição do procedimento não pode conter mais que 60 caracteres. ");
-//        }
+        if (procedimento.getDescricaoProcedimento().isEmpty() || procedimento.getDescricaoProcedimento().isBlank() || procedimento.getDescricaoProcedimento().length() == 0) {
+            builder.append("A descrição do procedimento deve ser informado.");
+        }
+        if (procedimento.getDescricaoProcedimento().length() > 60) {
+            builder.append("A descrição do procedimento não pode conter mais que 60 caracteres. ");
+        }
 
         String respostaDB = dal.Atualizar(procedimento);
         return respostaDB;
