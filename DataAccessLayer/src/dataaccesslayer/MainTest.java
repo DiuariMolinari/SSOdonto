@@ -4,11 +4,12 @@
  * and open the template in the editor.
  */
 package dataaccesslayer;
-import domain.Pais;
+
+import domain.Cidade;
+import domain.Bairro;
+import domain.Logradouro;
+
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -17,13 +18,12 @@ import java.util.logging.Logger;
 public class MainTest {
     public static void main(String[] args) throws SQLException
     {
-        PaisDAL paisdal = new PaisDAL();
-        for (int i = 0; i < 5; i++) {
-            paisdal.insert(new Pais("PAIS " + i ));
-        }
         
-        ArrayList<Pais> paises = paisdal.getAll();
-        System.out.println(paises.size());
-
+        BairroDAL bairrodal = new BairroDAL();
+        Bairro bairro = bairrodal.getById(1);
+        
+        LogradouroDAL logradal = new LogradouroDAL();
+        logradal.update(new Logradouro(1, "logradouro 1", bairro));
+        
     }
 }

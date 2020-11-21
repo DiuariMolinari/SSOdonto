@@ -7,8 +7,6 @@ package dataaccesslayer;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.text.MessageFormat;
 import domain.Pais;
 import java.util.ArrayList;
 
@@ -47,7 +45,7 @@ public class PaisDAL {
         } 
         
         catch (Exception e) {
-            throw new SQLException("Erro ao buscar um equipamento. \n Entre em contato com o suporte.");
+            throw new SQLException("Falha ao buscar país. \n Entre em contato com o suporte.");
         }
         
         finally
@@ -69,7 +67,7 @@ public class PaisDAL {
         } 
         
         catch (Exception e) {
-            throw new SQLException("Erro ao buscar um equipamento. \n Entre em contato com o suporte.");
+            throw new SQLException("Falha ao buscar paises. \n Entre em contato com o suporte.");
         }
         
         finally
