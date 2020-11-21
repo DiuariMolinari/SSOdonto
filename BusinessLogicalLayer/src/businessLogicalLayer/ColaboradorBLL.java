@@ -21,7 +21,7 @@ public class ColaboradorBLL {
     //Incluir um registro
     public String Inserir(Colaborador colaborador) {
         StringBuilder builder = new StringBuilder();
-        
+
         if (colaborador.getNome().isBlank() || colaborador.getNome().isEmpty() || colaborador.getNome().length() == 0) {
             builder.append("O nome do colaborador deve ser informado.");
         }
@@ -40,7 +40,7 @@ public class ColaboradorBLL {
         if (colaborador.getCroEstado().isBlank() || colaborador.getCroEstado().isEmpty() || colaborador.getCroEstado().length() == 0) {
             builder.append("O estado do CRO deve ser informado.");
         }
-        
+
         if (colaborador.getCroEstado().length() > 2) {
             builder.append("O estado do CRO não pode conter mais que 2 caracteres.");
         }
@@ -63,34 +63,38 @@ public class ColaboradorBLL {
 
     //Atualizar um registro existente
     public String Atualizar(Colaborador colaborador) {
-        StringBuilder erros = new StringBuilder();
+        StringBuilder builder = new StringBuilder();
 
         if (colaborador.getNome().isBlank() || colaborador.getNome().isEmpty() || colaborador.getNome().length() == 0) {
-            erros.append("O nome do colaborador deve ser informado.");
+            builder.append("O nome do colaborador deve ser informado.");
         }
 
         if (colaborador.getNome().length() > 50) {
-            erros.append("O nome do colaborador não pode conter mais que 50 caracteres. ");
+            builder.append("O nome do colaborador não pode conter mais que 50 caracteres. ");
         }
 
         if (colaborador.getCro().isBlank() || colaborador.getCro().isEmpty() || colaborador.getCro().length() == 0) {
-            erros.append("O CRO deve ser informada.");
+            builder.append("O CRO deve ser informada.");
         }
 
         if (colaborador.getCro().length() > 50) {
-            erros.append("O CRO não pode conter mais que 50 caracteres. ");
+            builder.append("O CRO não pode conter mais que 50 caracteres. ");
         }
 
         if (colaborador.getCroEstado().isBlank() || colaborador.getCroEstado().isEmpty() || colaborador.getCroEstado().length() == 0) {
-            erros.append("O estado do CRO deve ser informada.");
+            builder.append("O estado do CRO deve ser informada.");
         }
 
         if (colaborador.getCroEstado().length() > 2) {
-            erros.append("O estado do CRO não pode conter mais que 2 caracteres. ");
+            builder.append("O estado do CRO não pode conter mais que 2 caracteres. ");
         }
 
         if (colaborador.getDataAdmissao().equals("") || colaborador.getDataAdmissao() == null) {
-            erros.append("A data de admissão deve ser informada.");
+            builder.append("A data de admissão deve ser informada.");
+        }
+
+        if (builder.length() != 0) {
+            return builder.toString();
         }
 
         String respostaDB = dal.Atualizar(colaborador);

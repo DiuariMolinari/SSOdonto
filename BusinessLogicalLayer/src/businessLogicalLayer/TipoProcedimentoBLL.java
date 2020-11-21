@@ -61,6 +61,10 @@ public class TipoProcedimentoBLL {
             builder.append("O valor do procedimento deve ser informada.");
         }
 
+        if (builder.length() != 0) {
+            return builder.toString();
+        }
+
         String respostaDB = dal.Atualizar(tipoProcedimento);
         return respostaDB;
     }

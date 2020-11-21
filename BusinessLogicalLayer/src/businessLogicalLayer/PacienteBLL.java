@@ -124,6 +124,10 @@ public class PacienteBLL {
         if (paciente.getObservacao().length() > 250) {
             builder.append("As observações do paciente não pode conter mais que 250 caracteres.");
         }
+        
+        if (builder.length() != 0) {
+            return builder.toString();
+        }
 
         String respostaDB = dal.Atualizar(paciente);
         return respostaDB;

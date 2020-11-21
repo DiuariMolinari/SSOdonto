@@ -48,9 +48,13 @@ public class TipoPagamentoBLL {
         if (tipoPagamento.getTipoPagamento().isBlank() || tipoPagamento.getTipoPagamento().isEmpty() || tipoPagamento.getTipoPagamento().length() == 0) {
             builder.append("O tipo de pagamento deve ser informado.");
         }
-        
+
         if (tipoPagamento.getTipoPagamento().length() > 50) {
             builder.append("O tipo de pagamento não pode conter mais que 50 caracteres. ");
+        }
+
+        if (builder.length() != 0) {
+            return builder.toString();
         }
 
         String respostaDB = dal.Atualizar(tipoPagamento);

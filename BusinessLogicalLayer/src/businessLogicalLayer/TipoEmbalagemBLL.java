@@ -53,6 +53,10 @@ public class TipoEmbalagemBLL {
             builder.append("A descricao não pode conter mais que 60 caracteres. ");
         }
 
+        if (builder.length() != 0) {
+            return builder.toString();
+        }
+
         String respostaDB = dal.Atualizar(tipoEmbalagem);
         return respostaDB;
     }

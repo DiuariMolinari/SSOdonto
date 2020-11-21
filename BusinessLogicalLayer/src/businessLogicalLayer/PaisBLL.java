@@ -32,6 +32,7 @@ public class PaisBLL {
         if (builder.length() != 0) {
             return builder.toString();
         }
+
         String respostaDB = dal.Inserir(pais);
         return respostaDB;
     }
@@ -51,6 +52,10 @@ public class PaisBLL {
 
         if (pais.getNome().isBlank() || pais.getNome().isEmpty() || pais.getNome().length() == 0) {
             builder.append("O nome do país deve ser informado.");
+        }
+
+        if (builder.length() != 0) {
+            return builder.toString();
         }
 
         String respostaDB = dal.Atualizar(pais);

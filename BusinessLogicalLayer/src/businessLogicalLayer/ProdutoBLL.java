@@ -68,6 +68,10 @@ public class ProdutoBLL {
         if (produto.getDataCompra().equals("") || produto.getDataCompra() == null) {
             builder.append("A data da compra deve ser informado.");
         }
+        
+        if (builder.length() != 0) {
+            return builder.toString();
+        }
 
         String respostaDB = dal.Atualizar(produto);
         return respostaDB;

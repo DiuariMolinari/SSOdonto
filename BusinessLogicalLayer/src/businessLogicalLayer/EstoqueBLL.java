@@ -20,7 +20,7 @@ public class EstoqueBLL {
     //Incluir um registro
     public String Inserir(Estoque estoque) {
         StringBuilder builder = new StringBuilder();
-        
+
         if (estoque.getQtdProduto() < 0 || estoque.getQtdProduto() != 0) {
             builder.append("A quantidade de produto deve ser informado.");
         }
@@ -61,6 +61,10 @@ public class EstoqueBLL {
             builder.append("A data de saída do produto deve ser informado.");
         }
 
+        if (builder.length() != 0) {
+            return builder.toString();
+        }
+        
         String respostaDB = dal.Atualizar(estoque);
         return respostaDB;
     }

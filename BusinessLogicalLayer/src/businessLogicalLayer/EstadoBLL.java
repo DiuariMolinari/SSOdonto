@@ -52,6 +52,11 @@ public class EstadoBLL {
         if (estado.getNome().length() > 20) {
             builder.append("O nome do estado não pode conter mais que 20 caracteres. ");
         }
+
+        if (builder.length() != 0) {
+            return builder.toString();
+        }
+
         String respostaDB = dal.Atualizar(estado);
         return respostaDB;
     }

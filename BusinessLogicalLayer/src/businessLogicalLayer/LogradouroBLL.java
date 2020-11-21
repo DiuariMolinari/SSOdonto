@@ -53,6 +53,10 @@ public class LogradouroBLL {
             builder.append("O nome do logradouro não pode conter mais que 50 caracteres. ");
         }
 
+        if (builder.length() != 0) {
+            return builder.toString();
+        }
+        
         String respostaDB = dal.Atualizar(logradouro);
         return respostaDB;
     }

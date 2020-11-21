@@ -45,6 +45,10 @@ public class AtendimentoBLL {
             builder.append("A quantidade de procedimento deve ser informado.");
         }
 
+        if (builder.length() != 0) {
+            return builder.toString();
+        }
+
         String respostaDB = dal.Atualizar(atendimento);
         return respostaDB;
     }

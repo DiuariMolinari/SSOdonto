@@ -14,15 +14,14 @@ import java.util.List;
  * @author Marciele
  */
 public class ClinicaBLL {
-     
+
     //TODO: Obter um registro
-    
     ClinicaDAL dal = new ClinicaDAL();
 
     //Incluir um registro
     public String Inserir(Clinica clinica) {
         StringBuilder builder = new StringBuilder();
-        
+
         if (clinica.getNome().isBlank() || clinica.getNome().isEmpty() || clinica.getNome().length() == 0) {
             builder.append("O nome da clíncia deve ser informado.");
         }
@@ -34,10 +33,11 @@ public class ClinicaBLL {
         if (clinica.getDataInauguracao().equals("") || clinica.getDataInauguracao() == null) {
             builder.append("A data de inauguração deve ser informado.");
         }
-        
+
         if (builder.length() != 0) {
             return builder.toString();
         }
+
         String respostaDB = dal.Inserir(clinica);
         return respostaDB;
     }
@@ -46,21 +46,25 @@ public class ClinicaBLL {
     public List<Clinica> LerTodos() {
         return dal.LerTodos();
     }
-    
+
     //Atualizar um registro existente
     public String Atualizar(Clinica clinica) {
-        StringBuilder erros = new StringBuilder();
+        StringBuilder builder = new StringBuilder();
 
         if (clinica.getNome().length() > 60) {
-            erros.append("O nome da clínica não pode conter mais que 60 caracteres. ");
+            builder.append("O nome da clínica não pode conter mais que 60 caracteres. ");
         }
 
         if (clinica.getNome().isBlank() || clinica.getNome().isEmpty() || clinica.getNome().length() == 0) {
-            erros.append("O nome da clínica deve ser informado.");
+            builder.append("O nome da clínica deve ser informado.");
         }
 
         if (clinica.getDataInauguracao().equals("") || clinica.getDataInauguracao() == null) {
-            erros.append("A data de inauguração deve ser informada.");
+            builder.append("A data de inauguração deve ser informada.");
+        }
+
+        if (builder.length() != 0) {
+            return builder.toString();
         }
 
         String respostaDB = dal.Atualizar(clinica);

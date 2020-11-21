@@ -74,6 +74,10 @@ public class UsuarioBLL {
             builder.append("A senha não pode conter mais que 250 caracteres.");
         }
 
+        if (builder.length() != 0) {
+            return builder.toString();
+        }
+
         String respostaDB = dal.Atualizar(usuario);
         return respostaDB;
     }

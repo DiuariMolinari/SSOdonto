@@ -28,7 +28,7 @@ public class ProcedimentoBLL {
         if (procedimento.getNome().length() > 60) {
             builder.append("O nome do procedimento não pode conter mais que 60 caracteres.");
         }
-        
+
         if (procedimento.getDescricaoProcedimento().isEmpty() || procedimento.getDescricaoProcedimento().isBlank() || procedimento.getDescricaoProcedimento().length() == 0) {
             builder.append("A descrição do procedimento deve ser informado.");
         }
@@ -64,6 +64,10 @@ public class ProcedimentoBLL {
         }
         if (procedimento.getDescricaoProcedimento().length() > 60) {
             builder.append("A descrição do procedimento não pode conter mais que 60 caracteres. ");
+        }
+
+        if (builder.length() != 0) {
+            return builder.toString();
         }
 
         String respostaDB = dal.Atualizar(procedimento);

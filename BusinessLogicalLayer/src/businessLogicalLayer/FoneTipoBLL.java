@@ -53,6 +53,10 @@ public class FoneTipoBLL {
             builder.append("O tipo de contato não pode conter mais que 60 caracteres. ");
         }
 
+        if (builder.length() != 0) {
+            return builder.toString();
+        }
+
         String respostaDB = dal.Atualizar(foneTipo);
         return respostaDB;
     }

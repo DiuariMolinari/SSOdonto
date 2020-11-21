@@ -24,7 +24,7 @@ public class PagamentoBLL {
         if (pagamento.getDataPagamento().equals("") || pagamento.getDataPagamento() == null) {
             builder.append("A data de pagamento deve ser informado.");
         }
-        
+
         if (builder.length() != 0) {
             return builder.toString();
         }
@@ -40,9 +40,13 @@ public class PagamentoBLL {
     //Atualizar um registro existente
     public String Atualizar(Pagamento pagamento) {
         StringBuilder builder = new StringBuilder();
-        
+
         if (pagamento.getDataPagamento().equals("") || pagamento.getDataPagamento() == null) {
             builder.append("A data de pagamento deve ser informado.");
+        }
+
+        if (builder.length() != 0) {
+            return builder.toString();
         }
 
         String respostaDB = dal.Atualizar(pagamento);

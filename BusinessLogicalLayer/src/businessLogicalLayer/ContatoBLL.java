@@ -39,6 +39,7 @@ public class ContatoBLL {
         if (builder.length() != 0) {
             return builder.toString();
         }
+
         String respostaDB = dal.Inserir(contato);
         return respostaDB;
     }
@@ -64,6 +65,10 @@ public class ContatoBLL {
         }
         if (contato.getEmail().length() > 50) {
             builder.append("O email não pode conter mais que 50 caracteres. ");
+        }
+
+        if (builder.length() != 0) {
+            return builder.toString();
         }
 
         String respostaDB = dal.Atualizar(contato);

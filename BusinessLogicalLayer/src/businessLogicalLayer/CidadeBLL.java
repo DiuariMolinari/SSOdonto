@@ -16,13 +16,12 @@ import java.util.List;
 public class CidadeBLL {
 
     //TODO: Obter um registro
-    
     CidadeDAL dal = new CidadeDAL();
 
     //Incluir um registro
     public String Inserir(Cidade cidade) {
         StringBuilder builder = new StringBuilder();
-        
+
         if (cidade.getNome().isBlank() || cidade.getNome().isEmpty() || cidade.getNome().length() == 0) {
             builder.append("O nome da cidade deve ser informado.");
         }
@@ -45,14 +44,18 @@ public class CidadeBLL {
 
     //Atualizar um registro existente
     public String Atualizar(Cidade cidade) {
-        StringBuilder erros = new StringBuilder();
+        StringBuilder builder = new StringBuilder();
 
         if (cidade.getNome().length() > 50) {
-            erros.append("O nome da cidade não pode conter mais que 50 caracteres. ");
+            builder.append("O nome da cidade não pode conter mais que 50 caracteres. ");
         }
 
         if (cidade.getNome().isBlank() || cidade.getNome().isEmpty() || cidade.getNome().length() == 0) {
-            erros.append("O nome da cidade deve ser informado.");
+            builder.append("O nome da cidade deve ser informado.");
+        }
+
+        if (builder.length() != 0) {
+            return builder.toString();
         }
 
         String respostaDB = dal.Atualizar(cidade);

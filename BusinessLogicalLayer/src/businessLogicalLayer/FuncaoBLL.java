@@ -75,6 +75,10 @@ public class FuncaoBLL {
 
         if (funcao.getComissao() < 0) {
             builder.append("A comissão deve ser informado.");
+        } 
+        
+        if (builder.length() != 0) {
+            return builder.toString();
         }
 
         String respostaDB = dal.Atualizar(funcao);

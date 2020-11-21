@@ -61,6 +61,10 @@ public class EnderecoBLL {
         if (endereco.getNumeroCasa() < 0 || endereco.getNumeroCasa() != 0) {
             builder.append("O número da casa deve ser informado.");
         }
+        
+        if (builder.length() != 0) {
+            return builder.toString();
+        }
 
         String respostaDB = dal.Atualizar(endereco);
         return respostaDB;
