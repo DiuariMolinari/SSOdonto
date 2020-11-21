@@ -5,8 +5,9 @@
  */
 package businessLogicalLayer;
 
-import dataAccessLayer.PaisDAL;
+import dataaccesslayer.PaisDAL;
 import domain.Pais;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -18,7 +19,7 @@ public class PaisBLL {
     PaisDAL dal = new PaisDAL();
 
     //Incluir um registro
-    public String Inserir(Pais pais) {
+    public String Inserir(Pais pais) throws SQLException {
         StringBuilder builder = new StringBuilder();
 
         if (pais.getNome().isEmpty() || pais.getNome().trim().length() == 0) {
@@ -33,17 +34,17 @@ public class PaisBLL {
             return builder.toString();
         }
 
-        String respostaDB = dal.Inserir(pais);
+        String respostaDB = dal.insert(pais);
         return respostaDB;
     }
 
     // Obter todos os registros
-    public List<Pais> LerTodos() {
-        return dal.LerTodos();
+    public List<Pais> LerTodos() throws SQLException {
+        return dal.getAll();
     }
 
     //Atualizar um registro existente
-    public String Atualizar(Pais pais) {
+    public String Atualizar(Pais pais) throws SQLException {
         StringBuilder builder = new StringBuilder();
 
         if (pais.getNome().length() > 20) {
@@ -58,13 +59,13 @@ public class PaisBLL {
             return builder.toString();
         }
 
-        String respostaDB = dal.Atualizar(pais);
+        String respostaDB = dal.update(pais);
         return respostaDB;
     }
 
     //Excluir um registro
-    public String Deletar(Pais pais) {
-        String respostaDB = dal.Deletar(pais);
+    public String Deletar(Pais pais) throws SQLException {
+        String respostaDB = dal.delete(pais);
         return respostaDB;
     }
 

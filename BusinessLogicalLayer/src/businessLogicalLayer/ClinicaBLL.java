@@ -5,8 +5,9 @@
  */
 package businessLogicalLayer;
 
-import dataAccessLayer.ClinicaDAL;
+import dataaccesslayer.ClinicaDAL;
 import domain.Clinica;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -19,7 +20,7 @@ public class ClinicaBLL {
     ClinicaDAL dal = new ClinicaDAL();
 
     //Incluir um registro
-    public String Inserir(Clinica clinica) {
+    public String Inserir(Clinica clinica) throws SQLException {
         StringBuilder builder = new StringBuilder();
 
         if (clinica.getNome().isEmpty() || clinica.getNome().trim().length() == 0) {
@@ -43,12 +44,12 @@ public class ClinicaBLL {
     }
 
     // Obter todos os registros
-    public List<Clinica> LerTodos() {
-        return dal.LerTodos();
+    public List<Clinica> LerTodos() throws SQLException {
+        return dal.getAll();
     }
 
     //Atualizar um registro existente
-    public String Atualizar(Clinica clinica) {
+    public String Atualizar(Clinica clinica) throws SQLException {
         StringBuilder builder = new StringBuilder();
 
         if (clinica.getNome().length() > 60) {
@@ -72,7 +73,7 @@ public class ClinicaBLL {
     }
 
     //Excluir um registro
-    public String Deletar(Clinica clinica) {
+    public String Deletar(Clinica clinica) throws SQLException {
         String respostaDB = dal.delete(clinica);
         return respostaDB;
     }

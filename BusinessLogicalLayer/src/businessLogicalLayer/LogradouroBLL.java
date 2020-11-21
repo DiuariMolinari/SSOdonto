@@ -5,8 +5,9 @@
  */
 package businessLogicalLayer;
 
-import dataAccessLayer.LogradouroDAL;
+import dataaccesslayer.LogradouroDAL;
 import domain.Logradouro;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -18,7 +19,7 @@ public class LogradouroBLL {
     LogradouroDAL dal = new LogradouroDAL();
 
     //Incluir um registro
-    public String Inserir(Logradouro logradouro) {
+    public String Inserir(Logradouro logradouro) throws SQLException {
         StringBuilder builder = new StringBuilder();
 
         if (logradouro.getNome().isEmpty() || logradouro.getNome().trim().length() == 0) {
@@ -32,17 +33,17 @@ public class LogradouroBLL {
         if (builder.length() != 0) {
             return builder.toString();
         }
-        String respostaDB = dal.Inserir(logradouro);
+        String respostaDB = dal.insert(logradouro);
         return respostaDB;
     }
 
     // Obter todos os registros
-    public List<Logradouro> LerTodos() {
-        return dal.LerTodos();
+    public List<Logradouro> LerTodos() throws SQLException {
+        return dal.getAll();
     }
 
     //Atualizar um registro existente
-    public String Atualizar(Logradouro logradouro) {
+    public String Atualizar(Logradouro logradouro) throws SQLException {
         StringBuilder builder = new StringBuilder();
 
         if (logradouro.getNome().isEmpty() || logradouro.getNome().trim().length() == 0) {
@@ -57,13 +58,13 @@ public class LogradouroBLL {
             return builder.toString();
         }
         
-        String respostaDB = dal.Atualizar(logradouro);
+        String respostaDB = dal.update(logradouro);
         return respostaDB;
     }
 
     //Excluir um registro
-    public String Deletar(Logradouro logradouro) {
-        String respostaDB = dal.Deletar(logradouro);
+    public String Deletar(Logradouro logradouro) throws SQLException {
+        String respostaDB = dal.delete(logradouro);
         return respostaDB;
     }
 

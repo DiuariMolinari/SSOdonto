@@ -5,8 +5,9 @@
  */
 package businessLogicalLayer;
 
-import dataAccessLayer.FuncaoDAL;
+import dataaccesslayer.FuncaoDAL;
 import domain.Funcao;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -18,7 +19,7 @@ public class FuncaoBLL {
     FuncaoDAL dal = new FuncaoDAL();
 
     //Incluir um registro
-    public String Inserir(Funcao funcao) {
+    public String Inserir(Funcao funcao) throws SQLException {
         StringBuilder builder = new StringBuilder();
 
         if (funcao.getNome().isEmpty() || funcao.getNome().trim().length() == 0) {
@@ -44,17 +45,17 @@ public class FuncaoBLL {
         if (builder.length() != 0) {
             return builder.toString();
         }
-        String respostaDB = dal.Inserir(funcao);
+        String respostaDB = dal.insert(funcao);
         return respostaDB;
     }
 
     // Obter todos os registros
-    public List<Funcao> LerTodos() {
-        return dal.LerTodos();
+    public List<Funcao> LerTodos() throws SQLException {
+        return dal.getAll();
     }
 
     //Atualizar um registro existente
-    public String Atualizar(Funcao funcao) {
+    public String Atualizar(Funcao funcao) throws SQLException{
         StringBuilder builder = new StringBuilder();
 
         if (funcao.getNome().isEmpty() || funcao.getNome().trim().length() == 0) {
@@ -81,13 +82,13 @@ public class FuncaoBLL {
             return builder.toString();
         }
 
-        String respostaDB = dal.Atualizar(funcao);
+        String respostaDB = dal.update(funcao);
         return respostaDB;
     }
 
     //Excluir um registro
-    public String Deletar(Funcao funcao) {
-        String respostaDB = dal.Deletar(funcao);
+    public String Deletar(Funcao funcao) throws SQLException {
+        String respostaDB = dal.delete(funcao);
         return respostaDB;
     }
 

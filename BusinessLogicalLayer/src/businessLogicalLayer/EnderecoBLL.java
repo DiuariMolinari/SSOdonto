@@ -5,8 +5,9 @@
  */
 package businessLogicalLayer;
 
-import dataAccessLayer.EnderecoDAL;
+import dataaccesslayer.EnderecoDAL;
 import domain.Endereco;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -19,7 +20,7 @@ public class EnderecoBLL {
     EnderecoDAL dal = new EnderecoDAL();
 
     //Incluir um registro
-    public String Inserir(Endereco endereco) {
+    public String Inserir(Endereco endereco) throws SQLException {
         StringBuilder builder = new StringBuilder();
 
         if (endereco.getCep().isEmpty() || endereco.getCep().trim().length() == 0) {
@@ -37,17 +38,17 @@ public class EnderecoBLL {
         if (builder.length() != 0) {
             return builder.toString();
         }
-        String respostaDB = dal.Inserir(endereco);
+        String respostaDB = dal.insert(endereco);
         return respostaDB;
     }
 
     //Obter todos os registros
-    public List<Endereco> LerTodos() {
-        return dal.LerTodos();
+    public List<Endereco> LerTodos() throws SQLException {
+        return dal.getAll();
     }
 
     //Atualizar um registro existente
-    public String Atualizar(Endereco endereco) {
+    public String Atualizar(Endereco endereco) throws SQLException {
         StringBuilder builder = new StringBuilder();
 
         if (endereco.getCep().isEmpty() || endereco.getCep().trim().length() == 0) {
@@ -66,13 +67,13 @@ public class EnderecoBLL {
             return builder.toString();
         }
 
-        String respostaDB = dal.Atualizar(endereco);
+        String respostaDB = dal.update(endereco);
         return respostaDB;
     }
 
     //Excluir um registro
-    public String Deletar(Endereco endereco) {
-        String respostaDB = dal.Deletar(endereco);
+    public String Deletar(Endereco endereco) throws SQLException {
+        String respostaDB = dal.delete(endereco);
         return respostaDB;
     }
 }

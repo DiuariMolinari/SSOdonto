@@ -5,8 +5,9 @@
  */
 package businessLogicalLayer;
 
-import dataAccessLayer.ColaboradorDAL;
+import dataaccesslayer.ColaboradorDAL;
 import domain.Colaborador;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -19,7 +20,7 @@ public class ColaboradorBLL {
     ColaboradorDAL dal = new ColaboradorDAL();
 
     //Incluir um registro
-    public String Inserir(Colaborador colaborador) {
+    public String Inserir(Colaborador colaborador) throws SQLException {
         StringBuilder builder = new StringBuilder();
 
         if (colaborador.getNome().isEmpty() || colaborador.getNome().trim().length() == 0) {
@@ -57,12 +58,12 @@ public class ColaboradorBLL {
     }
 
     // Obter todos os registros
-    public List<Colaborador> LerTodos() {
+    public List<Colaborador> LerTodos() throws SQLException {
         return dal.getAll();
     }
 
     //Atualizar um registro existente
-    public String Atualizar(Colaborador colaborador) {
+    public String Atualizar(Colaborador colaborador) throws SQLException {
         StringBuilder builder = new StringBuilder();
 
         if (colaborador.getNome().isEmpty() || colaborador.getNome().trim().length() == 0) {
@@ -102,7 +103,7 @@ public class ColaboradorBLL {
     }
 
     //Excluir um registro
-    public String Deletar(Colaborador colaborador) {
+    public String Deletar(Colaborador colaborador) throws SQLException {
         String respostaDB = dal.delete(colaborador);
         return respostaDB;
     }

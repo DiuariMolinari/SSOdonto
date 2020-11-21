@@ -5,8 +5,9 @@
  */
 package businessLogicalLayer;
 
-import dataAccessLayer.CidadeDAL;
+import dataaccesslayer.CidadeDAL;
 import domain.Cidade;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -19,7 +20,7 @@ public class CidadeBLL {
     CidadeDAL dal = new CidadeDAL();
 
     //Incluir um registro
-    public String Inserir(Cidade cidade) {
+    public String Inserir(Cidade cidade) throws SQLException {
         StringBuilder builder = new StringBuilder();
 
         if (cidade.getNome().isEmpty() || cidade.getNome().trim().length() == 0) {
@@ -33,17 +34,17 @@ public class CidadeBLL {
         if (builder.length() != 0) {
             return builder.toString();
         }
-        String respostaDB = dal.Inserir(cidade);
+        String respostaDB = dal.insert(cidade);
         return respostaDB;
     }
 
     // Obter todos os registros
-    public List<Cidade> LerTodos() {
-        return dal.LerTodos();
+    public List<Cidade> LerTodos() throws SQLException {
+        return dal.getAll();
     }
 
     //Atualizar um registro existente
-    public String Atualizar(Cidade cidade) {
+    public String Atualizar(Cidade cidade) throws SQLException {
         StringBuilder builder = new StringBuilder();
 
         if (cidade.getNome().length() > 50) {
@@ -58,13 +59,13 @@ public class CidadeBLL {
             return builder.toString();
         }
 
-        String respostaDB = dal.Atualizar(cidade);
+        String respostaDB = dal.update(cidade);
         return respostaDB;
     }
 
     //Excluir um registro
-    public String Deletar(Cidade cidade) {
-        String respostaDB = dal.Deletar(cidade);
+    public String Deletar(Cidade cidade) throws SQLException {
+        String respostaDB = dal.delete(cidade);
         return respostaDB;
     }
 }
