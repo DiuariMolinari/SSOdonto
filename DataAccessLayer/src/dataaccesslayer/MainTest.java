@@ -20,19 +20,12 @@ import java.time.Month;
 public class MainTest {
     public static void main(String[] args) throws SQLException
     {
-        Funcao Funcao = new FuncaoDAL().getById(2);
-        Clinica Clinica = new ClinicaDAL().getById(2);
+        Funcao funcao = new FuncaoDAL().getById(2);
+        Clinica clinica = new ClinicaDAL().getById(2);
         Endereco endereco = new EnderecoDAL().getById(2);
+        Colaborador colaborador = new ColaboradorDAL().getById(2);
         
-        System.out.println(new ColaboradorDAL().insert(new Colaborador(1,
-                "daniel",
-                "123",
-                "df",
-                LocalDate.of(2010, Month.MARCH, 1),
-                endereco,
-                Funcao,
-                Clinica,
-                true,
-                true)));
+        
+        
     }
 }

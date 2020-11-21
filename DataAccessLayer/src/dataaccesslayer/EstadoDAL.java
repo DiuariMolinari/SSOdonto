@@ -17,7 +17,7 @@ import java.util.ArrayList;
  */
 public class EstadoDAL {
     private final Conexao conexao = new Conexao();
-    public Estado getById(long id ) throws SQLException{
+    public Estado getById(int id ) throws SQLException{
         try 
         {
             PreparedStatement pst = conexao.getConexao().prepareStatement("SELECT * FROM ESTADO WHERE IDESTADO =" + id, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);

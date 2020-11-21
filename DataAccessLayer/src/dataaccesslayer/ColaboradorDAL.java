@@ -22,7 +22,7 @@ import java.util.ArrayList;
  */
 public class ColaboradorDAL {
     private final Conexao conexao = new Conexao();
-    public Colaborador getById(long id ) throws SQLException{
+    public Colaborador getById(int id ) throws SQLException{
         try 
         {
             PreparedStatement pst = conexao.getConexao().prepareStatement("SELECT * FROM Colaborador WHERE IDColaborador =" + id, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);

@@ -19,7 +19,7 @@ import java.time.ZoneId;
  */
 public class ClinicaDAL {
     private final Conexao conexao = new Conexao();
-    public Clinica getById(long id ) throws SQLException{
+    public Clinica getById(int id ) throws SQLException{
         try 
         {
             PreparedStatement pst = conexao.getConexao().prepareStatement("SELECT * FROM Clinica WHERE IdClinica =" + id, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
