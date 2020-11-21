@@ -52,13 +52,13 @@ public class ColaboradorBLL {
         if (builder.length() != 0) {
             return builder.toString();
         }
-        String respostaDB = dal.Inserir(colaborador);
+        String respostaDB = dal.insert(colaborador);
         return respostaDB;
     }
 
     // Obter todos os registros
     public List<Colaborador> LerTodos() {
-        return dal.LerTodos();
+        return dal.getAll();
     }
 
     //Atualizar um registro existente
@@ -97,13 +97,13 @@ public class ColaboradorBLL {
             return builder.toString();
         }
 
-        String respostaDB = dal.Atualizar(colaborador);
+        String respostaDB = dal.update(colaborador);
         return respostaDB;
     }
 
     //Excluir um registro
     public String Deletar(Colaborador colaborador) {
-        String respostaDB = dal.Deletar(colaborador);
+        String respostaDB = dal.delete(colaborador);
         return respostaDB;
     }
 }

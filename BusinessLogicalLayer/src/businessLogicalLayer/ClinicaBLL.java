@@ -38,7 +38,7 @@ public class ClinicaBLL {
             return builder.toString();
         }
 
-        String respostaDB = dal.Inserir(clinica);
+        String respostaDB = dal.insert(clinica);
         return respostaDB;
     }
 
@@ -67,13 +67,13 @@ public class ClinicaBLL {
             return builder.toString();
         }
 
-        String respostaDB = dal.Atualizar(clinica);
+        String respostaDB = dal.update(clinica);
         return respostaDB;
     }
 
     //Excluir um registro
     public String Deletar(Clinica clinica) {
-        String respostaDB = dal.Deletar(clinica);
+        String respostaDB = dal.delete(clinica);
         return respostaDB;
     }
 }

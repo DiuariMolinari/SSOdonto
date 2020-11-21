@@ -5,7 +5,7 @@
  */
 package businessLogicalLayer;
 
-import dataAccessLayer.AtendimentoDAL;
+import dataaccesslayer.AtendimentoDAL;
 import domain.Atendimento;
 import java.util.List;
 
@@ -28,7 +28,7 @@ public class AtendimentoBLL {
         if (builder.length() != 0) {
             return builder.toString();
         }
-        String respostaDB = dal.Inserir(atendimento);
+        String respostaDB = dal.insert(atendimento);
         return respostaDB;
     }
 
@@ -49,13 +49,13 @@ public class AtendimentoBLL {
             return builder.toString();
         }
 
-        String respostaDB = dal.Atualizar(atendimento);
+        String respostaDB = dal.update(atendimento);
         return respostaDB;
     }
 
     //Excluir um registro
     public String Deletar(Atendimento atendimento) {
-        String respostaDB = dal.Deletar(atendimento);
+        String respostaDB = dal.delete(atendimento);
         return respostaDB;
     }
 

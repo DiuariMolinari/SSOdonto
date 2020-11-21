@@ -5,8 +5,9 @@
  */
 package businessLogicalLayer;
 
-import dataAccessLayer.EstadoDAL;
+import dataaccesslayer.EstadoDAL;
 import domain.Estado;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -18,7 +19,7 @@ public class EstadoBLL {
     EstadoDAL dal = new EstadoDAL();
 
     //Incluir um registro
-    public String Inserir(Estado estado) {
+    public String Inserir(Estado estado) throws SQLException {
         StringBuilder builder = new StringBuilder();
 
         if (estado.getNome().isBlank() || estado.getNome().isEmpty() || estado.getNome().length() == 0) {
@@ -32,17 +33,17 @@ public class EstadoBLL {
         if (builder.length() != 0) {
             return builder.toString();
         }
-        String respostaDB = dal.Inserir(estado);
+        String respostaDB = dal.insert(estado);
         return respostaDB;
     }
 
     // Obter todos os registros
-    public List<Estado> LerTodos() {
-        return dal.LerTodos();
+    public List<Estado> LerTodos() throws SQLException {
+        return dal.getAll();
     }
 
     //Atualizar um registro existente
-    public String Atualizar(Estado estado) {
+    public String Atualizar(Estado estado) throws SQLException {
         StringBuilder builder = new StringBuilder();
 
         if (estado.getNome().isBlank() || estado.getNome().isEmpty() || estado.getNome().length() == 0) {
@@ -57,13 +58,13 @@ public class EstadoBLL {
             return builder.toString();
         }
 
-        String respostaDB = dal.Atualizar(estado);
+        String respostaDB = dal.update(estado);
         return respostaDB;
     }
 
     //Excluir um registro
-    public String Deletar(Estado estado) {
-        String respostaDB = dal.Deletar(estado);
+    public String Deletar(Estado estado) throws SQLException {
+        String respostaDB = dal.delete(estado);
         return respostaDB;
     }
 

@@ -5,8 +5,9 @@
  */
 package businessLogicalLayer;
 
-import dataAcessLayer.BairroDAL;
+import dataaccesslayer.BairroDAL;
 import domain.Bairro;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -19,7 +20,7 @@ public class BairroBLL {
     BairroDAL dal = new BairroDAL();
 
     //Incluir um registro
-    public String Inserir(Bairro bairro) {
+    public String Inserir(Bairro bairro) throws SQLException {
         StringBuilder builder = new StringBuilder();
 
         if (bairro.getNome().isEmpty() || bairro.getNome().isBlank() || bairro.getNome().length() == 0) {
@@ -33,17 +34,17 @@ public class BairroBLL {
         if (builder.length() != 0) {
             return builder.toString();
         }
-        String respostaDB = dal.Inserir(bairro);
+        String respostaDB = dal.insert(bairro);
         return respostaDB;
     }
 
     //Obter todos os registros
-    public List<Bairro> LerTodos() {
-        return dal.LerTodos();
+    public List<Bairro> LerTodos() throws SQLException {
+        return dal.getAll();
     }
 
     //Atualizar um registro existente
-    public String Atualizar(Bairro bairro) {
+    public String Atualizar(Bairro bairro) throws SQLException {
         StringBuilder builder = new StringBuilder();
 
         if (bairro.getNome().isBlank() || bairro.getNome().isEmpty() || bairro.getNome().length() == 0) {
@@ -58,13 +59,13 @@ public class BairroBLL {
             return builder.toString();
         }
 
-        String respostaDB = dal.Atualizar(bairro);
+        String respostaDB = dal.update(bairro);
         return respostaDB;
     }
 
     //Excluir um registro
-    public String Deletar(Bairro bairro) {
-        String respostaDB = dal.Deletar(bairro);
+    public String Deletar(Bairro bairro) throws SQLException {
+        String respostaDB = dal.delete(bairro);
         return respostaDB;
     }
 }
