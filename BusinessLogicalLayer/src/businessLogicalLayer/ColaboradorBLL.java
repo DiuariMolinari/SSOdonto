@@ -22,7 +22,7 @@ public class ColaboradorBLL {
     public String Inserir(Colaborador colaborador) {
         StringBuilder builder = new StringBuilder();
 
-        if (colaborador.getNome().isBlank() || colaborador.getNome().isEmpty() || colaborador.getNome().length() == 0) {
+        if (colaborador.getNome().isEmpty() || colaborador.getNome().trim().length() == 0) {
             builder.append("O nome do colaborador deve ser informado.");
         }
 
@@ -30,14 +30,14 @@ public class ColaboradorBLL {
             builder.append("O nome do colaborador não pode conter mais que 100 caracteres.");
         }
 
-        if (colaborador.getCro().isBlank() || colaborador.getCro().isEmpty() || colaborador.getCro().length() == 0) {
+        if (colaborador.getCro().isEmpty() || colaborador.getCro().trim().length() == 0) {
             builder.append("O CRO deve ser informada.");
         }
         if (colaborador.getCro().length() > 10) {
             builder.append("O CRO não pode conter mais que 10 caracteres.");
         }
 
-        if (colaborador.getCroEstado().isBlank() || colaborador.getCroEstado().isEmpty() || colaborador.getCroEstado().length() == 0) {
+        if (colaborador.getCroEstado().isEmpty() || colaborador.getCroEstado().trim().length() == 0) {
             builder.append("O estado do CRO deve ser informado.");
         }
 
@@ -65,7 +65,7 @@ public class ColaboradorBLL {
     public String Atualizar(Colaborador colaborador) {
         StringBuilder builder = new StringBuilder();
 
-        if (colaborador.getNome().isBlank() || colaborador.getNome().isEmpty() || colaborador.getNome().length() == 0) {
+        if (colaborador.getNome().isEmpty() || colaborador.getNome().trim().length() == 0) {
             builder.append("O nome do colaborador deve ser informado.");
         }
 
@@ -73,7 +73,7 @@ public class ColaboradorBLL {
             builder.append("O nome do colaborador não pode conter mais que 50 caracteres. ");
         }
 
-        if (colaborador.getCro().isBlank() || colaborador.getCro().isEmpty() || colaborador.getCro().length() == 0) {
+        if (colaborador.getCro().isEmpty() || colaborador.getCro().trim().length() == 0) {
             builder.append("O CRO deve ser informada.");
         }
 
@@ -81,7 +81,7 @@ public class ColaboradorBLL {
             builder.append("O CRO não pode conter mais que 50 caracteres. ");
         }
 
-        if (colaborador.getCroEstado().isBlank() || colaborador.getCroEstado().isEmpty() || colaborador.getCroEstado().length() == 0) {
+        if (colaborador.getCroEstado().isEmpty() || colaborador.getCroEstado().trim().length() == 0) {
             builder.append("O estado do CRO deve ser informada.");
         }
 

@@ -22,7 +22,7 @@ public class BairroBLL {
     public String Inserir(Bairro bairro) {
         StringBuilder builder = new StringBuilder();
 
-        if (bairro.getNome().isEmpty() || bairro.getNome().isBlank() || bairro.getNome().length() == 0) {
+        if (bairro.getNome().isEmpty() ||bairro.getNome().trim().length() == 0) {
             builder.append("O nome do bairro deve ser informado.");
         }
 
@@ -46,7 +46,7 @@ public class BairroBLL {
     public String Atualizar(Bairro bairro) {
         StringBuilder builder = new StringBuilder();
 
-        if (bairro.getNome().isBlank() || bairro.getNome().isEmpty() || bairro.getNome().length() == 0) {
+        if (bairro.getNome().isEmpty() || bairro.getNome().trim().length() == 0) {
             builder.append("O nome do bairro deve ser informado.");
         }
 

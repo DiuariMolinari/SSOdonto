@@ -21,7 +21,7 @@ public class FoneTipoBLL {
     public String Inserir(FoneTipo foneTipo) {
         StringBuilder builder = new StringBuilder();
 
-        if (foneTipo.getTipo().isBlank() || foneTipo.getTipo().isEmpty() || foneTipo.getTipo().length() == 0) {
+        if (foneTipo.getTipo().isEmpty() || foneTipo.getTipo().trim().length() == 0) {
             builder.append("O tipo de contato deve ser informado.");
         }
 
@@ -45,7 +45,7 @@ public class FoneTipoBLL {
     public String Atualizar(FoneTipo foneTipo) {
         StringBuilder builder = new StringBuilder();
 
-        if (foneTipo.getTipo().isBlank() || foneTipo.getTipo().isEmpty() || foneTipo.getTipo().length() == 0) {
+        if (foneTipo.getTipo().isEmpty() || foneTipo.getTipo().trim().length() == 0) {
             builder.append("O tipo de contato deve ser informado.");
         }
 

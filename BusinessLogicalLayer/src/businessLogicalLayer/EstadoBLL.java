@@ -21,7 +21,7 @@ public class EstadoBLL {
     public String Inserir(Estado estado) {
         StringBuilder builder = new StringBuilder();
 
-        if (estado.getNome().isBlank() || estado.getNome().isEmpty() || estado.getNome().length() == 0) {
+        if (estado.getNome().isEmpty() || estado.getNome().trim().length() == 0) {
             builder.append("O nome do estado deve ser informado.");
         }
 
@@ -45,7 +45,7 @@ public class EstadoBLL {
     public String Atualizar(Estado estado) {
         StringBuilder builder = new StringBuilder();
 
-        if (estado.getNome().isBlank() || estado.getNome().isEmpty() || estado.getNome().length() == 0) {
+        if (estado.getNome().isEmpty() || estado.getNome().trim().length() == 0) {
             builder.append("O nome do estado deve ser informado.");
         }
 

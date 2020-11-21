@@ -21,7 +21,7 @@ public class LogradouroBLL {
     public String Inserir(Logradouro logradouro) {
         StringBuilder builder = new StringBuilder();
 
-        if (logradouro.getNome().isBlank() || logradouro.getNome().isEmpty() || logradouro.getNome().length() == 0) {
+        if (logradouro.getNome().isEmpty() || logradouro.getNome().trim().length() == 0) {
             builder.append("O nome do logradouro deve ser informado.");
         }
 
@@ -45,7 +45,7 @@ public class LogradouroBLL {
     public String Atualizar(Logradouro logradouro) {
         StringBuilder builder = new StringBuilder();
 
-        if (logradouro.getNome().isBlank() || logradouro.getNome().isEmpty() || logradouro.getNome().length() == 0) {
+        if (logradouro.getNome().isEmpty() || logradouro.getNome().trim().length() == 0) {
             builder.append("O nome do logradouro deve ser informado.");
         }
 

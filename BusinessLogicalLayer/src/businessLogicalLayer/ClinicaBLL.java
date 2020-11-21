@@ -22,7 +22,7 @@ public class ClinicaBLL {
     public String Inserir(Clinica clinica) {
         StringBuilder builder = new StringBuilder();
 
-        if (clinica.getNome().isBlank() || clinica.getNome().isEmpty() || clinica.getNome().length() == 0) {
+        if (clinica.getNome().isEmpty() || clinica.getNome().trim().length() == 0) {
             builder.append("O nome da clíncia deve ser informado.");
         }
 
@@ -55,7 +55,7 @@ public class ClinicaBLL {
             builder.append("O nome da clínica não pode conter mais que 60 caracteres. ");
         }
 
-        if (clinica.getNome().isBlank() || clinica.getNome().isEmpty() || clinica.getNome().length() == 0) {
+        if (clinica.getNome().isEmpty() || clinica.getNome().trim().length() == 0) {
             builder.append("O nome da clínica deve ser informado.");
         }
 

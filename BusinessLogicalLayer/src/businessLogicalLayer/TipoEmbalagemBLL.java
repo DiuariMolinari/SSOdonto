@@ -21,7 +21,7 @@ public class TipoEmbalagemBLL {
     public String Inserir(TipoEmbalagem tipoEmbalagem) {
         StringBuilder builder = new StringBuilder();
 
-        if (tipoEmbalagem.getDescricao().isBlank() || tipoEmbalagem.getDescricao().isEmpty() || tipoEmbalagem.getDescricao().length() == 0) {
+        if (tipoEmbalagem.getDescricao().isEmpty() || tipoEmbalagem.getDescricao().trim().length() == 0) {
             builder.append("A descricao deve ser informado.");
         }
 
@@ -45,7 +45,7 @@ public class TipoEmbalagemBLL {
     public String Atualizar(TipoEmbalagem tipoEmbalagem) {
         StringBuilder builder = new StringBuilder();
 
-        if (tipoEmbalagem.getDescricao().isBlank() || tipoEmbalagem.getDescricao().isEmpty() || tipoEmbalagem.getDescricao().length() == 0) {
+        if (tipoEmbalagem.getDescricao().isEmpty() || tipoEmbalagem.getDescricao().trim().length() == 0) {
             builder.append("A descricao deve ser informado.");
         }
 

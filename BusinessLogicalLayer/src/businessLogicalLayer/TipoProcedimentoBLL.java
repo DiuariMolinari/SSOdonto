@@ -21,7 +21,7 @@ public class TipoProcedimentoBLL {
     public String Inserir(TipoProcedimento tipoProcedimento) {
         StringBuilder builder = new StringBuilder();
 
-        if (tipoProcedimento.getNome().isEmpty() || tipoProcedimento.getNome().isBlank() || tipoProcedimento.getNome().length() == 0) {
+        if (tipoProcedimento.getNome().isEmpty() || tipoProcedimento.getNome().trim().length() == 0) {
             builder.append("O nome do tipo de procedimento deve ser informado.");
         }
 
@@ -49,7 +49,7 @@ public class TipoProcedimentoBLL {
     public String Atualizar(TipoProcedimento tipoProcedimento) {
         StringBuilder builder = new StringBuilder();
 
-        if (tipoProcedimento.getNome().isEmpty() || tipoProcedimento.getNome().isBlank() || tipoProcedimento.getNome().length() == 0) {
+        if (tipoProcedimento.getNome().isEmpty() || tipoProcedimento.getNome().trim().length() == 0) {
             builder.append("O nome do tipo de procedimento deve ser informado.");
         }
 
