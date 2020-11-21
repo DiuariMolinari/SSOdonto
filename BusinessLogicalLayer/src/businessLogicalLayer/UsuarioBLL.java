@@ -22,14 +22,14 @@ public class UsuarioBLL {
     public String Inserir(Usuario usuario) {
         StringBuilder builder = new StringBuilder();
 
-        if (usuario.getUsuario().isBlank() || usuario.getUsuario().isEmpty() || usuario.getUsuario().length() == 0) {
+        if (usuario.getUsuario().isEmpty() || usuario.getUsuario().trim().length() == 0) {
             builder.append("O usuário de login deve ser informado.");
         }
         if (usuario.getUsuario().length() > 60) {
             builder.append("O usuário de login não pode conter mais que 60 caracteres.");
         }
 
-        if (usuario.getSenha().isBlank() || usuario.getSenha().isEmpty() || usuario.getSenha().length() == 0) {
+        if (usuario.getSenha().isEmpty() || usuario.getSenha().trim().length() == 0) {
             builder.append("A senha deve ser informada.");
         }
         if (usuario.getSenha().length() > 250) {
@@ -60,14 +60,14 @@ public class UsuarioBLL {
     public String Atualizar(Usuario usuario) {
         StringBuilder builder = new StringBuilder();
 
-        if (usuario.getUsuario().isBlank() || usuario.getUsuario().isEmpty() || usuario.getUsuario().length() == 0) {
+        if (usuario.getUsuario().isEmpty() || usuario.getUsuario().trim().length() == 0) {
             builder.append("O usuário de login deve ser informado.");
         }
         if (usuario.getUsuario().length() > 60) {
             builder.append("O usuário de login não pode conter mais que 60 caracteres.");
         }
 
-        if (usuario.getSenha().isBlank() || usuario.getSenha().isEmpty() || usuario.getSenha().length() == 0) {
+        if (usuario.getSenha().isEmpty() || usuario.getSenha().trim().length() == 0) {
             builder.append("A senha deve ser informada.");
         }
         if (usuario.getSenha().length() > 250) {

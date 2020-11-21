@@ -21,7 +21,7 @@ public class ProcedimentoBLL {
     public String Inserir(Procedimento procedimento) {
         StringBuilder builder = new StringBuilder();
 
-        if (procedimento.getNome().isEmpty() || procedimento.getNome().isBlank() || procedimento.getNome().length() == 0) {
+        if (procedimento.getNome().isEmpty() || procedimento.getNome().trim().length() == 0) {
             builder.append("O nome do procedimento deve ser informado.");
         }
 
@@ -29,7 +29,7 @@ public class ProcedimentoBLL {
             builder.append("O nome do procedimento não pode conter mais que 60 caracteres.");
         }
 
-        if (procedimento.getDescricaoProcedimento().isEmpty() || procedimento.getDescricaoProcedimento().isBlank() || procedimento.getDescricaoProcedimento().length() == 0) {
+        if (procedimento.getDescricaoProcedimento().isEmpty() || procedimento.getDescricaoProcedimento().trim().length() == 0) {
             builder.append("A descrição do procedimento deve ser informado.");
         }
         if (procedimento.getDescricaoProcedimento().length() > 60) {
@@ -52,14 +52,14 @@ public class ProcedimentoBLL {
     public String Atualizar(Procedimento procedimento) {
         StringBuilder builder = new StringBuilder();
 
-        if (procedimento.getNome().isEmpty() || procedimento.getNome().isBlank() || procedimento.getNome().length() == 0) {
+        if (procedimento.getNome().isEmpty() || procedimento.getNome().trim().length() == 0) {
             builder.append("O nome do procedimento deve ser informado.");
         }
         if (procedimento.getNome().length() > 60) {
             builder.append("O nome do procedimento não pode conter mais que 60 caracteres. ");
         }
 
-        if (procedimento.getDescricaoProcedimento().isEmpty() || procedimento.getDescricaoProcedimento().isBlank() || procedimento.getDescricaoProcedimento().length() == 0) {
+        if (procedimento.getDescricaoProcedimento().isEmpty() || procedimento.getDescricaoProcedimento().trim().length() == 0) {
             builder.append("A descrição do procedimento deve ser informado.");
         }
         if (procedimento.getDescricaoProcedimento().length() > 60) {

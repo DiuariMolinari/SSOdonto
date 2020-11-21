@@ -21,7 +21,7 @@ public class TipoPagamentoBLL {
     public String Inserir(TipoPagamento tipoPagamento) {
         StringBuilder builder = new StringBuilder();
 
-        if (tipoPagamento.getTipoPagamento().isBlank() || tipoPagamento.getTipoPagamento().isEmpty() || tipoPagamento.getTipoPagamento().length() == 0) {
+        if (tipoPagamento.getTipoPagamento().isEmpty() || tipoPagamento.getTipoPagamento().trim().length() == 0) {
             builder.append("O tipo de pagamento deve ser informado.");
         }
 
@@ -45,7 +45,7 @@ public class TipoPagamentoBLL {
     public String Atualizar(TipoPagamento tipoPagamento) {
         StringBuilder builder = new StringBuilder();
 
-        if (tipoPagamento.getTipoPagamento().isBlank() || tipoPagamento.getTipoPagamento().isEmpty() || tipoPagamento.getTipoPagamento().length() == 0) {
+        if (tipoPagamento.getTipoPagamento().isEmpty() || tipoPagamento.getTipoPagamento().trim().length() == 0) {
             builder.append("O tipo de pagamento deve ser informado.");
         }
 

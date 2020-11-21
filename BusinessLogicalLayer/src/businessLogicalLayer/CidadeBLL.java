@@ -22,7 +22,7 @@ public class CidadeBLL {
     public String Inserir(Cidade cidade) {
         StringBuilder builder = new StringBuilder();
 
-        if (cidade.getNome().isBlank() || cidade.getNome().isEmpty() || cidade.getNome().length() == 0) {
+        if (cidade.getNome().isEmpty() || cidade.getNome().trim().length() == 0) {
             builder.append("O nome da cidade deve ser informado.");
         }
 
@@ -50,7 +50,7 @@ public class CidadeBLL {
             builder.append("O nome da cidade não pode conter mais que 50 caracteres. ");
         }
 
-        if (cidade.getNome().isBlank() || cidade.getNome().isEmpty() || cidade.getNome().length() == 0) {
+        if (cidade.getNome().isEmpty() || cidade.getNome().trim().length() == 0) {
             builder.append("O nome da cidade deve ser informado.");
         }
 

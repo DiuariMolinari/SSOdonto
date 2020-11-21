@@ -21,7 +21,7 @@ public class PaisBLL {
     public String Inserir(Pais pais) {
         StringBuilder builder = new StringBuilder();
 
-        if (pais.getNome().isBlank() || pais.getNome().isEmpty() || pais.getNome().length() == 0) {
+        if (pais.getNome().isEmpty() || pais.getNome().trim().length() == 0) {
             builder.append("O nome do país deve ser informado.");
         }
 
@@ -50,7 +50,7 @@ public class PaisBLL {
             builder.append("O nome do país não pode conter mais que 20 caracteres. ");
         }
 
-        if (pais.getNome().isBlank() || pais.getNome().isEmpty() || pais.getNome().length() == 0) {
+        if (pais.getNome().isEmpty() || pais.getNome().trim().length() == 0) {
             builder.append("O nome do país deve ser informado.");
         }
 

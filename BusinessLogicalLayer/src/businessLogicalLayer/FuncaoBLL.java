@@ -21,7 +21,7 @@ public class FuncaoBLL {
     public String Inserir(Funcao funcao) {
         StringBuilder builder = new StringBuilder();
 
-        if (funcao.getNome().isBlank() || funcao.getNome().isEmpty() || funcao.getNome().length() == 0) {
+        if (funcao.getNome().isEmpty() || funcao.getNome().trim().length() == 0) {
             builder.append("O nome da funçao deve ser informado.");
         }
 
@@ -57,7 +57,7 @@ public class FuncaoBLL {
     public String Atualizar(Funcao funcao) {
         StringBuilder builder = new StringBuilder();
 
-        if (funcao.getNome().isBlank() || funcao.getNome().isEmpty() || funcao.getNome().length() == 0) {
+        if (funcao.getNome().isEmpty() || funcao.getNome().trim().length() == 0) {
             builder.append("O nome da funçao deve ser informado.");
         }
 

@@ -21,7 +21,7 @@ public class PacienteBLL {
     public String Inserir(Paciente paciente) {
         StringBuilder builder = new StringBuilder();
 
-        if (paciente.getNome().isBlank() || paciente.getNome().isEmpty() || paciente.getNome().length() == 0) {
+        if (paciente.getNome().isEmpty() || paciente.getNome().trim().length() == 0) {
             builder.append("O nome do paciente deve ser informado.");
         }
 
@@ -29,7 +29,7 @@ public class PacienteBLL {
             builder.append("O nome do paciente não pode conter mais que 60 caracteres.");
         }
 
-        if (paciente.getSobrenome().isBlank() || paciente.getSobrenome().isEmpty() || paciente.getSobrenome().length() == 0) {
+        if (paciente.getSobrenome().isEmpty() || paciente.getSobrenome().trim().length() == 0) {
             builder.append("O sobrenome do paciente deve ser informado.");
         }
 
@@ -37,7 +37,7 @@ public class PacienteBLL {
             builder.append("O sobrenome do paciente não pode conter mais que 60 caracteres.");
         }
 
-        if (paciente.getRg().isBlank() || paciente.getRg().isEmpty() || paciente.getRg().length() == 0) {
+        if (paciente.getRg().isEmpty() || paciente.getRg().trim().length() == 0) {
             builder.append("O RG deve ser informado.");
         }
 
@@ -45,7 +45,7 @@ public class PacienteBLL {
             builder.append("O RG não pode conter mais que 20 caracteres.");
         }
 
-        if (paciente.getCpf().isBlank() || paciente.getCpf().isEmpty() || paciente.getCpf().length() == 0) {
+        if (paciente.getCpf().isEmpty() || paciente.getCpf().trim().length() == 0) {
             builder.append("O CPF deve ser informado.");
         }
 
@@ -57,7 +57,7 @@ public class PacienteBLL {
             builder.append("A data de nascimento do paciente deve ser informado.");
         }
 
-        if (paciente.getObservacao().isBlank() || paciente.getObservacao().isEmpty() || paciente.getObservacao().length() == 0) {
+        if (paciente.getObservacao().isEmpty() || paciente.getObservacao().trim().length() == 0) {
             builder.append("As observações do paciente deve ser informado.");
         }
 
@@ -81,7 +81,7 @@ public class PacienteBLL {
     public String Atualizar(Paciente paciente) {
         StringBuilder builder = new StringBuilder();
 
-       if (paciente.getNome().isBlank() || paciente.getNome().isEmpty() || paciente.getNome().length() == 0) {
+       if (paciente.getNome().isEmpty() || paciente.getNome().trim().length() == 0) {
             builder.append("O nome do paciente deve ser informado.");
         }
 
@@ -89,7 +89,7 @@ public class PacienteBLL {
             builder.append("O nome do paciente não pode conter mais que 60 caracteres.");
         }
 
-        if (paciente.getSobrenome().isBlank() || paciente.getSobrenome().isEmpty() || paciente.getSobrenome().length() == 0) {
+        if (paciente.getSobrenome().isEmpty() || paciente.getSobrenome().trim().length() == 0) {
             builder.append("O sobrenome do paciente deve ser informado.");
         }
 
@@ -97,7 +97,7 @@ public class PacienteBLL {
             builder.append("O sobrenome do paciente não pode conter mais que 60 caracteres.");
         }
 
-        if (paciente.getRg().isBlank() || paciente.getRg().isEmpty() || paciente.getRg().length() == 0) {
+        if (paciente.getRg().isEmpty() || paciente.getRg().trim().length() == 0) {
             builder.append("O RG deve ser informado.");
         }
 
@@ -105,7 +105,7 @@ public class PacienteBLL {
             builder.append("O RG não pode conter mais que 20 caracteres.");
         }
 
-        if (paciente.getCpf().isBlank() || paciente.getCpf().isEmpty() || paciente.getCpf().length() == 0) {
+        if (paciente.getCpf().isEmpty() || paciente.getCpf().trim().length() == 0) {
             builder.append("O CPF deve ser informado.");
         }
 
@@ -117,7 +117,7 @@ public class PacienteBLL {
             builder.append("A data de nascimento do paciente deve ser informado.");
         }
 
-        if (paciente.getObservacao().isBlank() || paciente.getObservacao().isEmpty() || paciente.getObservacao().length() == 0) {
+        if (paciente.getObservacao().isEmpty() || paciente.getObservacao().trim().length() == 0) {
             builder.append("As observações do paciente deve ser informado.");
         }
 

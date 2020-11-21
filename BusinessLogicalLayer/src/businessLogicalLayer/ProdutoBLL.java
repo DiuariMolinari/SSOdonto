@@ -21,7 +21,7 @@ public class ProdutoBLL {
     public String Inserir(Produto produto) {
         StringBuilder builder = new StringBuilder();
 
-        if (produto.getNome().isEmpty() || produto.getNome().isBlank() || produto.getNome().length() == 0) {
+        if (produto.getNome().isEmpty() || produto.getNome().trim().length() == 0) {
             builder.append("O nome do produto deve ser informado.");
         }
 
@@ -53,7 +53,7 @@ public class ProdutoBLL {
     public String Atualizar(Produto produto) {
         StringBuilder builder = new StringBuilder();
 
-        if (produto.getNome().isEmpty() || produto.getNome().isBlank() || produto.getNome().length() == 0) {
+        if (produto.getNome().isEmpty() || produto.getNome().trim().length() == 0) {
             builder.append("O nome do produto deve ser informado.");
         }
 

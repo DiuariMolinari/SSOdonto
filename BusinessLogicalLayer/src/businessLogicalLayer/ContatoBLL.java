@@ -21,7 +21,7 @@ public class ContatoBLL {
     public String Inserir(Contato contato) {
         StringBuilder builder = new StringBuilder();
 
-        if (contato.getFone().isBlank() || contato.getFone().isEmpty() || contato.getFone().length() == 0) {
+        if (contato.getFone().isEmpty() || contato.getFone().trim().length() == 0) {
             builder.append("O telefone deve ser informado.");
         }
 
@@ -29,7 +29,7 @@ public class ContatoBLL {
             builder.append("O telefone não pode conter mais que 20 caracteres.");
         }
 
-        if (contato.getEmail().isBlank() || contato.getEmail().isEmpty() || contato.getEmail().length() == 0) {
+        if (contato.getEmail().isEmpty() || contato.getEmail().trim().length() == 0) {
             builder.append("O email deve ser informada.");
         }
         if (contato.getEmail().length() > 50) {
@@ -53,14 +53,14 @@ public class ContatoBLL {
     public String Atualizar(Contato contato) {
         StringBuilder builder = new StringBuilder();
 
-        if (contato.getFone().isBlank() || contato.getFone().isEmpty() || contato.getFone().length() == 0) {
+        if (contato.getFone().isEmpty() || contato.getFone().trim().length() == 0) {
             builder.append("O telefone deve ser informado.");
         }
         if (contato.getFone().length() > 20) {
             builder.append("O telefone não pode conter mais que 20 caracteres. ");
         }
 
-        if (contato.getEmail().isBlank() || contato.getEmail().isEmpty() || contato.getEmail().length() == 0) {
+        if (contato.getEmail().isEmpty() || contato.getEmail().trim().length() == 0) {
             builder.append("O email deve ser informada.");
         }
         if (contato.getEmail().length() > 50) {

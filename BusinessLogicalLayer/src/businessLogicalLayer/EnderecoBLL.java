@@ -22,7 +22,7 @@ public class EnderecoBLL {
     public String Inserir(Endereco endereco) {
         StringBuilder builder = new StringBuilder();
 
-        if (endereco.getCep().isBlank() || endereco.getCep().isEmpty() || endereco.getCep().length() == 0) {
+        if (endereco.getCep().isEmpty() || endereco.getCep().trim().length() == 0) {
             builder.append("O CEP deve ser informada.");
         }
 
@@ -50,7 +50,7 @@ public class EnderecoBLL {
     public String Atualizar(Endereco endereco) {
         StringBuilder builder = new StringBuilder();
 
-        if (endereco.getCep().isBlank() || endereco.getCep().isEmpty() || endereco.getCep().length() == 0) {
+        if (endereco.getCep().isEmpty() || endereco.getCep().trim().length() == 0) {
             builder.append("O CEP deve ser informada.");
         }
 
