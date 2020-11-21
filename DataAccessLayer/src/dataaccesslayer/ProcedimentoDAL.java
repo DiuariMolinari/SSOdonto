@@ -25,7 +25,6 @@ public class ProcedimentoDAL {
             ResultSet rs = pst.executeQuery();
             rs.first();
             TipoProcedimento TipoProcedimento = new TipoProcedimentoDAL().getById(rs.getInt("IDTipoProcedimento"));
-            
             ArrayList<Atendimento> atendimentos = getAtendimentos(rs.getInt("idProcedimento"));
             return new Procedimento(rs.getInt("IDProcedimento"), rs.getString("NOMEProcedimento"), TipoProcedimento, rs.getString("dsProcedimento"), atendimentos);
         }
@@ -40,7 +39,7 @@ public class ProcedimentoDAL {
         }
     }
     
-    private ArrayList<Atendimento> getAtendimentos(int idProcedimento) throws SQLException{
+    private ArrayList<Atendimento> getAtendimentos(int idProcedimento) throws SQLException {
         try 
         {
             ArrayList<Atendimento> atendimentos = new ArrayList<Atendimento>();
@@ -48,27 +47,14 @@ public class ProcedimentoDAL {
             ResultSet rs = pst.executeQuery();
             while (rs.next())
             {
-                //Atendimento atendimento = new AtendimentoDAL().getById(rs.getInt("IDAtendimento"));
-                //atendimentos.add(atendimento);
+                Atendimento atendimento = new AtendimentoDAL().getById(rs.getInt("IDAtendimento"));
+                atendimentos.add(atendimento);
             }
             
             return atendimentos;
         } 
-    
-    public ArrayList<Procedimento> getByTipoProcedimento(TipoProcedimento TipoProcedimento) throws SQLException{
-        try 
-        {
-            PreparedStatement pst = conexao.getConexao().prepareStatement("SELECT * FROM Procedimento WHERE IDTipoProcedimento =" + TipoProcedimento.getId(), ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            ArrayList<Procedimento> Procedimentos = new ArrayList<Procedimento>();
-            ResultSet rs = pst.executeQuery();
-            while (rs.next())               
-                Procedimentos.add(new Procedimento(rs.getInt("IDProcedimento"), rs.getString("NOMEProcedimento"), TipoProcedimento));
-            
-            return Procedimentos;
-        }
-        
         catch (Exception e) {
-            throw new SQLException("Falha ao buscar Procedimentos. \n Entre em contato com o suporte.");
+            throw new SQLException("Falha ao buscar Procedimento. \n Entre em contato com o suporte.");
         }
         
         finally
@@ -77,14 +63,18 @@ public class ProcedimentoDAL {
         }
     }
     
+   
+    
      public Procedimento getLastRegister() throws SQLException{
         try 
         {
             PreparedStatement pst = conexao.getConexao().prepareStatement("SELECT * FROM Procedimento ORDER BY IDProcedimento DESC LIMIT 1", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
             ResultSet rs = pst.executeQuery();
             rs.first();
+            
             TipoProcedimento TipoProcedimento = new TipoProcedimentoDAL().getById(rs.getInt("IDTipoProcedimento"));
-            return new Procedimento(rs.getInt("IDProcedimento"), rs.getString("NOMEProcedimento"), TipoProcedimento);
+            ArrayList<Atendimento> atendimentos = getAtendimentos(rs.getInt("idProcedimento"));
+            return new Procedimento(rs.getInt("IDProcedimento"), rs.getString("NOMEProcedimento"), TipoProcedimento, rs.getString("dsProcedimento"), atendimentos);
         } 
         
         catch (Exception e) {
@@ -106,14 +96,15 @@ public class ProcedimentoDAL {
             while (rs.next())
             {
                 TipoProcedimento TipoProcedimento = new TipoProcedimentoDAL().getById(rs.getInt("IDTipoProcedimento"));
-                Procedimentos.add(new Procedimento(rs.getInt("IDProcedimento"), rs.getString("NOMEProcedimento"), TipoProcedimento));
+                ArrayList<Atendimento> atendimentos = getAtendimentos(rs.getInt("idProcedimento"));
+                Procedimentos.add(new Procedimento(rs.getInt("IDProcedimento"), rs.getString("NOMEProcedimento"), TipoProcedimento, rs.getString("dsProcedimento"), atendimentos));
             }
             
             return Procedimentos;
         } 
         
         catch (Exception e) {
-            throw new SQLException("Falha ao buscar Procedimentos. \n Entre em contato com o suporte.");
+            throw new SQLException("Falha ao buscar procedimentos. \n Entre em contato com o suporte.");
         }
         
         finally
@@ -125,9 +116,10 @@ public class ProcedimentoDAL {
     public String insert(Procedimento Procedimento) throws SQLException{
         try 
         {
-            PreparedStatement pst = conexao.getConexao().prepareStatement("INSERT INTO Procedimento (IDProcedimento, NOMEProcedimento, IDTipoProcedimento) VALUES(0, ?, ?)");
+            PreparedStatement pst = conexao.getConexao().prepareStatement("INSERT INTO Procedimento (IDProcedimento, NOMEProcedimento, dsProcedimento, IDTipoProcedimento) VALUES(0, ?, ?, ?)");
             pst.setString(1, Procedimento.getNome());
-            pst.setInt(2, Procedimento.getTipoProcedimento().getId());
+            pst.setString(2, Procedimento.getDescricaoProcedimento());
+            pst.setInt(3, Procedimento.getTipoProcedimento().getId());
             pst.executeUpdate();
             return "Procedimento inserido com sucesso!";
         } 
@@ -145,16 +137,17 @@ public class ProcedimentoDAL {
     public String update(Procedimento Procedimento) throws SQLException{
         try 
         {
-            PreparedStatement pst = conexao.getConexao().prepareStatement("UPDATE Procedimento SET NOMEProcedimento = ?, IDTipoProcedimento = ? WHERE IDProcedimento = ?");
+            PreparedStatement pst = conexao.getConexao().prepareStatement("UPDATE Procedimento SET NOMEProcedimento = ?, dsProcedimento, IDTipoProcedimento = ? WHERE IDProcedimento = ?");
             pst.setString(1, Procedimento.getNome());
-            pst.setInt(2, Procedimento.getTipoProcedimento().getId());
-            pst.setInt(3, Procedimento.getId());
+            pst.setString(2, Procedimento.getDescricaoProcedimento());
+            pst.setInt(3, Procedimento.getTipoProcedimento().getId());
+            pst.setInt(4, Procedimento.getId());
             pst.executeUpdate();
             return "Procedimento atualizado com sucesso!";
         } 
         
         catch (Exception e) {
-            throw new SQLException("Falha ao atualizar Procedimento. \n Entre em contato com o suporte.");
+            throw new SQLException("Falha ao atualizar procedimento. \n Entre em contato com o suporte.");
         }
         
         finally {

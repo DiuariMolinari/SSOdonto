@@ -13,6 +13,15 @@ public class TipoPagamento {
     private int id;
     private String tipoPagamento;
 
+    public TipoPagamento(int id) {
+        this.id = id;
+    }
+    
+    public TipoPagamento(int id, String tipoPagamento) {
+        this.id = id;
+        this.tipoPagamento = tipoPagamento;
+    }
+
     public int getId() {
         return id;
     }
