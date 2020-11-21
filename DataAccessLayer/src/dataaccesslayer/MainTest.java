@@ -4,12 +4,11 @@
  * and open the template in the editor.
  */
 package dataaccesslayer;
-
-import domain.Cidade;
-import domain.Bairro;
-import domain.Logradouro;
-
 import java.sql.SQLException;
+import java.util.ArrayList;
+import domain.Clinica;
+import domain.Endereco;
+import java.time.LocalDate;
 
 /**
  *
@@ -18,12 +17,11 @@ import java.sql.SQLException;
 public class MainTest {
     public static void main(String[] args) throws SQLException
     {
+        Endereco endereco = new EnderecoDAL().getById(2);
         
-        BairroDAL bairrodal = new BairroDAL();
-        Bairro bairro = bairrodal.getById(1);
+        ClinicaDAL clidal = new ClinicaDAL();
+        clidal.delete(new Clinica(1));
         
-        LogradouroDAL logradal = new LogradouroDAL();
-        logradal.update(new Logradouro(1, "logradouro 1", bairro));
         
     }
 }
