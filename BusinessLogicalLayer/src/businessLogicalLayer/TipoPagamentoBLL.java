@@ -25,7 +25,6 @@ public class TipoPagamentoBLL {
             builder.append("O tipo de pagamento deve ser informado.");
         }
 
-        //Verificar pois no BD está como double
         if (tipoPagamento.getTipoPagamento().length() > 50) {
             builder.append("O tipo de pagamento não pode conter mais que 50 caracteres.");
         }
