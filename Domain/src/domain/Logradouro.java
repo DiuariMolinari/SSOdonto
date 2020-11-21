@@ -14,6 +14,16 @@ public class Logradouro {
     private String nome;
     private Bairro bairro;
 
+    public Logradouro(int id) {
+        this.id = id;
+    }
+    
+    public Logradouro(int id, String nome, Bairro bairro) {
+        this.id = id;
+        this.nome = nome;
+        this.bairro = bairro;
+    }
+
     public int getId() {
         return id;
     }

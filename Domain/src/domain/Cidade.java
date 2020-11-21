@@ -14,6 +14,16 @@ public class Cidade {
     private String nome;
     private Estado estado;
 
+    public Cidade(int id) {
+        this.id = id;
+    }
+    
+    public Cidade(int id, String nome, Estado estado) {
+        this.id = id;
+        this.nome = nome;
+        this.estado = estado;
+    }
+    
     public int getId() {
         return id;
     }
