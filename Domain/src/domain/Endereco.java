@@ -11,9 +11,20 @@ package domain;
  */
 public class Endereco {
     private int id;
-    private int numeroCasa;
     private Logradouro logradouro;
+    private int numeroCasa;
     private String cep;
+
+    public Endereco(int id) {
+        this.id = id;
+    }
+    
+    public Endereco(int id, Logradouro logradouro, int numeroCasa, String cep) {
+        this.id = id;
+        this.numeroCasa = numeroCasa;
+        this.logradouro = logradouro;
+        this.cep = cep;
+    }
 
     public int getId() {
         return id;

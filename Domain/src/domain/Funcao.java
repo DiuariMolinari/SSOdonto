@@ -14,8 +14,18 @@ public class Funcao {
     private String nome;
     private double salario;
     private double comissao;
-    private Especialidade especialidade;
 
+    public Funcao(int id) {
+        this.id = id;
+    }
+    
+    public Funcao(int id, String nome, double salario, double comissao) {
+        this.id = id;
+        this.nome = nome;
+        this.salario = salario;
+        this.comissao = comissao;
+    }
+    
     public int getId() {
         return id;
     }
@@ -46,13 +56,5 @@ public class Funcao {
 
     public void setComissao(double comissao) {
         this.comissao = comissao;
-    }
-
-    public Especialidade getEspecialidade() {
-        return especialidade;
-    }
-
-    public void setEspecialidade(Especialidade especialidade) {
-        this.especialidade = especialidade;
     }
 }

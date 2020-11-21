@@ -15,8 +15,9 @@ public class Procedimento {
     private int id;
     private String nome;
     private TipoProcedimento tipoProcedimento;
+    private String descricaoProcedimento;
     private ArrayList<Atendimento> atendimentos = new ArrayList<Atendimento>();
-
+    
     public int getId() {
         return id;
     }
@@ -47,5 +48,13 @@ public class Procedimento {
     
     public void setAtendimentos(Atendimento atendimento){
         this.atendimentos.add(atendimento);
+    }
+    
+    public String getDescricaoProcedimento() {
+        return descricaoProcedimento;
+    }
+
+    public void setDescricaoProcedimento(String descricaoProcedimento) {
+        this.descricaoProcedimento = descricaoProcedimento;
     }
 }
