@@ -21,10 +21,11 @@ public class TipoPagamentoBLL {
     public String Inserir(TipoPagamento tipoPagamento) {
         StringBuilder builder = new StringBuilder();
 
-        if (String.IsNullOrWhiteSpace(tipoPagamento.tipoPagamento)) {
-            builder.append("O nome deve ser informado.");
+        if (tipoPagamento.getTipoPagamento().isBlank() || tipoPagamento.getTipoPagamento().isEmpty() || tipoPagamento.getTipoPagamento().length() == 0) {
+            builder.append("O tipo de pagamento deve ser informado.");
         }
 
+        //Verificar pois no BD está como double
         if (tipoPagamento.getTipoPagamento().length() > 50) {
             builder.append("O tipo de pagamento não pode conter mais que 50 caracteres.");
         }
@@ -45,12 +46,12 @@ public class TipoPagamentoBLL {
     public String Atualizar(TipoPagamento tipoPagamento) {
         StringBuilder builder = new StringBuilder();
 
-        if (tipoPagamento.tipoPagamento.Length > 50) {
-            builder.append("O usuário não pode conter mais que 50 caracteres. ");
+        if (tipoPagamento.getTipoPagamento().isBlank() || tipoPagamento.getTipoPagamento().isEmpty() || tipoPagamento.getTipoPagamento().length() == 0) {
+            builder.append("O tipo de pagamento deve ser informado.");
         }
-
-        if (String.IsNullOrWhiteSpace(tipoPagamento.tipoPagamento)) {
-            builder.append("O usuário deve ser informado.");
+        
+        if (tipoPagamento.getTipoPagamento().length() > 50) {
+            builder.append("O tipo de pagamento não pode conter mais que 50 caracteres. ");
         }
 
         String respostaDB = dal.Atualizar(tipoPagamento);
