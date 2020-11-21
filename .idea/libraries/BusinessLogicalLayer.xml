@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="BusinessLogicalLayer">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/BusinessLogicalLayer/dist/BusinessLogicalLayer.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
