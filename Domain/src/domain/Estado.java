@@ -14,6 +14,16 @@ public class Estado {
     private String nome;
     private Pais pais;
 
+    public Estado(int id) {
+        this.id = id;
+    }
+    
+    public Estado(int id, String nome, Pais pais) {
+        this.id = id;
+        this.nome = nome;
+        this.pais = pais;
+    }
+
     public int getId() {
         return id;
     }
