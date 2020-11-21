@@ -5,7 +5,7 @@
  */
 package businessLogicalLayer;
 
-import dataAccessLayer.EstadoDAL;
+import dataaccesslayer.EstadoDAL;
 import domain.Estado;
 import java.util.List;
 

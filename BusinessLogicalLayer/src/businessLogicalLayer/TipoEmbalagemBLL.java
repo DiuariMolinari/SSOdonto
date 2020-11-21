@@ -5,7 +5,7 @@
  */
 package businessLogicalLayer;
 
-import dataAccessLayer.TipoEmbalagemDAL;
+import dataaccesslayer.TipoEmbalagemDAL;
 import domain.TipoEmbalagem;
 import java.util.List;
 

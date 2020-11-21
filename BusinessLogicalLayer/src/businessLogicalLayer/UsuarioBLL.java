@@ -5,7 +5,7 @@
  */
 package businessLogicalLayer;
 
-import dataAccessLayer.UsuarioDAL;
+import dataaccesslayer.UsuarioDAL;
 import domain.Usuario;
 import java.util.List;
 import sun.security.validator.ValidatorException;

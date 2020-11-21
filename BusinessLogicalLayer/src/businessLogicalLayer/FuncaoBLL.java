@@ -5,7 +5,7 @@
  */
 package businessLogicalLayer;
 
-import dataAccessLayer.FuncaoDAL;
+import dataaccesslayer.FuncaoDAL;
 import domain.Funcao;
 import java.util.List;
 

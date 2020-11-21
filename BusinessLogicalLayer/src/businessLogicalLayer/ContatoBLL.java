@@ -5,7 +5,7 @@
  */
 package businessLogicalLayer;
 
-import dataAccessLayer.ContatoDAL;
+import dataaccesslayer.ContatoDAL;
 import domain.Contato;
 import java.util.List;
 

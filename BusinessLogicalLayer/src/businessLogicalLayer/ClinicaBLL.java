@@ -5,7 +5,7 @@
  */
 package businessLogicalLayer;
 
-import dataAccessLayer.ClinicaDAL;
+import dataaccesslayer.ClinicaDAL;
 import domain.Clinica;
 import java.util.List;
 
@@ -15,11 +15,10 @@ import java.util.List;
  */
 public class ClinicaBLL {
 
-    //TODO: Obter um registro
     ClinicaDAL dal = new ClinicaDAL();
 
     //Incluir um registro
-    public String Inserir(Clinica clinica) {
+    public String insert(Clinica clinica) {
         StringBuilder builder = new StringBuilder();
 
         if (clinica.getNome().isEmpty() || clinica.getNome().trim().length() == 0) {
@@ -38,17 +37,17 @@ public class ClinicaBLL {
             return builder.toString();
         }
 
-        String respostaDB = dal.Inserir(clinica);
+        String respostaDB = dal.insert(clinica);
         return respostaDB;
     }
 
     // Obter todos os registros
-    public List<Clinica> LerTodos() {
-        return dal.LerTodos();
+    public List<Clinica> getAll() {
+        return dal.getAll();
     }
 
     //Atualizar um registro existente
-    public String Atualizar(Clinica clinica) {
+    public String update(Clinica clinica) {
         StringBuilder builder = new StringBuilder();
 
         if (clinica.getNome().length() > 60) {
@@ -67,13 +66,15 @@ public class ClinicaBLL {
             return builder.toString();
         }
 
-        String respostaDB = dal.Atualizar(clinica);
+        String respostaDB = dal.update(clinica);
         return respostaDB;
     }
 
     //Excluir um registro
-    public String Deletar(Clinica clinica) {
-        String respostaDB = dal.Deletar(clinica);
+    public String delete(Clinica clinica) {
+        String respostaDB = dal.delete(clinica);
         return respostaDB;
     }
+
+    //TODO: Obter um registro
 }

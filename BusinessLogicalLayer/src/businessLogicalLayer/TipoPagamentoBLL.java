@@ -5,7 +5,7 @@
  */
 package businessLogicalLayer;
 
-import dataAccessLayer.TipoPagamentoDAL;
+import dataaccesslayer.TipoPagamentoDAL;
 import domain.TipoPagamento;
 import java.util.List;
 

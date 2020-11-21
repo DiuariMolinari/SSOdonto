@@ -5,7 +5,7 @@
  */
 package businessLogicalLayer;
 
-import dataAccessLayer.FoneTipoDAL;
+import dataaccesslayer.FoneTipoDAL;
 import domain.FoneTipo;
 import java.util.List;
 

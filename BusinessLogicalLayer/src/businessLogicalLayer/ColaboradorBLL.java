@@ -5,7 +5,7 @@
  */
 package businessLogicalLayer;
 
-import dataAccessLayer.ColaboradorDAL;
+import dataaccesslayer.ColaboradorDAL;
 import domain.Colaborador;
 import java.util.List;
 

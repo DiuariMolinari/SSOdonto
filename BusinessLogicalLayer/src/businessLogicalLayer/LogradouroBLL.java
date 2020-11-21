@@ -5,7 +5,7 @@
  */
 package businessLogicalLayer;
 
-import dataAccessLayer.LogradouroDAL;
+import dataaccesslayer.LogradouroDAL;
 import domain.Logradouro;
 import java.util.List;
 

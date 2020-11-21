@@ -5,7 +5,7 @@
  */
 package businessLogicalLayer;
 
-import dataAccessLayer.EstoqueDAL;
+import dataaccesslayer.EstoqueDAL;
 import domain.Estoque;
 import java.util.List;
 

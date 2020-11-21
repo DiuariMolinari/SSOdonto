@@ -5,7 +5,7 @@
  */
 package businessLogicalLayer;
 
-import dataAccessLayer.EnderecoDAL;
+import dataaccesslayer.EnderecoDAL;
 import domain.Endereco;
 import java.util.List;
 
