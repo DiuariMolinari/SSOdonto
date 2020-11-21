@@ -8,6 +8,7 @@ package businessLogicalLayer;
 import dataAccessLayer.UsuarioDAL;
 import domain.Usuario;
 import java.util.List;
+import sun.security.validator.ValidatorException;
 
 /**
  *
@@ -42,13 +43,13 @@ public class UsuarioBLL {
         return respostaDB;
     }
 
-//    public void Autenticar(String login, String password) {
-//        Usuario user = dal.Autenticar(login, password);
-//        if (user == null) {
-//            throw new Exception("Usuário e/ou senha inválidos.");
-//        }
-//        Parametros.UsuarioLogado = user;
-//    }
+    public void Autenticar(String login, String password) throws ValidatorException {
+        Usuario user = dal.Autenticar(login, password);
+        if (user == null) {
+            throw new ValidatorException("Usuário e/ou senha inválidos.");
+        }
+        Parametros.UsuarioLogado = user;
+    }
 
     // Obter todos os registros
     public List<Usuario> LerTodos() {
