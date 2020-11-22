@@ -16,6 +16,16 @@ public class Pagamento {
     private LocalDate dataPagamento;
     private TipoPagamento tipoPagamento;
 
+    public Pagamento(int id) {
+        this.id = id;
+    }
+    
+    public Pagamento(int id, LocalDate dataPagamento, TipoPagamento tipoPagamento) {
+        this.id = id;
+        this.dataPagamento = dataPagamento;
+        this.tipoPagamento = tipoPagamento;
+    }
+
     public int getId() {
         return id;
     }
