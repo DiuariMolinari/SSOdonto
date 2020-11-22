@@ -7,6 +7,7 @@ package businessLogicalLayer;
 
 import dataaccesslayer.ProcedimentoDAL;
 import domain.Procedimento;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,7 +19,7 @@ public class ProcedimentoBLL {
     ProcedimentoDAL dal = new ProcedimentoDAL();
 
     //Incluir um registro
-    public String Inserir(Procedimento procedimento) {
+    public String insert(Procedimento procedimento) throws Exception {
         StringBuilder builder = new StringBuilder();
 
         if (procedimento.getNome().isEmpty() || procedimento.getNome().trim().length() == 0) {
@@ -39,17 +40,17 @@ public class ProcedimentoBLL {
         if (builder.length() != 0) {
             return builder.toString();
         }
-        String respostaDB = dal.Inserir(procedimento);
+        String respostaDB = dal.insert(procedimento);
         return respostaDB;
     }
 
     // Obter todos os registros
-    public List<Procedimento> LerTodos() {
-        return dal.LerTodos();
+    public ArrayList<Procedimento> getAll() throws Exception {
+        return dal.getAll();
     }
 
     //Atualizar um registro existente
-    public String Atualizar(Procedimento procedimento) {
+    public String update(Procedimento procedimento) throws Exception {
         StringBuilder builder = new StringBuilder();
 
         if (procedimento.getNome().isEmpty() || procedimento.getNome().trim().length() == 0) {
@@ -70,15 +71,24 @@ public class ProcedimentoBLL {
             return builder.toString();
         }
 
-        String respostaDB = dal.Atualizar(procedimento);
+        String respostaDB = dal.update(procedimento);
         return respostaDB;
     }
 
     //Excluir um registro
-    public String Deletar(Procedimento procedimento) {
-        String respostaDB = dal.Deletar(procedimento);
+    public String delete(Procedimento procedimento) throws Exception {
+        String respostaDB = dal.delete(procedimento);
         return respostaDB;
     }
 
-    //TODO: Obter um registro  
+    //    //Obter um registro
+//    public String getById(Procedimento procedimento) throws Exception {
+//
+//    }
+//
+//    //Obter último registro
+//    public String getLastRegister(Procedimento procedimento) throws Exception {
+//
+//    }
+//
 }

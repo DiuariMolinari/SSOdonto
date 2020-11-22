@@ -7,6 +7,7 @@ package businessLogicalLayer;
 
 import dataaccesslayer.PacienteDAL;
 import domain.Paciente;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,7 +19,7 @@ public class PacienteBLL {
     PacienteDAL dal = new PacienteDAL();
 
     //Incluir um registro
-    public String Inserir(Paciente paciente) {
+    public String insert(Paciente paciente) throws Exception {
         StringBuilder builder = new StringBuilder();
 
         if (paciente.getNome().isEmpty() || paciente.getNome().trim().length() == 0) {
@@ -68,20 +69,20 @@ public class PacienteBLL {
         if (builder.length() != 0) {
             return builder.toString();
         }
-        String respostaDB = dal.Inserir(paciente);
+        String respostaDB = dal.insert(paciente);
         return respostaDB;
     }
 
     // Obter todos os registros
-    public List<Paciente> LerTodos() {
-        return dal.LerTodos();
+    public ArrayList<Paciente> getAll() throws Exception {
+        return dal.getAll();
     }
 
     //Atualizar um registro existente
-    public String Atualizar(Paciente paciente) {
+    public String update(Paciente paciente) throws Exception {
         StringBuilder builder = new StringBuilder();
 
-       if (paciente.getNome().isEmpty() || paciente.getNome().trim().length() == 0) {
+        if (paciente.getNome().isEmpty() || paciente.getNome().trim().length() == 0) {
             builder.append("O nome do paciente deve ser informado.");
         }
 
@@ -124,20 +125,29 @@ public class PacienteBLL {
         if (paciente.getObservacao().length() > 250) {
             builder.append("As observações do paciente não pode conter mais que 250 caracteres.");
         }
-        
+
         if (builder.length() != 0) {
             return builder.toString();
         }
 
-        String respostaDB = dal.Atualizar(paciente);
+        String respostaDB = dal.update(paciente);
         return respostaDB;
     }
 
     //Excluir um registro
-    public String Deletar(Paciente paciente) {
-        String respostaDB = dal.Deletar(paciente);
+    public String delete(Paciente paciente) throws Exception {
+        String respostaDB = dal.delete(paciente);
         return respostaDB;
     }
 
-    //TODO: Obter um registro
+    //    //Obter um registro
+//    public String getById(Paciente paciente) throws Exception {
+//
+//    }
+//
+//    //Obter último registro
+//    public String getLastRegister(Paciente paciente) throws Exception {
+//
+//    }
+//
 }

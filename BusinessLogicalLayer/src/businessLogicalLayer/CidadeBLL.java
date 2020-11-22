@@ -8,7 +8,6 @@ package businessLogicalLayer;
 import dataaccesslayer.CidadeDAL;
 import domain.Cidade;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
@@ -68,18 +67,29 @@ public class CidadeBLL {
         return respostaDB;
     }
 
-    //Obter um registro
+//    //Obter um registro
     public String getById(Cidade cidade) throws Exception {
+        StringBuilder builder = new StringBuilder();
 
+        if (cidade.getId() != 0 || cidade.getId() < 0) {
+            builder.append("O ID da cidade deve ser informado.");
+        }
+
+        if (builder.length() != 0) {
+            return builder.toString();
+        }
+
+        String respostaDB = dal.getById(cidade);
+        return respostaDB;
     }
 
-    //Obter último registro
-    public String getLastRegister(Cidade cidade) throws Exception {
-
-    }
-
-    //Obter registros de determinado estado
-    public ArrayList<Cidade> getByEstado(Cidade cidade) throws Exception {
-
-    }
+//    //Obter último registro
+//    public String getLastRegister(Cidade cidade) throws Exception {
+//
+//    }
+//
+//    //Obter registros de determinado estado
+//    public ArrayList<Cidade> getByEstado(Cidade cidade) throws Exception {
+//
+//    }
 }

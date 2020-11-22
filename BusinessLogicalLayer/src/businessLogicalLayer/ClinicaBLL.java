@@ -7,7 +7,7 @@ package businessLogicalLayer;
 
 import dataaccesslayer.ClinicaDAL;
 import domain.Clinica;
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  *
@@ -18,7 +18,7 @@ public class ClinicaBLL {
     ClinicaDAL dal = new ClinicaDAL();
 
     //Incluir um registro
-    public String insert(Clinica clinica) {
+    public String insert(Clinica clinica) throws Exception {
         StringBuilder builder = new StringBuilder();
 
         if (clinica.getNome().isEmpty() || clinica.getNome().trim().length() == 0) {
@@ -42,12 +42,12 @@ public class ClinicaBLL {
     }
 
     // Obter todos os registros
-    public List<Clinica> getAll() {
+    public ArrayList<Clinica> getAll() throws Exception{
         return dal.getAll();
     }
 
     //Atualizar um registro existente
-    public String update(Clinica clinica) {
+    public String update(Clinica clinica) throws Exception {
         StringBuilder builder = new StringBuilder();
 
         if (clinica.getNome().length() > 60) {
@@ -71,10 +71,23 @@ public class ClinicaBLL {
     }
 
     //Excluir um registro
-    public String delete(Clinica clinica) {
+    public String delete(Clinica clinica) throws Exception {
         String respostaDB = dal.delete(clinica);
         return respostaDB;
     }
 
-    //TODO: Obter um registro
+    //    //Obter um registro
+//    public String getById(Clinica clinica) throws Exception {
+//
+//    }
+//
+//    //Obter último registro
+//    public String getLastRegister(Clinica clinica) throws Exception {
+//
+//    }
+//
+//    //Obter registros de determinado estado
+//    public  ArrayList<Clinica> getByEndereco(Clinica clinica) throws Exception {
+//
+//    }
 }

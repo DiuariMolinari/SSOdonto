@@ -7,7 +7,7 @@ package businessLogicalLayer;
 
 import dataaccesslayer.ContatoDAL;
 import domain.Contato;
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  *
@@ -18,7 +18,7 @@ public class ContatoBLL {
     ContatoDAL dal = new ContatoDAL();
 
     //Incluir um registro
-    public String Inserir(Contato contato) {
+    public String insert(Contato contato) throws Exception{
         StringBuilder builder = new StringBuilder();
 
         if (contato.getFone().isEmpty() || contato.getFone().trim().length() == 0) {
@@ -40,17 +40,17 @@ public class ContatoBLL {
             return builder.toString();
         }
 
-        String respostaDB = dal.Inserir(contato);
+        String respostaDB = dal.insert(contato);
         return respostaDB;
     }
 
     //Obter todos os registros
-    public List<Contato> LerTodos() {
-        return dal.LerTodos();
+    public ArrayList<Contato> getAll() throws Exception{
+        return dal.getAll();
     }
 
     //Atualizar um registro existente
-    public String Atualizar(Contato contato) {
+    public String update(Contato contato) throws Exception{
         StringBuilder builder = new StringBuilder();
 
         if (contato.getFone().isEmpty() || contato.getFone().trim().length() == 0) {
@@ -71,15 +71,24 @@ public class ContatoBLL {
             return builder.toString();
         }
 
-        String respostaDB = dal.Atualizar(contato);
+        String respostaDB = dal.update(contato);
         return respostaDB;
     }
 
     //Excluir um registro
-    public String Deletar(Contato contato) {
-        String respostaDB = dal.Deletar(contato);
+    public String delete(Contato contato) throws Exception{
+        String respostaDB = dal.delete(contato);
         return respostaDB;
     }
 
-    //TODO: Obter um registro
+    //    //Obter um registro
+//    public String getById(Contato contato) throws Exception {
+//
+//    }
+//
+//    //Obter último registro
+//    public String getLastRegister(Contato contato) throws Exception {
+//
+//    }
+//
 }

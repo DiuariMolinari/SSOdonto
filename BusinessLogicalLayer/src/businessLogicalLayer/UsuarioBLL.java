@@ -7,6 +7,7 @@ package businessLogicalLayer;
 
 import dataaccesslayer.UsuarioDAL;
 import domain.Usuario;
+import java.util.ArrayList;
 import java.util.List;
 import sun.security.validator.ValidatorException;
 
@@ -19,7 +20,7 @@ public class UsuarioBLL {
     UsuarioDAL dal = new UsuarioDAL();
 
     //Incluir um registro
-    public String Inserir(Usuario usuario) {
+    public String insert(Usuario usuario) throws Exception {
         StringBuilder builder = new StringBuilder();
 
         if (usuario.getUsuario().isEmpty() || usuario.getUsuario().trim().length() == 0) {
@@ -39,7 +40,7 @@ public class UsuarioBLL {
         if (builder.length() != 0) {
             return builder.toString();
         }
-        String respostaDB = dal.Inserir(usuario);
+        String respostaDB = dal.insert(usuario);
         return respostaDB;
     }
 
@@ -52,12 +53,12 @@ public class UsuarioBLL {
     }
 
     // Obter todos os registros
-    public List<Usuario> LerTodos() {
-        return dal.LerTodos();
+    public ArrayList<Usuario> getAll() throws Exception {
+        return dal.getAll();
     }
 
     //Atualizar um registro existente
-    public String Atualizar(Usuario usuario) {
+    public String update(Usuario usuario) throws Exception {
         StringBuilder builder = new StringBuilder();
 
         if (usuario.getUsuario().isEmpty() || usuario.getUsuario().trim().length() == 0) {
@@ -78,15 +79,23 @@ public class UsuarioBLL {
             return builder.toString();
         }
 
-        String respostaDB = dal.Atualizar(usuario);
+        String respostaDB = dal.update(usuario);
         return respostaDB;
     }
 
     //Excluir um registro
-    public String Deletar(Usuario usuario) {
-        String respostaDB = dal.Deletar(usuario);
+    public String delete(Usuario usuario) throws Exception {
+        String respostaDB = dal.delete(usuario);
         return respostaDB;
     }
 
-    //TODO: Obter um registro
+    //    //Obter um registro
+//    public String getById(Usuario usuario) throws Exception {
+//
+//    }
+//
+//    //Obter último registro
+//    public String getLastRegister(Usuario usuario) throws Exception {
+//
+//    }
 }

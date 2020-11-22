@@ -7,6 +7,7 @@ package businessLogicalLayer;
 
 import dataaccesslayer.EstadoDAL;
 import domain.Estado;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,7 +19,7 @@ public class EstadoBLL {
     EstadoDAL dal = new EstadoDAL();
 
     //Incluir um registro
-    public String Inserir(Estado estado) {
+    public String insert(Estado estado) throws Exception {
         StringBuilder builder = new StringBuilder();
 
         if (estado.getNome().isEmpty() || estado.getNome().trim().length() == 0) {
@@ -32,17 +33,17 @@ public class EstadoBLL {
         if (builder.length() != 0) {
             return builder.toString();
         }
-        String respostaDB = dal.Inserir(estado);
+        String respostaDB = dal.insert(estado);
         return respostaDB;
     }
 
     // Obter todos os registros
-    public List<Estado> LerTodos() {
-        return dal.LerTodos();
+    public ArrayList<Estado> gettAll() throws Exception {
+        return dal.getAll();
     }
 
     //Atualizar um registro existente
-    public String Atualizar(Estado estado) {
+    public String update(Estado estado) throws Exception {
         StringBuilder builder = new StringBuilder();
 
         if (estado.getNome().isEmpty() || estado.getNome().trim().length() == 0) {
@@ -57,15 +58,28 @@ public class EstadoBLL {
             return builder.toString();
         }
 
-        String respostaDB = dal.Atualizar(estado);
+        String respostaDB = dal.update(estado);
         return respostaDB;
     }
 
     //Excluir um registro
-    public String Deletar(Estado estado) {
-        String respostaDB = dal.Deletar(estado);
+    public String delete(Estado estado) throws Exception {
+        String respostaDB = dal.delete(estado);
         return respostaDB;
     }
 
-    //TODO: Obter um registro
+    //    //Obter um registro
+//    public String getById(Estado estado) throws Exception {
+//
+//    }
+//
+//    //Obter último registro
+//    public String getLastRegister(Estado estado) throws Exception {
+//
+//    }
+//
+//    //Obter registros de determinado estado
+//    public ArrayList<Estado> getByPais(Estado estado) throws Exception {
+//
+//    }
 }

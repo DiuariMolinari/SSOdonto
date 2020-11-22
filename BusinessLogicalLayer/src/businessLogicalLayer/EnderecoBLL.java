@@ -7,6 +7,7 @@ package businessLogicalLayer;
 
 import dataaccesslayer.EnderecoDAL;
 import domain.Endereco;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,11 +16,10 @@ import java.util.List;
  */
 public class EnderecoBLL {
 
-    //Obter um registro
     EnderecoDAL dal = new EnderecoDAL();
 
     //Incluir um registro
-    public String Inserir(Endereco endereco) {
+    public String insert(Endereco endereco) throws Exception {
         StringBuilder builder = new StringBuilder();
 
         if (endereco.getCep().isEmpty() || endereco.getCep().trim().length() == 0) {
@@ -37,17 +37,17 @@ public class EnderecoBLL {
         if (builder.length() != 0) {
             return builder.toString();
         }
-        String respostaDB = dal.Inserir(endereco);
+        String respostaDB = dal.insert(endereco);
         return respostaDB;
     }
 
     //Obter todos os registros
-    public List<Endereco> LerTodos() {
-        return dal.LerTodos();
+    public ArrayList<Endereco> getAll() throws Exception{
+        return dal.getAll();
     }
 
     //Atualizar um registro existente
-    public String Atualizar(Endereco endereco) {
+    public String update(Endereco endereco) throws Exception {
         StringBuilder builder = new StringBuilder();
 
         if (endereco.getCep().isEmpty() || endereco.getCep().trim().length() == 0) {
@@ -61,18 +61,33 @@ public class EnderecoBLL {
         if (endereco.getNumeroCasa() < 0 || endereco.getNumeroCasa() != 0) {
             builder.append("O número da casa deve ser informado.");
         }
-        
+
         if (builder.length() != 0) {
             return builder.toString();
         }
 
-        String respostaDB = dal.Atualizar(endereco);
+        String respostaDB = dal.update(endereco);
         return respostaDB;
     }
 
     //Excluir um registro
-    public String Deletar(Endereco endereco) {
-        String respostaDB = dal.Deletar(endereco);
+    public String delete(Endereco endereco) throws Exception {
+        String respostaDB = dal.delete(endereco);
         return respostaDB;
     }
+
+    //    //Obter um registro
+//    public String getById(Endereco endereco) throws Exception {
+//
+//    }
+//
+//    //Obter último registro
+//    public String getLastRegister(Endereco endereco) throws Exception {
+//
+//    }
+//
+//    //Obter registros de determinado estado
+//    public ArrayList<Endereco> getByLogradouro(Endereco endereco) throws Exception {
+//
+//    }
 }

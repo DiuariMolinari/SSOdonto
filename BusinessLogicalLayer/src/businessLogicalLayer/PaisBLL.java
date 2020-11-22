@@ -7,6 +7,7 @@ package businessLogicalLayer;
 
 import dataaccesslayer.PaisDAL;
 import domain.Pais;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,7 +19,7 @@ public class PaisBLL {
     PaisDAL dal = new PaisDAL();
 
     //Incluir um registro
-    public String Inserir(Pais pais) {
+    public String insert(Pais pais) throws Exception{
         StringBuilder builder = new StringBuilder();
 
         if (pais.getNome().isEmpty() || pais.getNome().trim().length() == 0) {
@@ -33,17 +34,17 @@ public class PaisBLL {
             return builder.toString();
         }
 
-        String respostaDB = dal.Inserir(pais);
+        String respostaDB = dal.insert(pais);
         return respostaDB;
     }
 
     // Obter todos os registros
-    public List<Pais> LerTodos() {
-        return dal.LerTodos();
+    public ArrayList<Pais> getAll() throws Exception{
+        return dal.getAll();
     }
 
     //Atualizar um registro existente
-    public String Atualizar(Pais pais) {
+    public String update(Pais pais) throws Exception{
         StringBuilder builder = new StringBuilder();
 
         if (pais.getNome().length() > 20) {
@@ -58,15 +59,23 @@ public class PaisBLL {
             return builder.toString();
         }
 
-        String respostaDB = dal.Atualizar(pais);
+        String respostaDB = dal.update(pais);
         return respostaDB;
     }
 
     //Excluir um registro
-    public String Deletar(Pais pais) {
-        String respostaDB = dal.Deletar(pais);
+    public String delete(Pais pais) throws Exception {
+        String respostaDB = dal.delete(pais);
         return respostaDB;
     }
 
-    //TODO: Obter um registro  
+    //    //Obter um registro
+//    public String getById(Pais pais) throws Exception {
+//
+//    }
+//
+//    //Obter último registro
+//    public String getLastRegister(Pais pais) throws Exception {
+//
+//    }
 }

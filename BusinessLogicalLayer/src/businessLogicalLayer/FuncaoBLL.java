@@ -7,6 +7,7 @@ package businessLogicalLayer;
 
 import dataaccesslayer.FuncaoDAL;
 import domain.Funcao;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,7 +19,7 @@ public class FuncaoBLL {
     FuncaoDAL dal = new FuncaoDAL();
 
     //Incluir um registro
-    public String Inserir(Funcao funcao) {
+    public String insert(Funcao funcao) throws Exception {
         StringBuilder builder = new StringBuilder();
 
         if (funcao.getNome().isEmpty() || funcao.getNome().trim().length() == 0) {
@@ -44,17 +45,17 @@ public class FuncaoBLL {
         if (builder.length() != 0) {
             return builder.toString();
         }
-        String respostaDB = dal.Inserir(funcao);
+        String respostaDB = dal.insert(funcao);
         return respostaDB;
     }
 
     // Obter todos os registros
-    public List<Funcao> LerTodos() {
-        return dal.LerTodos();
+    public  ArrayList<Funcao> getAll() throws Exception {
+        return dal.getAll();
     }
 
     //Atualizar um registro existente
-    public String Atualizar(Funcao funcao) {
+    public String update(Funcao funcao) throws Exception {
         StringBuilder builder = new StringBuilder();
 
         if (funcao.getNome().isEmpty() || funcao.getNome().trim().length() == 0) {
@@ -81,15 +82,23 @@ public class FuncaoBLL {
             return builder.toString();
         }
 
-        String respostaDB = dal.Atualizar(funcao);
+        String respostaDB = dal.update(funcao);
         return respostaDB;
     }
 
     //Excluir um registro
-    public String Deletar(Funcao funcao) {
-        String respostaDB = dal.Deletar(funcao);
+    public String delete(Funcao funcao) throws Exception {
+        String respostaDB = dal.delete(funcao);
         return respostaDB;
     }
 
-    //TODO: Obter um registro
+    //    //Obter um registro
+//    public String getById(Funcao funcao) throws Exception {
+//
+//    }
+//
+//    //Obter último registro
+//    public String getLastRegister(Funcao funcao) throws Exception {
+//
+//    }
 }

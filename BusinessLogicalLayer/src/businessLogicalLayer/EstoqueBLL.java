@@ -7,6 +7,7 @@ package businessLogicalLayer;
 
 import dataaccesslayer.EstoqueDAL;
 import domain.Estoque;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,7 +19,7 @@ public class EstoqueBLL {
     EstoqueDAL dal = new EstoqueDAL();
 
     //Incluir um registro
-    public String Inserir(Estoque estoque) {
+    public String insert(Estoque estoque) throws Exception {
         StringBuilder builder = new StringBuilder();
 
         if (estoque.getQtdProduto() < 0 || estoque.getQtdProduto() != 0) {
@@ -36,17 +37,17 @@ public class EstoqueBLL {
         if (builder.length() != 0) {
             return builder.toString();
         }
-        String respostaDB = dal.Inserir(estoque);
+        String respostaDB = dal.insert(estoque);
         return respostaDB;
     }
 
     // Obter todos os registros
-    public List<Estoque> LerTodos() {
-        return dal.LerTodos();
+    public ArrayList<Estoque> getAll() throws Exception  {
+        return dal.getAll();
     }
 
     //Atualizar um registro existente
-    public String Atualizar(Estoque estoque) {
+    public String update(Estoque estoque) throws Exception  {
         StringBuilder builder = new StringBuilder();
 
         if (estoque.getQtdProduto() < 0) {
@@ -65,15 +66,23 @@ public class EstoqueBLL {
             return builder.toString();
         }
         
-        String respostaDB = dal.Atualizar(estoque);
+        String respostaDB = dal.update(estoque);
         return respostaDB;
     }
 
     //Excluir um registro
-    public String Deletar(Estoque estoque) {
-        String respostaDB = dal.Deletar(estoque);
+    public String delete(Estoque estoque) throws Exception {
+        String respostaDB = dal.delete(estoque);
         return respostaDB;
     }
 
-    //TODO: Obter um registro
+    //    //Obter um registro
+//    public String getById(Estoque estoque) throws Exception {
+//
+//    }
+//
+//    //Obter último registro
+//    public String getLastRegister(Estoque estoque) throws Exception {
+//
+//    }
 }

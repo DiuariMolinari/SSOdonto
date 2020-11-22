@@ -7,7 +7,7 @@ package businessLogicalLayer;
 
 import dataaccesslayer.ColaboradorDAL;
 import domain.Colaborador;
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  *
@@ -15,11 +15,10 @@ import java.util.List;
  */
 public class ColaboradorBLL {
 
-    //TODO: Obter um registro
     ColaboradorDAL dal = new ColaboradorDAL();
 
     //Incluir um registro
-    public String Inserir(Colaborador colaborador) {
+    public String insert(Colaborador colaborador) throws Exception {
         StringBuilder builder = new StringBuilder();
 
         if (colaborador.getNome().isEmpty() || colaborador.getNome().trim().length() == 0) {
@@ -52,17 +51,17 @@ public class ColaboradorBLL {
         if (builder.length() != 0) {
             return builder.toString();
         }
-        String respostaDB = dal.Inserir(colaborador);
+        String respostaDB = dal.insert(colaborador);
         return respostaDB;
     }
 
     // Obter todos os registros
-    public List<Colaborador> LerTodos() {
-        return dal.LerTodos();
+    public ArrayList<Colaborador> getAll() throws Exception {
+        return dal.getAll();
     }
 
     //Atualizar um registro existente
-    public String Atualizar(Colaborador colaborador) {
+    public String update(Colaborador colaborador) throws Exception {
         StringBuilder builder = new StringBuilder();
 
         if (colaborador.getNome().isEmpty() || colaborador.getNome().trim().length() == 0) {
@@ -97,13 +96,24 @@ public class ColaboradorBLL {
             return builder.toString();
         }
 
-        String respostaDB = dal.Atualizar(colaborador);
+        String respostaDB = dal.update(colaborador);
         return respostaDB;
     }
 
     //Excluir um registro
-    public String Deletar(Colaborador colaborador) {
-        String respostaDB = dal.Deletar(colaborador);
+    public String delete(Colaborador colaborador) throws Exception {
+        String respostaDB = dal.delete(colaborador);
         return respostaDB;
     }
+
+    //    //Obter um registro
+//    public String getById(Colaborador colaborador) throws Exception {
+//
+//    }
+//
+//    //Obter último registro
+//    public String getLastRegister(Colaborador colaborador) throws Exception {
+//
+//    }
+//
 }

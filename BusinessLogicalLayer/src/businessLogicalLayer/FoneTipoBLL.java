@@ -7,6 +7,7 @@ package businessLogicalLayer;
 
 import dataaccesslayer.FoneTipoDAL;
 import domain.FoneTipo;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,7 +19,7 @@ public class FoneTipoBLL {
     FoneTipoDAL dal = new FoneTipoDAL();
 
     //Incluir um registro
-    public String Inserir(FoneTipo foneTipo) {
+    public String insert(FoneTipo foneTipo) throws Exception {
         StringBuilder builder = new StringBuilder();
 
         if (foneTipo.getTipo().isEmpty() || foneTipo.getTipo().trim().length() == 0) {
@@ -32,17 +33,17 @@ public class FoneTipoBLL {
         if (builder.length() != 0) {
             return builder.toString();
         }
-        String respostaDB = dal.Inserir(foneTipo);
+        String respostaDB = dal.insert(foneTipo);
         return respostaDB;
     }
 
     // Obter todos os registros
-    public List<FoneTipo> LerTodos() {
-        return dal.LerTodos();
+    public ArrayList<FoneTipo> getAll() throws Exception {
+        return dal.getAll();
     }
 
     //Atualizar um registro existente
-    public String Atualizar(FoneTipo foneTipo) {
+    public String update(FoneTipo foneTipo) throws Exception {
         StringBuilder builder = new StringBuilder();
 
         if (foneTipo.getTipo().isEmpty() || foneTipo.getTipo().trim().length() == 0) {
@@ -57,15 +58,23 @@ public class FoneTipoBLL {
             return builder.toString();
         }
 
-        String respostaDB = dal.Atualizar(foneTipo);
+        String respostaDB = dal.update(foneTipo);
         return respostaDB;
     }
 
     //Excluir um registro
-    public String Deletar(FoneTipo foneTipo) {
-        String respostaDB = dal.Deletar(foneTipo);
+    public String delete(FoneTipo foneTipo) throws Exception {
+        String respostaDB = dal.delete(foneTipo);
         return respostaDB;
     }
 
-    //TODO: Obter um registro
+    //    //Obter um registro
+//    public String getById(FoneTipo foneTipo) throws Exception {
+//
+//    }
+//
+//    //Obter último registro
+//    public String getLastRegister(FoneTipo foneTipo) throws Exception {
+//
+//    }
 }

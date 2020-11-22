@@ -7,6 +7,7 @@ package businessLogicalLayer;
 
 import dataaccesslayer.TipoEmbalagemDAL;
 import domain.TipoEmbalagem;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,7 +19,7 @@ public class TipoEmbalagemBLL {
     TipoEmbalagemDAL dal = new TipoEmbalagemDAL();
 
     //Incluir um registro
-    public String Inserir(TipoEmbalagem tipoEmbalagem) {
+    public String insert(TipoEmbalagem tipoEmbalagem) throws Exception {
         StringBuilder builder = new StringBuilder();
 
         if (tipoEmbalagem.getDescricao().isEmpty() || tipoEmbalagem.getDescricao().trim().length() == 0) {
@@ -32,17 +33,17 @@ public class TipoEmbalagemBLL {
         if (builder.length() != 0) {
             return builder.toString();
         }
-        String respostaDB = dal.Inserir(tipoEmbalagem);
+        String respostaDB = dal.insert(tipoEmbalagem);
         return respostaDB;
     }
 
     // Obter todos os registros
-    public List<TipoEmbalagem> LerTodos() {
-        return dal.LerTodos();
+    public ArrayList<TipoEmbalagem> getAll() throws Exception {
+        return dal.getAll();
     }
 
     //Atualizar um registro existente
-    public String Atualizar(TipoEmbalagem tipoEmbalagem) {
+    public String update(TipoEmbalagem tipoEmbalagem) throws Exception {
         StringBuilder builder = new StringBuilder();
 
         if (tipoEmbalagem.getDescricao().isEmpty() || tipoEmbalagem.getDescricao().trim().length() == 0) {
@@ -57,15 +58,23 @@ public class TipoEmbalagemBLL {
             return builder.toString();
         }
 
-        String respostaDB = dal.Atualizar(tipoEmbalagem);
+        String respostaDB = dal.update(tipoEmbalagem);
         return respostaDB;
     }
 
     //Excluir um registro
-    public String Deletar(TipoEmbalagem tipoEmbalagem) {
-        String respostaDB = dal.Deletar(tipoEmbalagem);
+    public String delete(TipoEmbalagem tipoEmbalagem) throws Exception {
+        String respostaDB = dal.delete(tipoEmbalagem);
         return respostaDB;
     }
 
-    //TODO: Obter um registro  
+    //    //Obter um registro
+//    public String getById(TipoEmbalagem tipoEmbalagem) throws Exception {
+//
+//    }
+//
+//    //Obter último registro
+//    public String getLastRegister(TipoEmbalagem tipoEmbalagem) throws Exception {
+//
+//    }
 }

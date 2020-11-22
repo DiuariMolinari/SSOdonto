@@ -7,6 +7,7 @@ package businessLogicalLayer;
 
 import dataaccesslayer.LogradouroDAL;
 import domain.Logradouro;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,7 +19,7 @@ public class LogradouroBLL {
     LogradouroDAL dal = new LogradouroDAL();
 
     //Incluir um registro
-    public String Inserir(Logradouro logradouro) {
+    public String insert(Logradouro logradouro) throws Exception{
         StringBuilder builder = new StringBuilder();
 
         if (logradouro.getNome().isEmpty() || logradouro.getNome().trim().length() == 0) {
@@ -32,17 +33,17 @@ public class LogradouroBLL {
         if (builder.length() != 0) {
             return builder.toString();
         }
-        String respostaDB = dal.Inserir(logradouro);
+        String respostaDB = dal.insert(logradouro);
         return respostaDB;
     }
 
     // Obter todos os registros
-    public List<Logradouro> LerTodos() {
-        return dal.LerTodos();
+    public ArrayList<Logradouro> getAll() throws Exception{
+        return dal.getAll();
     }
 
     //Atualizar um registro existente
-    public String Atualizar(Logradouro logradouro) {
+    public String update(Logradouro logradouro) throws Exception{
         StringBuilder builder = new StringBuilder();
 
         if (logradouro.getNome().isEmpty() || logradouro.getNome().trim().length() == 0) {
@@ -57,15 +58,28 @@ public class LogradouroBLL {
             return builder.toString();
         }
         
-        String respostaDB = dal.Atualizar(logradouro);
+        String respostaDB = dal.update(logradouro);
         return respostaDB;
     }
 
     //Excluir um registro
-    public String Deletar(Logradouro logradouro) {
-        String respostaDB = dal.Deletar(logradouro);
+    public String delete(Logradouro logradouro) throws Exception{
+        String respostaDB = dal.delete(logradouro);
         return respostaDB;
     }
 
-    //TODO: Obter um registro
+    //    //Obter um registro
+//    public String getById(Logradouro logradouro) throws Exception {
+//
+//    }
+//
+//    //Obter último registro
+//    public String getLastRegister(Logradouro logradouro) throws Exception {
+//
+//    }
+//
+//    //Obter registros de determinado estado
+//    public ArrayList<Logradouro> getByBairro(Logradouro logradouro) throws Exception {
+//
+//    }
 }

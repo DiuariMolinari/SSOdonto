@@ -7,7 +7,7 @@ package businessLogicalLayer;
 
 import dataaccesslayer.AtendimentoDAL;
 import domain.Atendimento;
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  *
@@ -18,7 +18,7 @@ public class AtendimentoBLL {
     AtendimentoDAL dal = new AtendimentoDAL();
 
     //Incluir um registro
-    public String Inserir(Atendimento atendimento) {
+    public String insert(Atendimento atendimento) throws Exception{
         StringBuilder builder = new StringBuilder();
 
         if (atendimento.getQtdProcedimento() < 0 || atendimento.getQtdProcedimento() != 0) {
@@ -28,17 +28,17 @@ public class AtendimentoBLL {
         if (builder.length() != 0) {
             return builder.toString();
         }
-        String respostaDB = dal.Inserir(atendimento);
+        String respostaDB = dal.insert(atendimento);
         return respostaDB;
     }
 
     // Obter todos os registros
-    public List<Atendimento> LerTodos() {
-        return dal.LerTodos();
+    public ArrayList<Atendimento> getAll() throws Exception{
+        return dal.getAll();
     }
 
     //Atualizar um registro existente
-    public String Atualizar(Atendimento atendimento) {
+    public String update(Atendimento atendimento) throws Exception {
         StringBuilder builder = new StringBuilder();
 
         if (atendimento.getQtdProcedimento() < 0 || atendimento.getQtdProcedimento() != 0) {
@@ -49,15 +49,24 @@ public class AtendimentoBLL {
             return builder.toString();
         }
 
-        String respostaDB = dal.Atualizar(atendimento);
+        String respostaDB = dal.update(atendimento);
         return respostaDB;
     }
 
     //Excluir um registro
-    public String Deletar(Atendimento atendimento) {
-        String respostaDB = dal.Deletar(atendimento);
+    public String delete(Atendimento atendimento) throws Exception {
+        String respostaDB = dal.delete(atendimento);
         return respostaDB;
     }
 
-    //TODO: Obter um registro    
+    //    //Obter um registro
+//    public String getById(Atendimento atendimento) throws Exception {
+//
+//    }
+//
+//    //Obter último registro
+//    public String getLastRegister(Atendimento atendimento) throws Exception {
+//
+//    }
+//
 }
