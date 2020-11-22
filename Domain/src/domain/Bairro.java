@@ -14,6 +14,16 @@ public class Bairro {
     private String nome;
     private Cidade cidade;
 
+    public Bairro(int id) {
+        this.id = id;
+    }
+    
+    public Bairro(int id, String nome, Cidade cidade) {
+        this.id = id;
+        this.nome = nome;
+        this.cidade = cidade;
+    }
+
     public int getId() {
         return id;
     }

@@ -13,6 +13,15 @@ public class Pais {
     private int id;
     private String nome;
 
+    public Pais(String nome) {
+        this.nome = nome;
+    }
+    
+    public Pais(int id, String nome) {
+        this.id = id;
+        this.nome = nome;
+    }
+
     public int getId() {
         return id;
     }

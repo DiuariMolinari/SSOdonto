@@ -18,6 +18,18 @@ public class Estoque {
     private LocalDate dataEntrada;
     private LocalDate dataSaida;
 
+    public Estoque(int id) {
+        this.id = id;
+    }
+    
+    public Estoque(int id, Produto produto, int qtdProduto, LocalDate dataEntrada, LocalDate dataSaida) {
+        this.id = id;
+        this.qtdProduto = qtdProduto;
+        this.produto = produto;
+        this.dataEntrada = dataEntrada;
+        this.dataSaida = dataSaida;
+    }
+
     public int getId() {
         return id;
     }

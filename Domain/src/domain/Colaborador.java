@@ -5,7 +5,7 @@
  */
 package domain;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 /**
  *
@@ -16,12 +16,39 @@ public class Colaborador {
     private String nome;
     private String cro;
     private String croEstado;
-    private LocalDateTime dataAdmissao;
-    private LocalDateTime dataDemissao;
+    private LocalDate dataAdmissao;
+    private LocalDate dataDemissao;
     private Endereco endereco;
     private Funcao funcao;
     private Clinica clinica;
     private boolean ferias;
+    private boolean demitido;
+
+    public Colaborador(int id, String nome, String cro, String croEstado, LocalDate dataAdmissao, LocalDate dataDemissao, Endereco endereco, Funcao funcao, Clinica clinica, boolean ferias, boolean demitido) {
+        this.id = id;
+        this.nome = nome;
+        this.cro = cro;
+        this.croEstado = croEstado;
+        this.dataAdmissao = dataAdmissao;
+        this.dataDemissao = dataDemissao;
+        this.endereco = endereco;
+        this.funcao = funcao;
+        this.clinica = clinica;
+        this.ferias = ferias;
+        this.demitido = demitido;
+    }
+    public Colaborador(int id, String nome, String cro, String croEstado, LocalDate dataAdmissao, Endereco endereco, Funcao funcao, Clinica clinica, boolean ferias, boolean demitido) {
+        this.id = id;
+        this.nome = nome;
+        this.cro = cro;
+        this.croEstado = croEstado;
+        this.dataAdmissao = dataAdmissao;
+        this.endereco = endereco;
+        this.funcao = funcao;
+        this.clinica = clinica;
+        this.ferias = ferias;
+        this.demitido = demitido;
+    }
 
     public int getId() {
         return id;
@@ -55,19 +82,19 @@ public class Colaborador {
         this.croEstado = croEstado;
     }
 
-    public LocalDateTime getDataAdmissao() {
+    public LocalDate getDataAdmissao() {
         return dataAdmissao;
     }
 
-    public void setDataAdmissao(LocalDateTime dataAdmissao) {
+    public void setDataAdmissao(LocalDate dataAdmissao) {
         this.dataAdmissao = dataAdmissao;
     }
 
-    public LocalDateTime getDataDemissao() {
+    public LocalDate getDataDemissao() {
         return dataDemissao;
     }
 
-    public void setDataDemissao(LocalDateTime dataDemissao) {
+    public void setDataDemissao(LocalDate dataDemissao) {
         this.dataDemissao = dataDemissao;
     }
 
@@ -101,5 +128,13 @@ public class Colaborador {
 
     public void setFerias(boolean ferias) {
         this.ferias = ferias;
+    }
+    
+    public boolean isDemitido() {
+        return demitido;
+    }
+
+    public void setDemitido(boolean demitido) {
+        this.demitido = demitido;
     }
 }

@@ -17,6 +17,17 @@ public class Clinica {
     private LocalDate dataInauguracao;
     private Endereco endereco;
 
+    public Clinica(int id) {
+        this.id = id;
+    }
+    
+    public Clinica(int id, String nome, LocalDate dataInauguracao, Endereco endereco) {
+        this.id = id;
+        this.nome = nome;
+        this.dataInauguracao = dataInauguracao;
+        this.endereco = endereco;
+    }
+
     public int getId() {
         return id;
     }
