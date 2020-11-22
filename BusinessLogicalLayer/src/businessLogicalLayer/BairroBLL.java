@@ -90,7 +90,7 @@ public class BairroBLL {
     public ArrayList<Bairro> getByCidade(Bairro bairro) throws SQLException {
         StringBuilder builder = new StringBuilder();
 
-        if (bairro.getCidade().getId() {
+        if (bairro.getCidade().getId()  {
             builder.append("O ID do bairro deve ser informado.");
         }
 

@@ -9,6 +9,7 @@ import dataaccesslayer.CidadeDAL;
 import domain.Cidade;
 import java.util.ArrayList;
 import java.sql.SQLException;
+import javax.xml.bind.ValidationException;
 
 
 /**
@@ -70,19 +71,13 @@ public class CidadeBLL {
     }
 
 //    //Obter um registro
-    public String getById(Cidade cidade) throws Exception {
-        StringBuilder builder = new StringBuilder();
-
+    public Cidade getById(Cidade cidade) throws Exception {
+        
         if (cidade.getId() != 0 || cidade.getId() < 0) {
-            builder.append("O ID da cidade deve ser informado.");
+            throw new ValidationException("O ID da cidade deve ser informado.");
         }
 
-        if (builder.length() != 0) {
-            return builder.toString();
-        }
-
-        String respostaDB = dal.getById(cidade);
-        return respostaDB;
+        return dal.getById(cidade.getId());
     }
 
 //    //Obter último registro
