@@ -89,7 +89,7 @@ public class ClinicaBLL {
 //    }
 //
 //    //Obter registros de determinado estado
-//    public  ArrayList<Clinica> getByEndereco(Clinica clinica) throws SQLException {
-//
-//    }
+   public  ArrayList<Clinica> getByEndereco(Clinica clinica) throws SQLException {
+
+    }
 }
