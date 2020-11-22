@@ -5,7 +5,7 @@
  */
 package domain;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 /**
  *
@@ -17,9 +17,24 @@ public class Paciente {
     private String sobrenome;
     private String rg;
     private String cpf;
-    private LocalDateTime dataNascimento;
+    private LocalDate dataNascimento;
     private String observacao;
     private Endereco endereco;
+
+    public Paciente(int id) {
+        this.id = id;
+    }
+    
+    public Paciente(int id, String nome, String sobrenome, String rg, String cpf, LocalDate dataNascimento, String observacao, Endereco endereco) {
+        this.id = id;
+        this.nome = nome;
+        this.sobrenome = sobrenome;
+        this.rg = rg;
+        this.cpf = cpf;
+        this.dataNascimento = dataNascimento;
+        this.observacao = observacao;
+        this.endereco = endereco;
+    }
 
     public int getId() {
         return id;
@@ -61,11 +76,11 @@ public class Paciente {
         this.cpf = cpf;
     }
 
-    public LocalDateTime getDataNascimento() {
+    public LocalDate getDataNascimento() {
         return dataNascimento;
     }
 
-    public void setDataNascimento(LocalDateTime dataNascimento) {
+    public void setDataNascimento(LocalDate dataNascimento) {
         this.dataNascimento = dataNascimento;
     }
 

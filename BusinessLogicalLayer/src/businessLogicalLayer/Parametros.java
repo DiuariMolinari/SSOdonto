@@ -12,5 +12,5 @@ import domain.Usuario;
  * @author Marciele
  */
 public class Parametros {
-    public static Usuario UsuarioLogado {  get; set;}
+    public static Usuario UsuarioLogado;
 }

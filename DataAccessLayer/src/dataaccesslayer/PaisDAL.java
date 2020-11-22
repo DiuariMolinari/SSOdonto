@@ -16,7 +16,7 @@ import java.util.ArrayList;
  */
 public class PaisDAL {
     private final Conexao conexao = new Conexao();
-    public Pais getById(long id ) throws SQLException{
+    public Pais getById(int id ) throws SQLException{
         try 
         {
             PreparedStatement pst = conexao.getConexao().prepareStatement("SELECT * FROM PAIS WHERE IDPAIS =" + id, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
@@ -26,7 +26,7 @@ public class PaisDAL {
         } 
         
         catch (Exception e) {
-            throw new SQLException("Falha ao buscar um país. \n Entre em contato com o suporte.");
+            throw new SQLException("Falha ao buscar país. \n Entre em contato com o suporte.");
         }
         
         finally
@@ -131,4 +131,3 @@ public class PaisDAL {
         }
     }
 }
-

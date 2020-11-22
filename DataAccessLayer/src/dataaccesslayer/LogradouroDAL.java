@@ -17,7 +17,7 @@ import java.util.ArrayList;
  */
 public class LogradouroDAL {
     private final Conexao conexao = new Conexao();
-    public Logradouro getById(long id ) throws SQLException{
+    public Logradouro getById(int id ) throws SQLException{
         try 
         {
             PreparedStatement pst = conexao.getConexao().prepareStatement("SELECT * FROM Logradouro WHERE IDLogradouro =" + id, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);

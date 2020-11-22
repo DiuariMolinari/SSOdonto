@@ -11,9 +11,21 @@ package domain;
  */
 public class Usuario {
     private int id;
-    private String usuario;
+    private String login;
     private String senha;
+    private Colaborador colaborador;
 
+    public Usuario(int id) {
+        this.id = id;
+    }
+    
+    public Usuario(int id, String login, String senha, Colaborador colaborador) {
+        this.id = id;
+        this.login = login;
+        this.senha = senha;
+        this.colaborador = colaborador;
+    }
+    
     public int getId() {
         return id;
     }
@@ -22,12 +34,12 @@ public class Usuario {
         this.id = id;
     }
 
-    public String getUsuario() {
-        return usuario;
+    public String getLogin() {
+        return login;
     }
 
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
+    public void setLogin(String login) {
+        this.login = login;
     }
 
     public String getSenha() {
@@ -37,4 +49,13 @@ public class Usuario {
     public void setSenha(String senha) {
         this.senha = senha;
     }
+
+    public Colaborador getColaborador() {
+        return colaborador;
+    }
+
+    public void setColaborador(Colaborador colaborador) {
+        this.colaborador = colaborador;
+    }
+    
 }

@@ -8,6 +8,7 @@ package businessLogicalLayer;
 import dataaccesslayer.ContatoDAL;
 import domain.Contato;
 import java.util.ArrayList;
+import java.sql.SQLException;
 
 /**
  *
@@ -18,7 +19,7 @@ public class ContatoBLL {
     ContatoDAL dal = new ContatoDAL();
 
     //Incluir um registro
-    public String insert(Contato contato) throws Exception{
+    public String insert(Contato contato) throws SQLException{
         StringBuilder builder = new StringBuilder();
 
         if (contato.getFone().isEmpty() || contato.getFone().trim().length() == 0) {
@@ -45,12 +46,12 @@ public class ContatoBLL {
     }
 
     //Obter todos os registros
-    public ArrayList<Contato> getAll() throws Exception{
+    public ArrayList<Contato> getAll() throws SQLException{
         return dal.getAll();
     }
 
     //Atualizar um registro existente
-    public String update(Contato contato) throws Exception{
+    public String update(Contato contato) throws SQLException{
         StringBuilder builder = new StringBuilder();
 
         if (contato.getFone().isEmpty() || contato.getFone().trim().length() == 0) {
@@ -76,18 +77,18 @@ public class ContatoBLL {
     }
 
     //Excluir um registro
-    public String delete(Contato contato) throws Exception{
+    public String delete(Contato contato) throws SQLException{
         String respostaDB = dal.delete(contato);
         return respostaDB;
     }
 
     //    //Obter um registro
-//    public String getById(Contato contato) throws Exception {
+//    public String getById(Contato contato) throws SQLException {
 //
 //    }
 //
 //    //Obter último registro
-//    public String getLastRegister(Contato contato) throws Exception {
+//    public String getLastRegister(Contato contato) throws SQLException {
 //
 //    }
 //

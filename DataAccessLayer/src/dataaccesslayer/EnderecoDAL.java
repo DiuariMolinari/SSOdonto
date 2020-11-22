@@ -17,7 +17,7 @@ import java.util.ArrayList;
  */
 public class EnderecoDAL {
     private final Conexao conexao = new Conexao();
-    public Endereco getById(long id ) throws SQLException{
+    public Endereco getById(int id ) throws SQLException{
         try 
         {
             PreparedStatement pst = conexao.getConexao().prepareStatement("SELECT * FROM Endereco WHERE IDEndereco =" + id, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);

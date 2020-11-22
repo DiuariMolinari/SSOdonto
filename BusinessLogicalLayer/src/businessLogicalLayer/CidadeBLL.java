@@ -8,6 +8,8 @@ package businessLogicalLayer;
 import dataaccesslayer.CidadeDAL;
 import domain.Cidade;
 import java.util.ArrayList;
+import java.sql.SQLException;
+
 
 /**
  *
@@ -18,7 +20,7 @@ public class CidadeBLL {
     CidadeDAL dal = new CidadeDAL();
 
     //Incluir um registro
-    public String insert(Cidade cidade) throws Exception {
+    public String insert(Cidade cidade) throws SQLException {
         StringBuilder builder = new StringBuilder();
 
         if (cidade.getNome().isEmpty() || cidade.getNome().trim().length() == 0) {
@@ -37,12 +39,12 @@ public class CidadeBLL {
     }
 
     // Obter todos os registros
-    public ArrayList<Cidade> getAll() throws Exception {
+    public ArrayList<Cidade> getAll() throws SQLException {
         return dal.getAll();
     }
 
     //Atualizar um registro existente
-    public String update(Cidade cidade) throws Exception {
+    public String update(Cidade cidade) throws SQLException {
         StringBuilder builder = new StringBuilder();
 
         if (cidade.getNome().length() > 50) {
@@ -62,7 +64,7 @@ public class CidadeBLL {
     }
 
     //Excluir um registro
-    public String delete(Cidade cidade) throws Exception {
+    public String delete(Cidade cidade) throws SQLException {
         String respostaDB = dal.delete(cidade);
         return respostaDB;
     }
@@ -84,12 +86,12 @@ public class CidadeBLL {
     }
 
 //    //Obter último registro
-//    public String getLastRegister(Cidade cidade) throws Exception {
+//    public String getLastRegister(Cidade cidade) throws SQLException {
 //
 //    }
 //
 //    //Obter registros de determinado estado
-//    public ArrayList<Cidade> getByEstado(Cidade cidade) throws Exception {
+//    public ArrayList<Cidade> getByEstado(Cidade cidade) throws SQLException {
 //
 //    }
 }

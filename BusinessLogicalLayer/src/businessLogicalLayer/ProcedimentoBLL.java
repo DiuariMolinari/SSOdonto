@@ -8,7 +8,7 @@ package businessLogicalLayer;
 import dataaccesslayer.ProcedimentoDAL;
 import domain.Procedimento;
 import java.util.ArrayList;
-import java.util.List;
+import java.sql.SQLException;
 
 /**
  *
@@ -19,7 +19,7 @@ public class ProcedimentoBLL {
     ProcedimentoDAL dal = new ProcedimentoDAL();
 
     //Incluir um registro
-    public String insert(Procedimento procedimento) throws Exception {
+    public String insert(Procedimento procedimento) throws SQLException {
         StringBuilder builder = new StringBuilder();
 
         if (procedimento.getNome().isEmpty() || procedimento.getNome().trim().length() == 0) {
@@ -45,12 +45,12 @@ public class ProcedimentoBLL {
     }
 
     // Obter todos os registros
-    public ArrayList<Procedimento> getAll() throws Exception {
+    public ArrayList<Procedimento> getAll() throws SQLException {
         return dal.getAll();
     }
 
     //Atualizar um registro existente
-    public String update(Procedimento procedimento) throws Exception {
+    public String update(Procedimento procedimento) throws SQLException {
         StringBuilder builder = new StringBuilder();
 
         if (procedimento.getNome().isEmpty() || procedimento.getNome().trim().length() == 0) {
@@ -76,18 +76,18 @@ public class ProcedimentoBLL {
     }
 
     //Excluir um registro
-    public String delete(Procedimento procedimento) throws Exception {
+    public String delete(Procedimento procedimento) throws SQLException {
         String respostaDB = dal.delete(procedimento);
         return respostaDB;
     }
 
     //    //Obter um registro
-//    public String getById(Procedimento procedimento) throws Exception {
+//    public String getById(Procedimento procedimento) throws SQLException {
 //
 //    }
 //
 //    //Obter último registro
-//    public String getLastRegister(Procedimento procedimento) throws Exception {
+//    public String getLastRegister(Procedimento procedimento) throws SQLException {
 //
 //    }
 //

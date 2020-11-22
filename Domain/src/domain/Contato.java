@@ -15,7 +15,29 @@ public class Contato {
     private FoneTipo foneTipo;
     private String email;
     private Paciente paciente;
+
+    private Colaborador colaborador;
+
+     public Contato(int id) {
+        this.id = id;
+    }
     
+    public Contato(int id, String fone, FoneTipo foneTipo, String email, Colaborador colaborador) {
+        this.id = id;
+        this.fone = fone;
+        this.foneTipo = foneTipo;
+        this.email = email;
+        this.colaborador = colaborador;
+    }
+    
+    public Contato(int id, String fone, FoneTipo foneTipo, String email, Paciente paciente) {
+        this.id = id;
+        this.fone = fone;
+        this.foneTipo = foneTipo;
+        this.email = email;
+        this.paciente = paciente;
+    }
+
     public int getId() {
         return id;
     }
@@ -54,5 +76,13 @@ public class Contato {
 
     public void setPaciente(Paciente paciente) {
         this.paciente = paciente;
+    }
+
+    public Colaborador getColaborador() {
+        return colaborador;
+    }
+
+    public void setColaborador(Colaborador colaborador) {
+        this.colaborador = colaborador;
     }
 }

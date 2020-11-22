@@ -14,10 +14,19 @@ import java.util.ArrayList;
 public class Atendimento {
     private int id;
     private Paciente paciente;
-    private Procedimento procedimento;
     private Colaborador colaborador;
-    private int qtdProcedimento;
     private ArrayList<Procedimento> procedimentos = new ArrayList<Procedimento>();
+
+    public Atendimento(int id) {
+        this.id = id;
+    }
+    
+    public Atendimento(int id, Paciente paciente, Colaborador colaborador, ArrayList<Procedimento> procedimentos) {
+        this.id = id;
+        this.paciente = paciente;
+        this.colaborador = colaborador;
+        this.procedimentos = procedimentos;
+    }
 
     public int getId() {
         return id;
@@ -35,14 +44,6 @@ public class Atendimento {
         this.paciente = paciente;
     }
 
-    public Procedimento getProcedimento() {
-        return procedimento;
-    }
-
-    public void setProcedimento(Procedimento procedimento) {
-        this.procedimento = procedimento;
-    }
-
     public Colaborador getColaborador() {
         return colaborador;
     }
@@ -51,14 +52,6 @@ public class Atendimento {
         this.colaborador = colaborador;
     }
 
-    public int getQtdProcedimento() {
-        return qtdProcedimento;
-    }
-
-    public void setQtdProcedimento(int qtdProcedimento) {
-        this.qtdProcedimento = qtdProcedimento;
-    }
-    
     public ArrayList<Procedimento> getProcedimentos(){
         return procedimentos;
     }

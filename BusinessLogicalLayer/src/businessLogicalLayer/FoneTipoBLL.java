@@ -8,7 +8,7 @@ package businessLogicalLayer;
 import dataaccesslayer.FoneTipoDAL;
 import domain.FoneTipo;
 import java.util.ArrayList;
-import java.util.List;
+import java.sql.SQLException;
 
 /**
  *
@@ -19,7 +19,7 @@ public class FoneTipoBLL {
     FoneTipoDAL dal = new FoneTipoDAL();
 
     //Incluir um registro
-    public String insert(FoneTipo foneTipo) throws Exception {
+    public String insert(FoneTipo foneTipo) throws SQLException {
         StringBuilder builder = new StringBuilder();
 
         if (foneTipo.getTipo().isEmpty() || foneTipo.getTipo().trim().length() == 0) {
@@ -38,12 +38,12 @@ public class FoneTipoBLL {
     }
 
     // Obter todos os registros
-    public ArrayList<FoneTipo> getAll() throws Exception {
+    public ArrayList<FoneTipo> getAll() throws SQLException {
         return dal.getAll();
     }
 
     //Atualizar um registro existente
-    public String update(FoneTipo foneTipo) throws Exception {
+    public String update(FoneTipo foneTipo) throws SQLException {
         StringBuilder builder = new StringBuilder();
 
         if (foneTipo.getTipo().isEmpty() || foneTipo.getTipo().trim().length() == 0) {
@@ -63,18 +63,18 @@ public class FoneTipoBLL {
     }
 
     //Excluir um registro
-    public String delete(FoneTipo foneTipo) throws Exception {
+    public String delete(FoneTipo foneTipo) throws SQLException {
         String respostaDB = dal.delete(foneTipo);
         return respostaDB;
     }
 
     //    //Obter um registro
-//    public String getById(FoneTipo foneTipo) throws Exception {
+//    public String getById(FoneTipo foneTipo) throws SQLException {
 //
 //    }
 //
 //    //Obter último registro
-//    public String getLastRegister(FoneTipo foneTipo) throws Exception {
+//    public String getLastRegister(FoneTipo foneTipo) throws SQLException {
 //
 //    }
 }

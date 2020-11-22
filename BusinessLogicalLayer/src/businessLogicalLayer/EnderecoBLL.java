@@ -8,7 +8,8 @@ package businessLogicalLayer;
 import dataaccesslayer.EnderecoDAL;
 import domain.Endereco;
 import java.util.ArrayList;
-import java.util.List;
+import java.sql.SQLException;
+
 
 /**
  *
@@ -19,7 +20,7 @@ public class EnderecoBLL {
     EnderecoDAL dal = new EnderecoDAL();
 
     //Incluir um registro
-    public String insert(Endereco endereco) throws Exception {
+    public String insert(Endereco endereco) throws SQLException {
         StringBuilder builder = new StringBuilder();
 
         if (endereco.getCep().isEmpty() || endereco.getCep().trim().length() == 0) {
@@ -42,12 +43,12 @@ public class EnderecoBLL {
     }
 
     //Obter todos os registros
-    public ArrayList<Endereco> getAll() throws Exception{
+    public ArrayList<Endereco> getAll() throws SQLException{
         return dal.getAll();
     }
 
     //Atualizar um registro existente
-    public String update(Endereco endereco) throws Exception {
+    public String update(Endereco endereco) throws SQLException {
         StringBuilder builder = new StringBuilder();
 
         if (endereco.getCep().isEmpty() || endereco.getCep().trim().length() == 0) {
@@ -71,23 +72,23 @@ public class EnderecoBLL {
     }
 
     //Excluir um registro
-    public String delete(Endereco endereco) throws Exception {
+    public String delete(Endereco endereco) throws SQLException {
         String respostaDB = dal.delete(endereco);
         return respostaDB;
     }
 
     //    //Obter um registro
-//    public String getById(Endereco endereco) throws Exception {
+//    public String getById(Endereco endereco) throws SQLException {
 //
 //    }
 //
 //    //Obter último registro
-//    public String getLastRegister(Endereco endereco) throws Exception {
+//    public String getLastRegister(Endereco endereco) throws SQLException {
 //
 //    }
 //
 //    //Obter registros de determinado estado
-//    public ArrayList<Endereco> getByLogradouro(Endereco endereco) throws Exception {
+//    public ArrayList<Endereco> getByLogradouro(Endereco endereco) throws SQLException {
 //
 //    }
 }

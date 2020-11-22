@@ -14,6 +14,16 @@ public class TipoProcedimento {
     private String nome;
     private double valor;
 
+    public TipoProcedimento(int id) {
+        this.id = id;
+    }
+    
+    public TipoProcedimento(int id, String nome, double valor) {
+        this.id = id;
+        this.nome = nome;
+        this.valor = valor;
+    }
+
     public int getId() {
         return id;
     }

@@ -18,6 +18,18 @@ public class Produto {
     private double preco;
     private LocalDate dataCompra;
 
+    public Produto(int id) {
+        this.id = id;
+    }
+    
+    public Produto(int id, String nome, TipoEmbalagem tipoEmbalagem, double preco, LocalDate dataCompra) {
+        this.id = id;
+        this.nome = nome;
+        this.tipoEmbalagem = tipoEmbalagem;
+        this.preco = preco;
+        this.dataCompra = dataCompra;
+    }
+
     public int getId() {
         return id;
     }
