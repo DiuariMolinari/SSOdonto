@@ -32,7 +32,7 @@ public class BairroBLL {
         if (builder.length() != 0) {
             return builder.toString();
         }
-        
+
         String respostaDB = dal.insert(bairro);
         return respostaDB;
     }
@@ -85,57 +85,57 @@ public class BairroBLL {
     }
 
     //Obter todos os bairros por cidade
-//    public ArrayList<Bairro> getByCidade(Bairro bairro) throws Exception {
-//        StringBuilder builder = new StringBuilder();
-//
-//        if (bairro.getCidade().getId(){
-//            builder.append("O ID do bairro deve ser informado.");
-//        }
-//
-//        if (bairro.getCidade().length() > 50) {
-//            builder.append("O nome do bairro não pode conter mais que 50 caracteres. ");
-//        }
-//
-//        if (bairro.getCidade().getNome().length() < 0) {
-//            builder.append("O ID do bairro deve ser informado.");
-//        }
-//        if (bairro.getCidade().length() > 50) {
-//            builder.append("O nome do bairro não pode conter mais que 50 caracteres. ");
-//        }
-//
-//        if (bairro.getCidade().getEstado().length() < 0) {
-//            builder.append("O ID do bairro deve ser informado.");
-//        }
-//
-//        if (bairro.getCidade().length() > 50) {
-//            builder.append("O nome do bairro não pode conter mais que 50 caracteres. ");
-//        }
-//
-//        if (builder.length() != 0) {
-//            return builder.toString();
-//        }
-//
-//        String respostaDB = dal.getByCidade(bairro);
-//        return respostaDB;
-//    }
+    public ArrayList<Bairro> getByCidade(Bairro bairro) throws Exception {
+        StringBuilder builder = new StringBuilder();
 
-//    //Obter último registro
-//    public String getLastRegister(Bairro bairro) throws Exception {
-//        StringBuilder builder = new StringBuilder();
-//
-//        if (bairro.getNome().isEmpty() || bairro.getNome().trim().length() == 0) {
-//            builder.append("O nome do bairro deve ser informado.");
-//        }
-//
-//        if (bairro.getNome().length() > 50) {
-//            builder.append("O nome do bairro não pode conter mais que 50 caracteres. ");
-//        }
-//
-//        if (builder.length() != 0) {
-//            return builder.toString();
-//        }
-//
-//        String respostaDB = dal.getLastRegister(bairro);
-//        return respostaDB;
-//    }
+        if (bairro.getCidade().getId() {
+            builder.append("O ID do bairro deve ser informado.");
+        }
+
+        if (bairro.getCidade().length() > 50) {
+            builder.append("O nome do bairro não pode conter mais que 50 caracteres. ");
+        }
+
+        if (bairro.getCidade().getNome().length() < 0) {
+            builder.append("O ID do bairro deve ser informado.");
+        }
+        if (bairro.getCidade().length() > 50) {
+            builder.append("O nome do bairro não pode conter mais que 50 caracteres. ");
+        }
+
+        if (bairro.getCidade().getEstado().length() < 0) {
+            builder.append("O ID do bairro deve ser informado.");
+        }
+
+        if (bairro.getCidade().length() > 50) {
+            builder.append("O nome do bairro não pode conter mais que 50 caracteres. ");
+        }
+
+        if (builder.length() != 0) {
+            return builder.toString();
+        }
+
+        String respostaDB = dal.getByCidade(bairro);
+        return respostaDB;
+    }
+
+    //Obter último registro
+    public String getLastRegister(Bairro bairro) throws Exception {
+        StringBuilder builder = new StringBuilder();
+
+        if (bairro.getNome().isEmpty() || bairro.getNome().trim().length() == 0) {
+            builder.append("O nome do bairro deve ser informado.");
+        }
+
+        if (bairro.getNome().length() > 50) {
+            builder.append("O nome do bairro não pode conter mais que 50 caracteres. ");
+        }
+
+        if (builder.length() != 0) {
+            return builder.toString();
+        }
+
+        String respostaDB = dal.getLastRegister(bairro);
+        return respostaDB;
+    }
 }
