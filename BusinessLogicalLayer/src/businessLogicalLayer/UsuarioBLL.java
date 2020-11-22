@@ -43,10 +43,10 @@ public class UsuarioBLL {
         return respostaDB;
     }
 
-    public void Autenticar(String login, String password) throws ValidatorException {
+    public void Autenticar(String login, String password) throws Exception {
         Usuario user = dal.Autenticar(login, password);
         if (user == null) {
-            throw new ValidatorException("Usuário e/ou senha inválidos.");
+            throw new Exception("Usuário e/ou senha inválidos.");
         }
         Parametros.UsuarioLogado = user;
     }
