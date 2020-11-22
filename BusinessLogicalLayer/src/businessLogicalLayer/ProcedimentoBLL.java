@@ -5,8 +5,9 @@
  */
 package businessLogicalLayer;
 
-import dataAccessLayer.ProcedimentoDAL;
+import dataaccesslayer.ProcedimentoDAL;
 import domain.Procedimento;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -18,7 +19,7 @@ public class ProcedimentoBLL {
     ProcedimentoDAL dal = new ProcedimentoDAL();
 
     //Incluir um registro
-    public String Inserir(Procedimento procedimento) {
+    public String Inserir(Procedimento procedimento) throws SQLException {
         StringBuilder builder = new StringBuilder();
 
         if (procedimento.getNome().isEmpty() || procedimento.getNome().trim().length() == 0) {
@@ -39,17 +40,17 @@ public class ProcedimentoBLL {
         if (builder.length() != 0) {
             return builder.toString();
         }
-        String respostaDB = dal.Inserir(procedimento);
+        String respostaDB = dal.insert(procedimento);
         return respostaDB;
     }
 
     // Obter todos os registros
-    public List<Procedimento> LerTodos() {
-        return dal.LerTodos();
+    public List<Procedimento> LerTodos() throws SQLException {
+        return dal.getAll();
     }
 
     //Atualizar um registro existente
-    public String Atualizar(Procedimento procedimento) {
+    public String Atualizar(Procedimento procedimento) throws SQLException {
         StringBuilder builder = new StringBuilder();
 
         if (procedimento.getNome().isEmpty() || procedimento.getNome().trim().length() == 0) {
@@ -70,13 +71,13 @@ public class ProcedimentoBLL {
             return builder.toString();
         }
 
-        String respostaDB = dal.Atualizar(procedimento);
+        String respostaDB = dal.update(procedimento);
         return respostaDB;
     }
 
     //Excluir um registro
-    public String Deletar(Procedimento procedimento) {
-        String respostaDB = dal.Deletar(procedimento);
+    public String Deletar(Procedimento procedimento) throws SQLException {
+        String respostaDB = dal.delete(procedimento);
         return respostaDB;
     }
 

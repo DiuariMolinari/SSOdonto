@@ -7,6 +7,7 @@ package businessLogicalLayer;
 
 import dataaccesslayer.AtendimentoDAL;
 import domain.Atendimento;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -18,12 +19,8 @@ public class AtendimentoBLL {
     AtendimentoDAL dal = new AtendimentoDAL();
 
     //Incluir um registro
-    public String Inserir(Atendimento atendimento) {
+    public String Inserir(Atendimento atendimento) throws SQLException {
         StringBuilder builder = new StringBuilder();
-
-        if (atendimento.getQtdProcedimento() < 0 || atendimento.getQtdProcedimento() != 0) {
-            builder.append("A quantidade de procedimento deve ser informado.");
-        }
 
         if (builder.length() != 0) {
             return builder.toString();
@@ -33,17 +30,14 @@ public class AtendimentoBLL {
     }
 
     // Obter todos os registros
-    public List<Atendimento> LerTodos() {
-        return dal.LerTodos();
+    public List<Atendimento> LerTodos() throws SQLException {
+        return dal.getAll();
     }
 
     //Atualizar um registro existente
-    public String Atualizar(Atendimento atendimento) {
+    public String Atualizar(Atendimento atendimento) throws SQLException {
         StringBuilder builder = new StringBuilder();
 
-        if (atendimento.getQtdProcedimento() < 0 || atendimento.getQtdProcedimento() != 0) {
-            builder.append("A quantidade de procedimento deve ser informado.");
-        }
 
         if (builder.length() != 0) {
             return builder.toString();
@@ -54,7 +48,7 @@ public class AtendimentoBLL {
     }
 
     //Excluir um registro
-    public String Deletar(Atendimento atendimento) {
+    public String Deletar(Atendimento atendimento) throws SQLException {
         String respostaDB = dal.delete(atendimento);
         return respostaDB;
     }

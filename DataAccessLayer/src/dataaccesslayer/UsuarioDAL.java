@@ -159,4 +159,24 @@ public class UsuarioDAL {
             conexao.close();
         }
     }
+
+    public Usuario Autenticar(String login, String password) {
+        try 
+        {
+            PreparedStatement pst = conexao.getConexao().prepareStatement("SELECT * FROM Usuario WHERE login =" + login + " senha = " + password, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            ResultSet rs = pst.executeQuery();
+            rs.first();
+            Colaborador colaborador = new ColaboradorDAL().getById(rs.getInt("IDColaborador"));
+            return new Usuario(rs.getInt("IDUsuario"), rs.getString("LOGIN"), rs.getString("SENHA"), colaborador);
+        }
+        
+        catch (Exception e) {
+            return null;
+        }
+        
+        finally
+        {
+            conexao.close();
+        }
+    }
 }

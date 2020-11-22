@@ -5,8 +5,9 @@
  */
 package businessLogicalLayer;
 
-import dataAccessLayer.PacienteDAL;
+import dataaccesslayer.PacienteDAL;
 import domain.Paciente;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -18,7 +19,7 @@ public class PacienteBLL {
     PacienteDAL dal = new PacienteDAL();
 
     //Incluir um registro
-    public String Inserir(Paciente paciente) {
+    public String Inserir(Paciente paciente) throws SQLException {
         StringBuilder builder = new StringBuilder();
 
         if (paciente.getNome().isEmpty() || paciente.getNome().trim().length() == 0) {
@@ -68,17 +69,17 @@ public class PacienteBLL {
         if (builder.length() != 0) {
             return builder.toString();
         }
-        String respostaDB = dal.Inserir(paciente);
+        String respostaDB = dal.insert(paciente);
         return respostaDB;
     }
 
     // Obter todos os registros
-    public List<Paciente> LerTodos() {
-        return dal.LerTodos();
+    public List<Paciente> LerTodos() throws SQLException {
+        return dal.getAll();
     }
 
     //Atualizar um registro existente
-    public String Atualizar(Paciente paciente) {
+    public String Atualizar(Paciente paciente) throws SQLException {
         StringBuilder builder = new StringBuilder();
 
        if (paciente.getNome().isEmpty() || paciente.getNome().trim().length() == 0) {
@@ -129,13 +130,13 @@ public class PacienteBLL {
             return builder.toString();
         }
 
-        String respostaDB = dal.Atualizar(paciente);
+        String respostaDB = dal.update(paciente);
         return respostaDB;
     }
 
     //Excluir um registro
-    public String Deletar(Paciente paciente) {
-        String respostaDB = dal.Deletar(paciente);
+    public String Deletar(Paciente paciente) throws SQLException {
+        String respostaDB = dal.delete(paciente);
         return respostaDB;
     }
 

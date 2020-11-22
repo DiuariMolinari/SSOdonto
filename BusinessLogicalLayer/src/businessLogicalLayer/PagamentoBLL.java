@@ -5,8 +5,9 @@
  */
 package businessLogicalLayer;
 
-import dataAccessLayer.PagamentoDAL;
+import dataaccesslayer.PagamentoDAL;
 import domain.Pagamento;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -18,7 +19,7 @@ public class PagamentoBLL {
     PagamentoDAL dal = new PagamentoDAL();
 
     //Incluir um registro
-    public String Inserir(Pagamento pagamento) {
+    public String Inserir(Pagamento pagamento) throws SQLException {
         StringBuilder builder = new StringBuilder();
 
         if (pagamento.getDataPagamento().equals("") || pagamento.getDataPagamento() == null) {
@@ -28,13 +29,13 @@ public class PagamentoBLL {
         if (builder.length() != 0) {
             return builder.toString();
         }
-        String respostaDB = dal.Inserir(pagamento);
+        String respostaDB = dal.insert(pagamento);
         return respostaDB;
     }
 
     // Obter todos os registros
-    public List<Pagamento> LerTodos() {
-        return dal.LerTodos();
+    public List<Pagamento> LerTodos() throws SQLException {
+        return dal.getAll();
     }
 
     //Atualizar um registro existente

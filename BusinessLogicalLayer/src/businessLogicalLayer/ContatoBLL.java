@@ -5,8 +5,9 @@
  */
 package businessLogicalLayer;
 
-import dataAccessLayer.ContatoDAL;
+import dataaccesslayer.ContatoDAL;
 import domain.Contato;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -18,7 +19,7 @@ public class ContatoBLL {
     ContatoDAL dal = new ContatoDAL();
 
     //Incluir um registro
-    public String Inserir(Contato contato) {
+    public String Inserir(Contato contato) throws SQLException {
         StringBuilder builder = new StringBuilder();
 
         if (contato.getFone().isEmpty() || contato.getFone().trim().length() == 0) {
@@ -40,17 +41,17 @@ public class ContatoBLL {
             return builder.toString();
         }
 
-        String respostaDB = dal.Inserir(contato);
+        String respostaDB = dal.insert(contato);
         return respostaDB;
     }
 
     //Obter todos os registros
-    public List<Contato> LerTodos() {
-        return dal.LerTodos();
+    public List<Contato> LerTodos() throws SQLException {
+        return dal.getAll();
     }
 
     //Atualizar um registro existente
-    public String Atualizar(Contato contato) {
+    public String Atualizar(Contato contato) throws SQLException {
         StringBuilder builder = new StringBuilder();
 
         if (contato.getFone().isEmpty() || contato.getFone().trim().length() == 0) {
@@ -71,13 +72,13 @@ public class ContatoBLL {
             return builder.toString();
         }
 
-        String respostaDB = dal.Atualizar(contato);
+        String respostaDB = dal.update(contato);
         return respostaDB;
     }
 
     //Excluir um registro
-    public String Deletar(Contato contato) {
-        String respostaDB = dal.Deletar(contato);
+    public String Deletar(Contato contato) throws SQLException {
+        String respostaDB = dal.delete(contato);
         return respostaDB;
     }
 

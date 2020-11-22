@@ -13,5 +13,5 @@ import static java.lang.reflect.Array.set;
  * @author Marciele
  */
 public class Parametros {
-    public static Usuario UsuarioLogado{get; set;}
+    public static Usuario UsuarioLogado;
 }

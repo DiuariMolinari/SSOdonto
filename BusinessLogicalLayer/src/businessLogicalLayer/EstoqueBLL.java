@@ -5,8 +5,9 @@
  */
 package businessLogicalLayer;
 
-import dataAccessLayer.EstoqueDAL;
+import dataaccesslayer.EstoqueDAL;
 import domain.Estoque;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -18,7 +19,7 @@ public class EstoqueBLL {
     EstoqueDAL dal = new EstoqueDAL();
 
     //Incluir um registro
-    public String Inserir(Estoque estoque) {
+    public String Inserir(Estoque estoque) throws SQLException {
         StringBuilder builder = new StringBuilder();
 
         if (estoque.getQtdProduto() < 0 || estoque.getQtdProduto() != 0) {
@@ -36,17 +37,17 @@ public class EstoqueBLL {
         if (builder.length() != 0) {
             return builder.toString();
         }
-        String respostaDB = dal.Inserir(estoque);
+        String respostaDB = dal.insert(estoque);
         return respostaDB;
     }
 
     // Obter todos os registros
-    public List<Estoque> LerTodos() {
-        return dal.LerTodos();
+    public List<Estoque> LerTodos() throws SQLException {
+        return dal.getAll();
     }
 
     //Atualizar um registro existente
-    public String Atualizar(Estoque estoque) {
+    public String Atualizar(Estoque estoque) throws SQLException {
         StringBuilder builder = new StringBuilder();
 
         if (estoque.getQtdProduto() < 0) {
@@ -65,13 +66,13 @@ public class EstoqueBLL {
             return builder.toString();
         }
         
-        String respostaDB = dal.Atualizar(estoque);
+        String respostaDB = dal.update(estoque);
         return respostaDB;
     }
 
     //Excluir um registro
-    public String Deletar(Estoque estoque) {
-        String respostaDB = dal.Deletar(estoque);
+    public String Deletar(Estoque estoque) throws SQLException {
+        String respostaDB = dal.delete(estoque);
         return respostaDB;
     }
 
