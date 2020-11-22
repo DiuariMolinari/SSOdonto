@@ -5,8 +5,9 @@
  */
 package businessLogicalLayer;
 
-import dataAccessLayer.TipoProcedimentoDAL;
+import dataaccesslayer.TipoProcedimentoDAL;
 import domain.TipoProcedimento;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,7 +19,7 @@ public class TipoProcedimentoBLL {
     TipoProcedimentoDAL dal = new TipoProcedimentoDAL();
 
     //Incluir um registro
-    public String Inserir(TipoProcedimento tipoProcedimento) {
+    public String insert(TipoProcedimento tipoProcedimento) throws Exception{
         StringBuilder builder = new StringBuilder();
 
         if (tipoProcedimento.getNome().isEmpty() || tipoProcedimento.getNome().trim().length() == 0) {
@@ -36,17 +37,17 @@ public class TipoProcedimentoBLL {
         if (builder.length() != 0) {
             return builder.toString();
         }
-        String respostaDB = dal.Inserir(tipoProcedimento);
+        String respostaDB = dal.insert(tipoProcedimento);
         return respostaDB;
     }
 
     // Obter todos os registros
-    public List<TipoProcedimento> LerTodos() {
-        return dal.LerTodos();
+    public ArrayList<TipoProcedimento> getAll() throws Exception{
+        return dal.getAll();
     }
 
     //Atualizar um registro existente
-    public String Atualizar(TipoProcedimento tipoProcedimento) {
+    public String update(TipoProcedimento tipoProcedimento) throws Exception{
         StringBuilder builder = new StringBuilder();
 
         if (tipoProcedimento.getNome().isEmpty() || tipoProcedimento.getNome().trim().length() == 0) {
@@ -65,15 +66,23 @@ public class TipoProcedimentoBLL {
             return builder.toString();
         }
 
-        String respostaDB = dal.Atualizar(tipoProcedimento);
+        String respostaDB = dal.update(tipoProcedimento);
         return respostaDB;
     }
 
     //Excluir um registro
-    public String Deletar(TipoProcedimento tipoProcedimento) {
-        String respostaDB = dal.Deletar(tipoProcedimento);
+    public String delete(TipoProcedimento tipoProcedimento) throws Exception {
+        String respostaDB = dal.delete(tipoProcedimento);
         return respostaDB;
     }
 
-    //TODO: Obter um registro  
+    //    //Obter um registro
+//    public String getById(TipoProcedimento tipoProcedimento) throws Exception {
+//
+//    }
+//
+//    //Obter último registro
+//    public String getLastRegister(TipoProcedimento tipoProcedimento) throws Exception {
+//
+//    }
 }

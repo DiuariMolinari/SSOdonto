@@ -7,8 +7,8 @@ package businessLogicalLayer;
 
 import dataaccesslayer.UsuarioDAL;
 import domain.Usuario;
+import java.util.ArrayList;
 import java.sql.SQLException;
-import java.util.List;
 import sun.security.validator.ValidatorException;
 
 /**
@@ -20,7 +20,7 @@ public class UsuarioBLL {
     UsuarioDAL dal = new UsuarioDAL();
 
     //Incluir um registro
-    public String Inserir(Usuario usuario) throws SQLException {
+    public String insert(Usuario usuario) throws SQLException {
         StringBuilder builder = new StringBuilder();
 
         if (usuario.getLogin().isEmpty() || usuario.getLogin().trim().length() == 0) {
@@ -44,22 +44,23 @@ public class UsuarioBLL {
         return respostaDB;
     }
 
+
     public String Autenticar(String login, String password) throws ValidatorException {
         Usuario user = dal.Autenticar(login, password);
         if (user == null)
             return "Usuário e/ou senha inválidos.";
-        
+      
         Parametros.UsuarioLogado = user;
         return "Usuário autenticado com sucesso!";
     }
 
     // Obter todos os registros
-    public List<Usuario> LerTodos() throws SQLException {
+    public ArrayList<Usuario> getAll() throws SQLException {
         return dal.getAll();
     }
 
     //Atualizar um registro existente
-    public String Atualizar(Usuario usuario) throws SQLException {
+    public String update(Usuario usuario) throws SQLException {
         StringBuilder builder = new StringBuilder();
 
         if (usuario.getLogin().isEmpty() || usuario.getLogin().trim().length() == 0) {
@@ -85,10 +86,18 @@ public class UsuarioBLL {
     }
 
     //Excluir um registro
-    public String Deletar(Usuario usuario) throws SQLException {
+    public String delete(Usuario usuario) throws SQLException {
         String respostaDB = dal.delete(usuario);
         return respostaDB;
     }
 
-    //TODO: Obter um registro
+    //    //Obter um registro
+//    public String getById(Usuario usuario) throws SQLException {
+//
+//    }
+//
+//    //Obter último registro
+//    public String getLastRegister(Usuario usuario) throws SQLException {
+//
+//    }
 }

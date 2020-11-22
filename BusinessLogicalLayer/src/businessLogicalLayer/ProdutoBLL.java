@@ -5,8 +5,9 @@
  */
 package businessLogicalLayer;
 
-import dataAccessLayer.ProdutoDAL;
+import dataaccesslayer.ProdutoDAL;
 import domain.Produto;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,7 +19,7 @@ public class ProdutoBLL {
     ProdutoDAL dal = new ProdutoDAL();
 
     //Incluir um registro
-    public String Inserir(Produto produto) {
+    public String insert(Produto produto) throws Exception {
         StringBuilder builder = new StringBuilder();
 
         if (produto.getNome().isEmpty() || produto.getNome().trim().length() == 0) {
@@ -40,17 +41,17 @@ public class ProdutoBLL {
         if (builder.length() != 0) {
             return builder.toString();
         }
-        String respostaDB = dal.Inserir(produto);
+        String respostaDB = dal.insert(produto);
         return respostaDB;
     }
 
     // Obter todos os registros
-    public List<Produto> LerTodos() {
-        return dal.LerTodos();
+    public ArrayList<Produto> getAll() throws Exception {
+        return dal.getAll();
     }
 
     //Atualizar um registro existente
-    public String Atualizar(Produto produto) {
+    public String update(Produto produto)throws Exception  {
         StringBuilder builder = new StringBuilder();
 
         if (produto.getNome().isEmpty() || produto.getNome().trim().length() == 0) {
@@ -73,15 +74,23 @@ public class ProdutoBLL {
             return builder.toString();
         }
 
-        String respostaDB = dal.Atualizar(produto);
+        String respostaDB = dal.update(produto);
         return respostaDB;
     }
 
     //Excluir um registro
-    public String Deletar(Produto produto) {
-        String respostaDB = dal.Deletar(produto);
+    public String delete(Produto produto) throws Exception {
+        String respostaDB = dal.delete(produto);
         return respostaDB;
     }
 
-    //TODO: Obter um registro  
+  //    //Obter um registro
+//    public String getById(Produto produto) throws Exception {
+//
+//    }
+//
+//    //Obter último registro
+//    public String getLastRegister(Produto produto) throws Exception {
+//
+//    }
 }

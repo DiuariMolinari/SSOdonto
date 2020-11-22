@@ -7,8 +7,9 @@ package businessLogicalLayer;
 
 import dataaccesslayer.EnderecoDAL;
 import domain.Endereco;
+import java.util.ArrayList;
 import java.sql.SQLException;
-import java.util.List;
+
 
 /**
  *
@@ -16,11 +17,10 @@ import java.util.List;
  */
 public class EnderecoBLL {
 
-    //Obter um registro
     EnderecoDAL dal = new EnderecoDAL();
 
     //Incluir um registro
-    public String Inserir(Endereco endereco) throws SQLException {
+    public String insert(Endereco endereco) throws SQLException {
         StringBuilder builder = new StringBuilder();
 
         if (endereco.getCep().isEmpty() || endereco.getCep().trim().length() == 0) {
@@ -43,12 +43,12 @@ public class EnderecoBLL {
     }
 
     //Obter todos os registros
-    public List<Endereco> LerTodos() throws SQLException {
+    public ArrayList<Endereco> getAll() throws SQLException{
         return dal.getAll();
     }
 
     //Atualizar um registro existente
-    public String Atualizar(Endereco endereco) throws SQLException {
+    public String update(Endereco endereco) throws SQLException {
         StringBuilder builder = new StringBuilder();
 
         if (endereco.getCep().isEmpty() || endereco.getCep().trim().length() == 0) {
@@ -62,7 +62,7 @@ public class EnderecoBLL {
         if (endereco.getNumeroCasa() < 0 || endereco.getNumeroCasa() != 0) {
             builder.append("O número da casa deve ser informado.");
         }
-        
+
         if (builder.length() != 0) {
             return builder.toString();
         }
@@ -72,8 +72,23 @@ public class EnderecoBLL {
     }
 
     //Excluir um registro
-    public String Deletar(Endereco endereco) throws SQLException {
+    public String delete(Endereco endereco) throws SQLException {
         String respostaDB = dal.delete(endereco);
         return respostaDB;
     }
+
+    //    //Obter um registro
+//    public String getById(Endereco endereco) throws SQLException {
+//
+//    }
+//
+//    //Obter último registro
+//    public String getLastRegister(Endereco endereco) throws SQLException {
+//
+//    }
+//
+//    //Obter registros de determinado estado
+//    public ArrayList<Endereco> getByLogradouro(Endereco endereco) throws SQLException {
+//
+//    }
 }

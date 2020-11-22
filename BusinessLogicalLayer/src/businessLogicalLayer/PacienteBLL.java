@@ -7,8 +7,8 @@ package businessLogicalLayer;
 
 import dataaccesslayer.PacienteDAL;
 import domain.Paciente;
+import java.util.ArrayList;
 import java.sql.SQLException;
-import java.util.List;
 
 /**
  *
@@ -19,7 +19,7 @@ public class PacienteBLL {
     PacienteDAL dal = new PacienteDAL();
 
     //Incluir um registro
-    public String Inserir(Paciente paciente) throws SQLException {
+    public String insert(Paciente paciente) throws SQLException {
         StringBuilder builder = new StringBuilder();
 
         if (paciente.getNome().isEmpty() || paciente.getNome().trim().length() == 0) {
@@ -74,15 +74,15 @@ public class PacienteBLL {
     }
 
     // Obter todos os registros
-    public List<Paciente> LerTodos() throws SQLException {
+    public ArrayList<Paciente> getAll() throws SQLException {
         return dal.getAll();
     }
 
     //Atualizar um registro existente
-    public String Atualizar(Paciente paciente) throws SQLException {
+    public String update(Paciente paciente) throws SQLException {
         StringBuilder builder = new StringBuilder();
 
-       if (paciente.getNome().isEmpty() || paciente.getNome().trim().length() == 0) {
+        if (paciente.getNome().isEmpty() || paciente.getNome().trim().length() == 0) {
             builder.append("O nome do paciente deve ser informado.");
         }
 
@@ -125,7 +125,7 @@ public class PacienteBLL {
         if (paciente.getObservacao().length() > 250) {
             builder.append("As observações do paciente não pode conter mais que 250 caracteres.");
         }
-        
+
         if (builder.length() != 0) {
             return builder.toString();
         }
@@ -135,10 +135,19 @@ public class PacienteBLL {
     }
 
     //Excluir um registro
-    public String Deletar(Paciente paciente) throws SQLException {
+    public String delete(Paciente paciente) throws SQLException {
         String respostaDB = dal.delete(paciente);
         return respostaDB;
     }
 
-    //TODO: Obter um registro
+    //    //Obter um registro
+//    public String getById(Paciente paciente) throws SQLException {
+//
+//    }
+//
+//    //Obter último registro
+//    public String getLastRegister(Paciente paciente) throws SQLException {
+//
+//    }
+//
 }

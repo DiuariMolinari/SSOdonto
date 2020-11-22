@@ -7,8 +7,8 @@ package businessLogicalLayer;
 
 import dataaccesslayer.PagamentoDAL;
 import domain.Pagamento;
+import java.util.ArrayList;
 import java.sql.SQLException;
-import java.util.List;
 
 /**
  *
@@ -19,7 +19,7 @@ public class PagamentoBLL {
     PagamentoDAL dal = new PagamentoDAL();
 
     //Incluir um registro
-    public String Inserir(Pagamento pagamento) throws SQLException {
+    public String insert(Pagamento pagamento) throws SQLException{
         StringBuilder builder = new StringBuilder();
 
         if (pagamento.getDataPagamento().equals("") || pagamento.getDataPagamento() == null) {
@@ -34,12 +34,12 @@ public class PagamentoBLL {
     }
 
     // Obter todos os registros
-    public List<Pagamento> LerTodos() throws SQLException {
+    public ArrayList<Pagamento> getAll() throws SQLException{
         return dal.getAll();
     }
 
     //Atualizar um registro existente
-    public String Atualizar(Pagamento pagamento) {
+    public String update(Pagamento pagamento) throws SQLException{
         StringBuilder builder = new StringBuilder();
 
         if (pagamento.getDataPagamento().equals("") || pagamento.getDataPagamento() == null) {
@@ -50,15 +50,23 @@ public class PagamentoBLL {
             return builder.toString();
         }
 
-        String respostaDB = dal.Atualizar(pagamento);
+        String respostaDB = dal.update(pagamento);
         return respostaDB;
     }
 
     //Excluir um registro
-    public String Deletar(Pagamento pagamento) {
-        String respostaDB = dal.Deletar(pagamento);
+    public String delete(Pagamento pagamento) throws SQLException{
+        String respostaDB = dal.delete(pagamento);
         return respostaDB;
     }
 
-    //TODO: Obter um registro  
+    //    //Obter um registro
+//    public String getById(Pagamento pagamento) throws SQLException {
+//
+//    }
+//
+//    //Obter último registro
+//    public String getLastRegister(Pagamento pagamento) throws SQLException {
+//
+//    }
 }
