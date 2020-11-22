@@ -8,6 +8,8 @@ package businessLogicalLayer;
 import dataaccesslayer.BairroDAL;
 import domain.Bairro;
 import java.util.ArrayList;
+import java.sql.SQLException;
+
 
 /**
  *
@@ -18,7 +20,7 @@ public class BairroBLL {
     BairroDAL dal = new BairroDAL();
 
     //Incluir um registro
-    public String insert(Bairro bairro) throws Exception {
+    public String insert(Bairro bairro) throws SQLException {
         StringBuilder builder = new StringBuilder();
 
         if (bairro.getNome().isEmpty() || bairro.getNome().trim().length() == 0) {
@@ -38,12 +40,12 @@ public class BairroBLL {
     }
 
     //Obter todos os registros
-    public ArrayList<Bairro> getAll() throws Exception {
+    public ArrayList<Bairro> getAll() throws SQLException {
         return dal.getAll();
     }
 
     //Atualizar um registro existente
-    public String update(Bairro bairro) throws Exception {
+    public String update(Bairro bairro) throws SQLException {
         StringBuilder builder = new StringBuilder();
 
         if (bairro.getNome().isEmpty() || bairro.getNome().trim().length() == 0) {
@@ -63,13 +65,13 @@ public class BairroBLL {
     }
 
     //Excluir um registro
-    public String delete(Bairro bairro) throws Exception {
+    public String delete(Bairro bairro) throws SQLException {
         String respostaDB = dal.delete(bairro);
         return respostaDB;
     }
 
     //Obter um registro
-    public String getById(Bairro bairro) throws Exception {
+    public String getById(Bairro bairro) throws SQLException {
         StringBuilder builder = new StringBuilder();
 
         if (bairro.getId() != 0 || bairro.getId() < 0) {
@@ -85,10 +87,10 @@ public class BairroBLL {
     }
 
     //Obter todos os bairros por cidade
-    public ArrayList<Bairro> getByCidade(Bairro bairro) throws Exception {
+    public ArrayList<Bairro> getByCidade(Bairro bairro) throws SQLException {
         StringBuilder builder = new StringBuilder();
 
-        if (bairro.getCidade().getId() {
+        if (bairro.getCidade().getId()  {
             builder.append("O ID do bairro deve ser informado.");
         }
 
@@ -120,7 +122,7 @@ public class BairroBLL {
     }
 
     //Obter último registro
-    public String getLastRegister(Bairro bairro) throws Exception {
+    public String getLastRegister(Bairro bairro) throws SQLException {
         StringBuilder builder = new StringBuilder();
 
         if (bairro.getNome().isEmpty() || bairro.getNome().trim().length() == 0) {

@@ -8,7 +8,7 @@ package businessLogicalLayer;
 import dataaccesslayer.FuncaoDAL;
 import domain.Funcao;
 import java.util.ArrayList;
-import java.util.List;
+import java.sql.SQLException;
 
 /**
  *
@@ -19,7 +19,7 @@ public class FuncaoBLL {
     FuncaoDAL dal = new FuncaoDAL();
 
     //Incluir um registro
-    public String insert(Funcao funcao) throws Exception {
+    public String insert(Funcao funcao) throws SQLException {
         StringBuilder builder = new StringBuilder();
 
         if (funcao.getNome().isEmpty() || funcao.getNome().trim().length() == 0) {
@@ -50,12 +50,12 @@ public class FuncaoBLL {
     }
 
     // Obter todos os registros
-    public  ArrayList<Funcao> getAll() throws Exception {
+    public  ArrayList<Funcao> getAll() throws SQLException {
         return dal.getAll();
     }
 
     //Atualizar um registro existente
-    public String update(Funcao funcao) throws Exception {
+    public String update(Funcao funcao) throws SQLException {
         StringBuilder builder = new StringBuilder();
 
         if (funcao.getNome().isEmpty() || funcao.getNome().trim().length() == 0) {
@@ -87,18 +87,18 @@ public class FuncaoBLL {
     }
 
     //Excluir um registro
-    public String delete(Funcao funcao) throws Exception {
+    public String delete(Funcao funcao) throws SQLException {
         String respostaDB = dal.delete(funcao);
         return respostaDB;
     }
 
     //    //Obter um registro
-//    public String getById(Funcao funcao) throws Exception {
+//    public String getById(Funcao funcao) throws SQLException {
 //
 //    }
 //
 //    //Obter último registro
-//    public String getLastRegister(Funcao funcao) throws Exception {
+//    public String getLastRegister(Funcao funcao) throws SQLException {
 //
 //    }
 }

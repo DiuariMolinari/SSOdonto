@@ -7,8 +7,11 @@ package dataaccesslayer;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import domain.Clinica;
+import domain.Colaborador;
 import domain.Endereco;
+import domain.Funcao;
 import java.time.LocalDate;
+import java.time.Month;
 
 /**
  *
@@ -17,10 +20,11 @@ import java.time.LocalDate;
 public class MainTest {
     public static void main(String[] args) throws SQLException
     {
+        Funcao funcao = new FuncaoDAL().getById(2);
+        Clinica clinica = new ClinicaDAL().getById(2);
         Endereco endereco = new EnderecoDAL().getById(2);
+        Colaborador colaborador = new ColaboradorDAL().getById(2);
         
-        ClinicaDAL clidal = new ClinicaDAL();
-        clidal.delete(new Clinica(1));
         
         
     }

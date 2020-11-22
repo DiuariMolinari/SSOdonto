@@ -8,7 +8,7 @@ package businessLogicalLayer;
 import dataaccesslayer.PacienteDAL;
 import domain.Paciente;
 import java.util.ArrayList;
-import java.util.List;
+import java.sql.SQLException;
 
 /**
  *
@@ -19,7 +19,7 @@ public class PacienteBLL {
     PacienteDAL dal = new PacienteDAL();
 
     //Incluir um registro
-    public String insert(Paciente paciente) throws Exception {
+    public String insert(Paciente paciente) throws SQLException {
         StringBuilder builder = new StringBuilder();
 
         if (paciente.getNome().isEmpty() || paciente.getNome().trim().length() == 0) {
@@ -74,12 +74,12 @@ public class PacienteBLL {
     }
 
     // Obter todos os registros
-    public ArrayList<Paciente> getAll() throws Exception {
+    public ArrayList<Paciente> getAll() throws SQLException {
         return dal.getAll();
     }
 
     //Atualizar um registro existente
-    public String update(Paciente paciente) throws Exception {
+    public String update(Paciente paciente) throws SQLException {
         StringBuilder builder = new StringBuilder();
 
         if (paciente.getNome().isEmpty() || paciente.getNome().trim().length() == 0) {
@@ -135,18 +135,18 @@ public class PacienteBLL {
     }
 
     //Excluir um registro
-    public String delete(Paciente paciente) throws Exception {
+    public String delete(Paciente paciente) throws SQLException {
         String respostaDB = dal.delete(paciente);
         return respostaDB;
     }
 
     //    //Obter um registro
-//    public String getById(Paciente paciente) throws Exception {
+//    public String getById(Paciente paciente) throws SQLException {
 //
 //    }
 //
 //    //Obter último registro
-//    public String getLastRegister(Paciente paciente) throws Exception {
+//    public String getLastRegister(Paciente paciente) throws SQLException {
 //
 //    }
 //

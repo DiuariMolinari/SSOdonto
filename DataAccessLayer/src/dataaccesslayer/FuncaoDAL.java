@@ -16,7 +16,7 @@ import domain.Funcao;
  */
 public class FuncaoDAL {
     private final Conexao conexao = new Conexao();
-    public Funcao getById(long id ) throws SQLException{
+    public Funcao getById(int id ) throws SQLException{
         try 
         {
             PreparedStatement pst = conexao.getConexao().prepareStatement("SELECT * FROM Funcao WHERE IDFuncao =" + id, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);

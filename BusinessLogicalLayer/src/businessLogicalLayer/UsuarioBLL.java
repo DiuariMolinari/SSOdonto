@@ -8,7 +8,7 @@ package businessLogicalLayer;
 import dataaccesslayer.UsuarioDAL;
 import domain.Usuario;
 import java.util.ArrayList;
-import java.util.List;
+import java.sql.SQLException;
 import sun.security.validator.ValidatorException;
 
 /**
@@ -20,13 +20,13 @@ public class UsuarioBLL {
     UsuarioDAL dal = new UsuarioDAL();
 
     //Incluir um registro
-    public String insert(Usuario usuario) throws Exception {
+    public String insert(Usuario usuario) throws SQLException {
         StringBuilder builder = new StringBuilder();
 
-        if (usuario.getUsuario().isEmpty() || usuario.getUsuario().trim().length() == 0) {
+        if (usuario.getLogin().isEmpty() || usuario.getLogin().trim().length() == 0) {
             builder.append("O usuário de login deve ser informado.");
         }
-        if (usuario.getUsuario().length() > 60) {
+        if (usuario.getLogin().length() > 60) {
             builder.append("O usuário de login não pode conter mais que 60 caracteres.");
         }
 
@@ -44,27 +44,29 @@ public class UsuarioBLL {
         return respostaDB;
     }
 
-    public void Autenticar(String login, String password) throws Exception {
+
+    public String Autenticar(String login, String password) throws ValidatorException {
         Usuario user = dal.Autenticar(login, password);
-        if (user == null) {
-            throw new Exception("Usuário e/ou senha inválidos.");
-        }
+        if (user == null)
+            return "Usuário e/ou senha inválidos.";
+      
         Parametros.UsuarioLogado = user;
+        return "Usuário autenticado com sucesso!";
     }
 
     // Obter todos os registros
-    public ArrayList<Usuario> getAll() throws Exception {
+    public ArrayList<Usuario> getAll() throws SQLException {
         return dal.getAll();
     }
 
     //Atualizar um registro existente
-    public String update(Usuario usuario) throws Exception {
+    public String update(Usuario usuario) throws SQLException {
         StringBuilder builder = new StringBuilder();
 
-        if (usuario.getUsuario().isEmpty() || usuario.getUsuario().trim().length() == 0) {
+        if (usuario.getLogin().isEmpty() || usuario.getLogin().trim().length() == 0) {
             builder.append("O usuário de login deve ser informado.");
         }
-        if (usuario.getUsuario().length() > 60) {
+        if (usuario.getLogin().length() > 60) {
             builder.append("O usuário de login não pode conter mais que 60 caracteres.");
         }
 
@@ -84,18 +86,18 @@ public class UsuarioBLL {
     }
 
     //Excluir um registro
-    public String delete(Usuario usuario) throws Exception {
+    public String delete(Usuario usuario) throws SQLException {
         String respostaDB = dal.delete(usuario);
         return respostaDB;
     }
 
     //    //Obter um registro
-//    public String getById(Usuario usuario) throws Exception {
+//    public String getById(Usuario usuario) throws SQLException {
 //
 //    }
 //
 //    //Obter último registro
-//    public String getLastRegister(Usuario usuario) throws Exception {
+//    public String getLastRegister(Usuario usuario) throws SQLException {
 //
 //    }
 }

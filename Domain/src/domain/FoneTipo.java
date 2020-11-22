@@ -12,6 +12,15 @@ package domain;
 public class FoneTipo {
     private int id;
     private String tipo;
+    
+    public FoneTipo(int id) {
+        this.id = id;
+    }
+
+    public FoneTipo(int id, String tipo) {
+        this.id = id;
+        this.tipo = tipo;
+    }
 
     public int getId() {
         return id;

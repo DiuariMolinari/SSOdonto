@@ -8,7 +8,7 @@ package businessLogicalLayer;
 import dataaccesslayer.EstoqueDAL;
 import domain.Estoque;
 import java.util.ArrayList;
-import java.util.List;
+import java.sql.SQLException;
 
 /**
  *
@@ -19,7 +19,7 @@ public class EstoqueBLL {
     EstoqueDAL dal = new EstoqueDAL();
 
     //Incluir um registro
-    public String insert(Estoque estoque) throws Exception {
+    public String insert(Estoque estoque) throws SQLException {
         StringBuilder builder = new StringBuilder();
 
         if (estoque.getQtdProduto() < 0 || estoque.getQtdProduto() != 0) {
@@ -42,12 +42,12 @@ public class EstoqueBLL {
     }
 
     // Obter todos os registros
-    public ArrayList<Estoque> getAll() throws Exception  {
+    public ArrayList<Estoque> getAll() throws SQLException  {
         return dal.getAll();
     }
 
     //Atualizar um registro existente
-    public String update(Estoque estoque) throws Exception  {
+    public String update(Estoque estoque) throws SQLException  {
         StringBuilder builder = new StringBuilder();
 
         if (estoque.getQtdProduto() < 0) {
@@ -71,18 +71,18 @@ public class EstoqueBLL {
     }
 
     //Excluir um registro
-    public String delete(Estoque estoque) throws Exception {
+    public String delete(Estoque estoque) throws SQLException {
         String respostaDB = dal.delete(estoque);
         return respostaDB;
     }
 
     //    //Obter um registro
-//    public String getById(Estoque estoque) throws Exception {
+//    public String getById(Estoque estoque) throws SQLException {
 //
 //    }
 //
 //    //Obter último registro
-//    public String getLastRegister(Estoque estoque) throws Exception {
+//    public String getLastRegister(Estoque estoque) throws SQLException {
 //
 //    }
 }

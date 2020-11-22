@@ -8,6 +8,7 @@ package businessLogicalLayer;
 import dataaccesslayer.ColaboradorDAL;
 import domain.Colaborador;
 import java.util.ArrayList;
+import java.sql.SQLException;
 
 /**
  *
@@ -18,7 +19,7 @@ public class ColaboradorBLL {
     ColaboradorDAL dal = new ColaboradorDAL();
 
     //Incluir um registro
-    public String insert(Colaborador colaborador) throws Exception {
+    public String insert(Colaborador colaborador) throws SQLException {
         StringBuilder builder = new StringBuilder();
 
         if (colaborador.getNome().isEmpty() || colaborador.getNome().trim().length() == 0) {
@@ -56,12 +57,12 @@ public class ColaboradorBLL {
     }
 
     // Obter todos os registros
-    public ArrayList<Colaborador> getAll() throws Exception {
+    public ArrayList<Colaborador> getAll() throws SQLException {
         return dal.getAll();
     }
 
     //Atualizar um registro existente
-    public String update(Colaborador colaborador) throws Exception {
+    public String update(Colaborador colaborador) throws SQLException {
         StringBuilder builder = new StringBuilder();
 
         if (colaborador.getNome().isEmpty() || colaborador.getNome().trim().length() == 0) {
@@ -101,18 +102,18 @@ public class ColaboradorBLL {
     }
 
     //Excluir um registro
-    public String delete(Colaborador colaborador) throws Exception {
+    public String delete(Colaborador colaborador) throws SQLException {
         String respostaDB = dal.delete(colaborador);
         return respostaDB;
     }
 
     //    //Obter um registro
-//    public String getById(Colaborador colaborador) throws Exception {
+//    public String getById(Colaborador colaborador) throws SQLException {
 //
 //    }
 //
 //    //Obter último registro
-//    public String getLastRegister(Colaborador colaborador) throws Exception {
+//    public String getLastRegister(Colaborador colaborador) throws SQLException {
 //
 //    }
 //
