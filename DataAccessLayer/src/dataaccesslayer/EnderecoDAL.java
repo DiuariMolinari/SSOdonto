@@ -147,6 +147,10 @@ public class EnderecoDAL {
     
     public String delete(Endereco Endereco) throws SQLException {
         try {
+            if (Endereco.getId() == 0) {
+                return "Endereco informada inválido!";
+            }
+            
             PreparedStatement pst = conexao.getConexao().prepareStatement("DELETE FROM Endereco WHERE IDEndereco = ?");
             pst.setInt(1, Endereco.getId());
             pst.executeUpdate();

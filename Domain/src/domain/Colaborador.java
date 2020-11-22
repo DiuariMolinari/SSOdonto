@@ -24,6 +24,10 @@ public class Colaborador {
     private boolean ferias;
     private boolean demitido;
 
+     public Colaborador(int id){
+         this.id = id;
+     }
+    
     public Colaborador(int id, String nome, String cro, String croEstado, LocalDate dataAdmissao, LocalDate dataDemissao, Endereco endereco, Funcao funcao, Clinica clinica, boolean ferias, boolean demitido) {
         this.id = id;
         this.nome = nome;

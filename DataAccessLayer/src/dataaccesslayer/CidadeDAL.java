@@ -145,6 +145,10 @@ public class CidadeDAL {
     
     public String delete(Cidade cidade) throws SQLException {
         try {
+            if (cidade.getId() == 0) {
+                return "Cidade informada inválido!";
+            }
+            
             PreparedStatement pst = conexao.getConexao().prepareStatement("DELETE FROM CIDADE WHERE IDCIDADE = ?");
             pst.setInt(1, cidade.getId());
             pst.executeUpdate();

@@ -116,6 +116,10 @@ public class PaisDAL {
     
     public String delete(Pais pais) throws SQLException {
         try {
+            if (pais.getId() == 0) {
+                return "País informado inválido!";
+            }
+            
             PreparedStatement pst = conexao.getConexao().prepareStatement("DELETE FROM PAIS WHERE IDPAIS = ?");
             pst.setInt(1, pais.getId());
             pst.executeUpdate();

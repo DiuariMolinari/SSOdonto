@@ -13,6 +13,10 @@ public class Pais {
     private int id;
     private String nome;
 
+    public Pais(int id) {
+        this.id = id;
+    }
+    
     public Pais(String nome) {
         this.nome = nome;
     }

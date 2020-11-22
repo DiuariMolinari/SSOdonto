@@ -145,6 +145,10 @@ public class EstadoDAL {
     
     public String delete(Estado estado) throws SQLException {
         try {
+            if (estado.getId() == 0) {
+                return "Estado informado inválido!";
+            }
+            
             PreparedStatement pst = conexao.getConexao().prepareStatement("DELETE FROM ESTADO WHERE IDESTADO = ?");
             pst.setInt(1, estado.getId());
             pst.executeUpdate();

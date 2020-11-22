@@ -158,22 +158,20 @@ public class ContatoDAL {
     public String insert(Contato Contato) throws SQLException{
         try 
         {
-            if (Contato.getPaciente().getId() == 0) {
-                PreparedStatement pst = conexao.getConexao().prepareStatement("INSERT INTO Contato (IDContato, fone, idfonetipo, email, idPaciente, idColaborador) VALUES(0, ?, ?, ?, ?, ?)");
+            if (Contato.getPaciente() == null) {
+                PreparedStatement pst = conexao.getConexao().prepareStatement("INSERT INTO Contato (IDContato, fone, idfonetipo, email, idPaciente, idColaborador) VALUES(0, ?, ?, ?, null, ?)");
                 pst.setString(1, Contato.getFone());
                 pst.setInt(2, Contato.getFoneTipo().getId());
                 pst.setString(3, Contato.getEmail());
-                pst.setInt(4, 0);
-                pst.setInt(5, Contato.getColaborador().getId());
+                pst.setInt(4, Contato.getColaborador().getId());
                 pst.executeUpdate();
             }
             else{
-                PreparedStatement pst = conexao.getConexao().prepareStatement("INSERT INTO Contato (IDContato, fone, idfonetipo, email, idPaciente, idColaborador) VALUES(0, ?, ?, ?, ?, ?)");
+                PreparedStatement pst = conexao.getConexao().prepareStatement("INSERT INTO Contato (IDContato, fone, idfonetipo, email, idPaciente, idColaborador) VALUES(0, ?, ?, ?, ?, null)");
                 pst.setString(1, Contato.getFone());
                 pst.setInt(2, Contato.getFoneTipo().getId());
                 pst.setString(3, Contato.getEmail());
                 pst.setInt(4, Contato.getPaciente().getId());
-                pst.setInt(5, 0);
                 pst.executeUpdate();
             }
             return "Contato inserido com sucesso!";
@@ -192,7 +190,7 @@ public class ContatoDAL {
     public String update(Contato Contato) throws SQLException{
         try 
         {
-            if (Contato.getPaciente().getId() == 0) {
+            if (Contato.getPaciente() == null) {
                 PreparedStatement pst = conexao.getConexao().prepareStatement("UPDATE Contato SET fone = ?, idfonetipo = ?, email = ?, idPaciente = ?, idColaborador = ? WHERE IDContato = ?");
                 pst.setString(1, Contato.getFone());
                 pst.setInt(2, Contato.getFoneTipo().getId());
@@ -226,6 +224,10 @@ public class ContatoDAL {
     
     public String delete(Contato Contato) throws SQLException {
         try {
+            if (Contato.getId() == 0) {
+                return "Contato informado inválido!";
+            }
+            
             PreparedStatement pst = conexao.getConexao().prepareStatement("DELETE FROM Contato WHERE IDContato = ?");
             pst.setInt(1, Contato.getId());
             pst.executeUpdate();

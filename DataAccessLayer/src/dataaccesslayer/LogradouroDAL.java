@@ -145,6 +145,10 @@ public class LogradouroDAL {
     
     public String delete(Logradouro Logradouro) throws SQLException {
         try {
+            if (Logradouro.getId() == 0) {
+                return "Logradouro informada inválido!";
+            }
+            
             PreparedStatement pst = conexao.getConexao().prepareStatement("DELETE FROM Logradouro WHERE IDLogradouro = ?");
             pst.setInt(1, Logradouro.getId());
             pst.executeUpdate();

@@ -5,6 +5,8 @@
  */
 package dataaccesslayer;
 import domain.Atendimento;
+import domain.Colaborador;
+import domain.Paciente;
 import domain.Procedimento;
 import domain.TipoProcedimento;
 import java.sql.PreparedStatement;
@@ -47,7 +49,13 @@ public class ProcedimentoDAL {
             ResultSet rs = pst.executeQuery();
             while (rs.next())
             {
-                Atendimento atendimento = new AtendimentoDAL().getById(rs.getInt("IDAtendimento"));
+                PreparedStatement pst2 = conexao.getConexao().prepareStatement("SELECT * FROM atendimento where idatendimento = " + rs.getInt("idatendimento"), ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+                ResultSet rs2 = pst2.executeQuery();
+                rs2.first();
+                
+                Paciente paciente = new PacienteDAL().getById(rs2.getInt("idPaciente"));
+                Colaborador colaborador = new ColaboradorDAL().getById(rs2.getInt("idColaborador"));
+                Atendimento atendimento = new Atendimento(rs2.getInt("idAtendimento"), paciente, colaborador);
                 atendimentos.add(atendimento);
             }
             
