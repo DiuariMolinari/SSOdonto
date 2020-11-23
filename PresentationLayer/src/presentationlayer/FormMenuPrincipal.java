@@ -28,6 +28,8 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
     private void initComponents() {
 
         jMenuItem11 = new javax.swing.JMenuItem();
+        jMenuItem25 = new javax.swing.JMenuItem();
+        jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -48,12 +50,34 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
         jMenuItem18 = new javax.swing.JMenuItem();
         jMenuItem19 = new javax.swing.JMenuItem();
         jMenuItem20 = new javax.swing.JMenuItem();
-        jMenu3 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
+        jMenuItem12 = new javax.swing.JMenuItem();
+        jMenuItem21 = new javax.swing.JMenuItem();
+        jMenuItem22 = new javax.swing.JMenuItem();
+        jMenuItem23 = new javax.swing.JMenuItem();
+        jMenuItem24 = new javax.swing.JMenuItem();
+        jMenuItem26 = new javax.swing.JMenuItem();
+        jMenuItem27 = new javax.swing.JMenuItem();
+        jMenuItem28 = new javax.swing.JMenuItem();
+        jMenuItem29 = new javax.swing.JMenuItem();
+        jMenuItem30 = new javax.swing.JMenuItem();
+        jMenuItem31 = new javax.swing.JMenuItem();
+        jMenuItem32 = new javax.swing.JMenuItem();
+        jMenuItem33 = new javax.swing.JMenuItem();
+        jMenuItem34 = new javax.swing.JMenuItem();
+        jMenuItem35 = new javax.swing.JMenuItem();
+        jMenuItem36 = new javax.swing.JMenuItem();
+        jMenuItem37 = new javax.swing.JMenuItem();
+        jMenuItem38 = new javax.swing.JMenuItem();
 
         jMenuItem11.setText("jMenuItem11");
 
+        jMenuItem25.setText("jMenuItem25");
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel1.setText("Menu Principal");
 
         jMenu1.setText("Cadastrar");
 
@@ -113,10 +137,62 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
-        jMenu3.setText("Editar");
-        jMenuBar1.add(jMenu3);
-
         jMenu2.setText("Consultar");
+
+        jMenuItem12.setText("Atendimento");
+        jMenu2.add(jMenuItem12);
+
+        jMenuItem21.setText("Colaborador");
+        jMenu2.add(jMenuItem21);
+
+        jMenuItem22.setText("Paciente");
+        jMenu2.add(jMenuItem22);
+
+        jMenuItem23.setText("Procedimento");
+        jMenu2.add(jMenuItem23);
+
+        jMenuItem24.setText("Tipo de Procedimento");
+        jMenu2.add(jMenuItem24);
+
+        jMenuItem26.setText("Clínica");
+        jMenu2.add(jMenuItem26);
+
+        jMenuItem27.setText("Função");
+        jMenu2.add(jMenuItem27);
+
+        jMenuItem28.setText("Pagamento");
+        jMenu2.add(jMenuItem28);
+
+        jMenuItem29.setText("Tipo de Pagamento");
+        jMenu2.add(jMenuItem29);
+
+        jMenuItem30.setText("Produto");
+        jMenu2.add(jMenuItem30);
+
+        jMenuItem31.setText("Tipo de Embalagem");
+        jMenu2.add(jMenuItem31);
+
+        jMenuItem32.setText("Estoque");
+        jMenu2.add(jMenuItem32);
+
+        jMenuItem33.setText("Endereço");
+        jMenu2.add(jMenuItem33);
+
+        jMenuItem34.setText("Logradouro");
+        jMenu2.add(jMenuItem34);
+
+        jMenuItem35.setText("Bairro");
+        jMenu2.add(jMenuItem35);
+
+        jMenuItem36.setText("Cidade");
+        jMenu2.add(jMenuItem36);
+
+        jMenuItem37.setText("Estado");
+        jMenu2.add(jMenuItem37);
+
+        jMenuItem38.setText("País");
+        jMenu2.add(jMenuItem38);
+
         jMenuBar1.add(jMenu2);
 
         setJMenuBar(jMenuBar1);
@@ -125,11 +201,17 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 527, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addContainerGap(319, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 442, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addContainerGap(191, Short.MAX_VALUE))
         );
 
         pack();
@@ -171,13 +253,14 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem11;
+    private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem13;
     private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem15;
@@ -187,7 +270,25 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem19;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem20;
+    private javax.swing.JMenuItem jMenuItem21;
+    private javax.swing.JMenuItem jMenuItem22;
+    private javax.swing.JMenuItem jMenuItem23;
+    private javax.swing.JMenuItem jMenuItem24;
+    private javax.swing.JMenuItem jMenuItem25;
+    private javax.swing.JMenuItem jMenuItem26;
+    private javax.swing.JMenuItem jMenuItem27;
+    private javax.swing.JMenuItem jMenuItem28;
+    private javax.swing.JMenuItem jMenuItem29;
     private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem30;
+    private javax.swing.JMenuItem jMenuItem31;
+    private javax.swing.JMenuItem jMenuItem32;
+    private javax.swing.JMenuItem jMenuItem33;
+    private javax.swing.JMenuItem jMenuItem34;
+    private javax.swing.JMenuItem jMenuItem35;
+    private javax.swing.JMenuItem jMenuItem36;
+    private javax.swing.JMenuItem jMenuItem37;
+    private javax.swing.JMenuItem jMenuItem38;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
