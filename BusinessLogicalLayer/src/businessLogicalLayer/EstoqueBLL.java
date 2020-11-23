@@ -7,6 +7,7 @@ package businessLogicalLayer;
 
 import dataaccesslayer.EstoqueDAL;
 import domain.Estoque;
+import domain.Produto;
 import java.util.ArrayList;
 import java.sql.SQLException;
 
@@ -42,12 +43,12 @@ public class EstoqueBLL {
     }
 
     // Obter todos os registros
-    public ArrayList<Estoque> getAll() throws SQLException  {
+    public ArrayList<Estoque> getAll() throws SQLException {
         return dal.getAll();
     }
 
     //Atualizar um registro existente
-    public String update(Estoque estoque) throws SQLException  {
+    public String update(Estoque estoque) throws SQLException {
         StringBuilder builder = new StringBuilder();
 
         if (estoque.getQtdProduto() < 0) {
@@ -65,7 +66,7 @@ public class EstoqueBLL {
         if (builder.length() != 0) {
             return builder.toString();
         }
-        
+
         String respostaDB = dal.update(estoque);
         return respostaDB;
     }
@@ -76,13 +77,21 @@ public class EstoqueBLL {
         return respostaDB;
     }
 
-    //    //Obter um registro
-//    public String getById(Estoque estoque) throws SQLException {
-//
-//    }
-//
-//    //Obter último registro
-//    public String getLastRegister(Estoque estoque) throws SQLException {
-//
-//    }
+    //Obter um registro
+    public Estoque getById(Estoque estoque) throws Exception {
+        if (estoque.getId() < 0 || estoque.getId() != 0) {
+            throw new Exception("O ID do estoque deve ser informado.");
+        }
+
+        return dal.getById(estoque.getId());
+    }
+
+    //Obter último registro
+    public Estoque getLastRegister() throws SQLException {
+        return dal.getLastRegister();
+    }
+
+    public ArrayList<Estoque> getByProduto(Produto produto) throws SQLException {
+        return dal.getByProduto(produto);
+    }
 }

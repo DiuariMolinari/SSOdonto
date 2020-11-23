@@ -6,6 +6,7 @@
 package businessLogicalLayer;
 
 import dataaccesslayer.ProcedimentoDAL;
+import domain.Atendimento;
 import domain.Procedimento;
 import java.util.ArrayList;
 import java.sql.SQLException;
@@ -81,14 +82,22 @@ public class ProcedimentoBLL {
         return respostaDB;
     }
 
-    //    //Obter um registro
-//    public String getById(Procedimento procedimento) throws SQLException {
-//
-//    }
-//
-//    //Obter último registro
-//    public String getLastRegister(Procedimento procedimento) throws SQLException {
-//
-//    }
-//
+    //Obter um registro
+    public Procedimento getById(Procedimento procedimento) throws Exception {
+        if (procedimento.getId() < 0 || procedimento.getId() != 0) {
+            throw new Exception("O ID do procedimento deve ser informado.");
+        }
+
+        return dal.getById(procedimento.getId());
+    }
+
+    //Obter último registro
+    public Procedimento getLastRegister() throws SQLException {
+        return dal.getLastRegister();
+    }
+
+    //Obtem lista de atendimentos por procedimento
+    public ArrayList<Atendimento> getAtendimentos(int idProcedimento) throws SQLException {
+        return dal.getAtendimentos(idProcedimento);
+    }
 }

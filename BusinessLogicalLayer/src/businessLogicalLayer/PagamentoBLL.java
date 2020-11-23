@@ -7,6 +7,7 @@ package businessLogicalLayer;
 
 import dataaccesslayer.PagamentoDAL;
 import domain.Pagamento;
+import domain.TipoPagamento;
 import java.util.ArrayList;
 import java.sql.SQLException;
 
@@ -19,7 +20,7 @@ public class PagamentoBLL {
     PagamentoDAL dal = new PagamentoDAL();
 
     //Incluir um registro
-    public String insert(Pagamento pagamento) throws SQLException{
+    public String insert(Pagamento pagamento) throws SQLException {
         StringBuilder builder = new StringBuilder();
 
         if (pagamento.getDataPagamento().equals("") || pagamento.getDataPagamento() == null) {
@@ -34,12 +35,12 @@ public class PagamentoBLL {
     }
 
     // Obter todos os registros
-    public ArrayList<Pagamento> getAll() throws SQLException{
+    public ArrayList<Pagamento> getAll() throws SQLException {
         return dal.getAll();
     }
 
     //Atualizar um registro existente
-    public String update(Pagamento pagamento) throws SQLException{
+    public String update(Pagamento pagamento) throws SQLException {
         StringBuilder builder = new StringBuilder();
 
         if (pagamento.getDataPagamento().equals("") || pagamento.getDataPagamento() == null) {
@@ -55,18 +56,27 @@ public class PagamentoBLL {
     }
 
     //Excluir um registro
-    public String delete(Pagamento pagamento) throws SQLException{
+    public String delete(Pagamento pagamento) throws SQLException {
         String respostaDB = dal.delete(pagamento);
         return respostaDB;
     }
 
-    //    //Obter um registro
-//    public String getById(Pagamento pagamento) throws SQLException {
-//
-//    }
-//
-//    //Obter último registro
-//    public String getLastRegister(Pagamento pagamento) throws SQLException {
-//
-//    }
+    //Obter um registro
+    public Pagamento getById(Pagamento pagamento) throws Exception {
+        if (pagamento.getId() < 0 || pagamento.getId() != 0) {
+            throw new Exception("O ID do pagamento deve ser informado.");
+        }
+
+        return dal.getById(pagamento.getId());
+    }
+
+    //Obter último registro
+    public Pagamento getLastRegister() throws SQLException {
+        return dal.getLastRegister();
+    }
+    
+    //Obtem lista de pagamentos por tipo
+    public ArrayList<Pagamento> getByTipoPagamento(TipoPagamento tipoPagamento) throws SQLException{
+        return dal.getByTipoPagamento(tipoPagamento);
+    }
 }
