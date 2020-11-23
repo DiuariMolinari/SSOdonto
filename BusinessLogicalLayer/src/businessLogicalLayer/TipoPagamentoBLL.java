@@ -7,6 +7,7 @@ package businessLogicalLayer;
 
 import dataaccesslayer.TipoPagamentoDAL;
 import domain.TipoPagamento;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +20,7 @@ public class TipoPagamentoBLL {
     TipoPagamentoDAL dal = new TipoPagamentoDAL();
 
     //Incluir um registro
-    public String insert(TipoPagamento tipoPagamento) throws Exception {
+    public String insert(TipoPagamento tipoPagamento) throws SQLException {
         StringBuilder builder = new StringBuilder();
 
         if (tipoPagamento.getTipoPagamento().isEmpty() || tipoPagamento.getTipoPagamento().trim().length() == 0) {
@@ -38,12 +39,12 @@ public class TipoPagamentoBLL {
     }
 
     // Obter todos os registros
-    public ArrayList<TipoPagamento> getAll() throws Exception {
+    public ArrayList<TipoPagamento> getAll() throws SQLException {
         return dal.getAll();
     }
 
     //Atualizar um registro existente
-    public String update(TipoPagamento tipoPagamento) throws Exception {
+    public String update(TipoPagamento tipoPagamento) throws SQLException {
         StringBuilder builder = new StringBuilder();
 
         if (tipoPagamento.getTipoPagamento().isEmpty() || tipoPagamento.getTipoPagamento().trim().length() == 0) {
@@ -63,18 +64,22 @@ public class TipoPagamentoBLL {
     }
 
     //Excluir um registro
-    public String delete(TipoPagamento tipoPagamento) throws Exception {
+    public String delete(TipoPagamento tipoPagamento) throws SQLException {
         String respostaDB = dal.delete(tipoPagamento);
         return respostaDB;
     }
 
-   //    //Obter um registro
-//    public String getById(TipoPagamento tipoPagamento) throws Exception {
-//
-//    }
-//
-//    //Obter último registro
-//    public String getLastRegister(TipoPagamento tipoPagamento) throws Exception {
-//
-//    }
+    //Obter um registro
+    public TipoPagamento getById(TipoPagamento tipoPagamento) throws Exception {
+        if (tipoPagamento.getId() < 0 || tipoPagamento.getId() != 0) {
+            throw new Exception("O ID do tipo de pagamento deve ser informado.");
+        }
+
+        return dal.getById(tipoPagamento.getId());
+    }
+
+    //Obter último registro
+    public TipoPagamento getLastRegister() throws SQLException {
+        return dal.getLastRegister();
+    }
 }

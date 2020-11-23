@@ -140,14 +140,18 @@ public class PacienteBLL {
         return respostaDB;
     }
 
-    //    //Obter um registro
-//    public String getById(Paciente paciente) throws SQLException {
-//
-//    }
-//
-//    //Obter último registro
-//    public String getLastRegister(Paciente paciente) throws SQLException {
-//
-//    }
-//
+    //Obter um registro
+    public Paciente getById(Paciente paciente) throws Exception {
+        if (paciente.getId() < 0 || paciente.getId() != 0) {
+            throw new Exception("O ID do paciente deve ser informado.");
+        }
+
+        return dal.getById(paciente.getId());
+    }
+
+    //Obter último registro
+    public Paciente getLastRegister() throws SQLException {
+        return dal.getLastRegister();
+    }
+
 }

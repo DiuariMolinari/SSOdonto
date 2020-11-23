@@ -7,6 +7,7 @@ package businessLogicalLayer;
 
 import dataaccesslayer.TipoEmbalagemDAL;
 import domain.TipoEmbalagem;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +20,7 @@ public class TipoEmbalagemBLL {
     TipoEmbalagemDAL dal = new TipoEmbalagemDAL();
 
     //Incluir um registro
-    public String insert(TipoEmbalagem tipoEmbalagem) throws Exception {
+    public String insert(TipoEmbalagem tipoEmbalagem) throws SQLException {
         StringBuilder builder = new StringBuilder();
 
         if (tipoEmbalagem.getDescricao().isEmpty() || tipoEmbalagem.getDescricao().trim().length() == 0) {
@@ -38,12 +39,12 @@ public class TipoEmbalagemBLL {
     }
 
     // Obter todos os registros
-    public ArrayList<TipoEmbalagem> getAll() throws Exception {
+    public ArrayList<TipoEmbalagem> getAll() throws SQLException {
         return dal.getAll();
     }
 
     //Atualizar um registro existente
-    public String update(TipoEmbalagem tipoEmbalagem) throws Exception {
+    public String update(TipoEmbalagem tipoEmbalagem) throws SQLException {
         StringBuilder builder = new StringBuilder();
 
         if (tipoEmbalagem.getDescricao().isEmpty() || tipoEmbalagem.getDescricao().trim().length() == 0) {
@@ -63,18 +64,22 @@ public class TipoEmbalagemBLL {
     }
 
     //Excluir um registro
-    public String delete(TipoEmbalagem tipoEmbalagem) throws Exception {
+    public String delete(TipoEmbalagem tipoEmbalagem) throws SQLException {
         String respostaDB = dal.delete(tipoEmbalagem);
         return respostaDB;
     }
 
-    //    //Obter um registro
-//    public String getById(TipoEmbalagem tipoEmbalagem) throws Exception {
-//
-//    }
-//
-//    //Obter último registro
-//    public String getLastRegister(TipoEmbalagem tipoEmbalagem) throws Exception {
-//
-//    }
+    //Obter um registro
+    public TipoEmbalagem getById(TipoEmbalagem tipoEmbalagem) throws Exception {
+        if (tipoEmbalagem.getId() < 0 || tipoEmbalagem.getId() != 0) {
+            throw new Exception("O ID do tipo de embalagem deve ser informado.");
+        }
+
+        return dal.getById(tipoEmbalagem.getId());
+    }
+
+    //Obter último registro
+    public TipoEmbalagem getLastRegister() throws SQLException {
+        return dal.getLastRegister();
+    }
 }

@@ -7,8 +7,9 @@ package businessLogicalLayer;
 
 import dataaccesslayer.ProdutoDAL;
 import domain.Produto;
+import domain.TipoEmbalagem;
+import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
@@ -19,7 +20,7 @@ public class ProdutoBLL {
     ProdutoDAL dal = new ProdutoDAL();
 
     //Incluir um registro
-    public String insert(Produto produto) throws Exception {
+    public String insert(Produto produto) throws SQLException {
         StringBuilder builder = new StringBuilder();
 
         if (produto.getNome().isEmpty() || produto.getNome().trim().length() == 0) {
@@ -46,12 +47,12 @@ public class ProdutoBLL {
     }
 
     // Obter todos os registros
-    public ArrayList<Produto> getAll() throws Exception {
+    public ArrayList<Produto> getAll() throws SQLException {
         return dal.getAll();
     }
 
     //Atualizar um registro existente
-    public String update(Produto produto)throws Exception  {
+    public String update(Produto produto) throws SQLException {
         StringBuilder builder = new StringBuilder();
 
         if (produto.getNome().isEmpty() || produto.getNome().trim().length() == 0) {
@@ -69,7 +70,7 @@ public class ProdutoBLL {
         if (produto.getDataCompra().equals("") || produto.getDataCompra() == null) {
             builder.append("A data da compra deve ser informado.");
         }
-        
+
         if (builder.length() != 0) {
             return builder.toString();
         }
@@ -79,18 +80,26 @@ public class ProdutoBLL {
     }
 
     //Excluir um registro
-    public String delete(Produto produto) throws Exception {
+    public String delete(Produto produto) throws SQLException {
         String respostaDB = dal.delete(produto);
         return respostaDB;
     }
 
-  //    //Obter um registro
-//    public String getById(Produto produto) throws Exception {
-//
-//    }
-//
-//    //Obter último registro
-//    public String getLastRegister(Produto produto) throws Exception {
-//
-//    }
+    //Obter um registro
+    public Produto getById(Produto produto) throws Exception {
+        if (produto.getId() < 0 || produto.getId() != 0) {
+            throw new Exception("O ID do produto deve ser informado.");
+        }
+
+        return dal.getById(produto.getId());
+    }
+
+    //Obter último registro
+    public Produto getLastRegister() throws SQLException {
+        return dal.getLastRegister();
+    }
+    
+    public ArrayList<Produto> getByTipoEmbalagem(TipoEmbalagem tipoEmbalagem) throws SQLException{
+        return dal.getByTipoEmbalagem(tipoEmbalagem);
+    }
 }

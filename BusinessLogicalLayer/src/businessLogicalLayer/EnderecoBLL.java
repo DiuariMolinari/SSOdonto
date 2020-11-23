@@ -9,7 +9,7 @@ import dataaccesslayer.EnderecoDAL;
 import domain.Endereco;
 import java.util.ArrayList;
 import java.sql.SQLException;
-
+import domain.Logradouro;
 
 /**
  *
@@ -43,7 +43,7 @@ public class EnderecoBLL {
     }
 
     //Obter todos os registros
-    public ArrayList<Endereco> getAll() throws SQLException{
+    public ArrayList<Endereco> getAll() throws SQLException {
         return dal.getAll();
     }
 
@@ -77,18 +77,22 @@ public class EnderecoBLL {
         return respostaDB;
     }
 
-    //    //Obter um registro
-//    public String getById(Endereco endereco) throws SQLException {
-//
-//    }
-//
-//    //Obter último registro
-//    public String getLastRegister(Endereco endereco) throws SQLException {
-//
-//    }
-//
-//    //Obter registros de determinado estado
-//    public ArrayList<Endereco> getByLogradouro(Endereco endereco) throws SQLException {
-//
-//    }
+    //Obter um registro
+    public Endereco getById(Endereco endereco) throws Exception {
+        if (endereco.getId() != 0 || endereco.getId() < 0) {
+            throw new Exception("O ID do endereco deve ser informado.");
+        }
+
+        return dal.getById(endereco.getId());
+    }
+
+    //Obter último registro
+    public Endereco getLastRegister() throws SQLException {
+        return dal.getLastRegister();
+    }
+
+    //Obter registros de determinado estado
+    public ArrayList<Endereco> getByLogradouro(Logradouro logradouro) throws SQLException {
+        return dal.getByLogradouro(logradouro);
+    }
 }

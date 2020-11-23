@@ -19,7 +19,7 @@ public class PaisBLL {
     PaisDAL dal = new PaisDAL();
 
     //Incluir um registro
-    public String insert(Pais pais) throws SQLException{
+    public String insert(Pais pais) throws SQLException {
         StringBuilder builder = new StringBuilder();
 
         if (pais.getNome().isEmpty() || pais.getNome().trim().length() == 0) {
@@ -39,12 +39,12 @@ public class PaisBLL {
     }
 
     // Obter todos os registros
-    public ArrayList<Pais> getAll() throws SQLException{
+    public ArrayList<Pais> getAll() throws SQLException {
         return dal.getAll();
     }
 
     //Atualizar um registro existente
-    public String update(Pais pais) throws SQLException{
+    public String update(Pais pais) throws SQLException {
         StringBuilder builder = new StringBuilder();
 
         if (pais.getNome().length() > 20) {
@@ -69,13 +69,17 @@ public class PaisBLL {
         return respostaDB;
     }
 
-    //    //Obter um registro
-//    public String getById(Pais pais) throws SQLException {
-//
-//    }
-//
-//    //Obter último registro
-//    public String getLastRegister(Pais pais) throws SQLException {
-//
-//    }
+    //Obter um registro
+    public Pais getById(Pais pais) throws Exception {
+        if (pais.getId() < 0 || pais.getId() != 0) {
+            throw new Exception("O ID do país deve ser informado.");
+        }
+
+        return dal.getById(pais.getId());
+    }
+
+    //Obter último registro
+    public Pais getLastRegister() throws SQLException {
+        return dal.getLastRegister();
+    }
 }

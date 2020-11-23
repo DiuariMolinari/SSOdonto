@@ -68,13 +68,17 @@ public class FoneTipoBLL {
         return respostaDB;
     }
 
-    //    //Obter um registro
-//    public String getById(FoneTipo foneTipo) throws SQLException {
-//
-//    }
-//
-//    //Obter último registro
-//    public String getLastRegister(FoneTipo foneTipo) throws SQLException {
-//
-//    }
+    //Obter um registro
+    public FoneTipo getById(FoneTipo foneTipo) throws Exception {
+        if (foneTipo.getId() < 0 || foneTipo.getId() != 0) {
+            throw new Exception("O ID do tipo de fone deve ser informado.");
+        }
+
+        return dal.getById(foneTipo.getId());
+    }
+
+    //Obter último registro
+    public FoneTipo getLastRegister() throws SQLException {
+        return dal.getLastRegister();
+    }
 }

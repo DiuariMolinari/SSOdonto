@@ -107,14 +107,17 @@ public class ColaboradorBLL {
         return respostaDB;
     }
 
-    //    //Obter um registro
-//    public String getById(Colaborador colaborador) throws SQLException {
-//
-//    }
-//
-//    //Obter último registro
-//    public String getLastRegister(Colaborador colaborador) throws SQLException {
-//
-//    }
-//
+    //Obter um registro
+    public Colaborador getById(Colaborador colaborador) throws Exception {
+        if (colaborador.getId() != 0 || colaborador.getId() < 0) {
+            throw new Exception("O ID do colaborador deve ser informado.");
+        }
+        
+        return dal.getById(colaborador.getId());
+    }
+
+    //Obter último registro
+    public Colaborador getLastRegister() throws SQLException {
+        return dal.getLastRegister();
+    }
 }
