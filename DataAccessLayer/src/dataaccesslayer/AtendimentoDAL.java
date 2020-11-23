@@ -8,6 +8,7 @@ import domain.Procedimento;
 import domain.Atendimento;
 import domain.Paciente;
 import domain.Colaborador;
+import domain.TipoProcedimento;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -45,11 +46,16 @@ public class AtendimentoDAL {
         try 
         {
             ArrayList<Procedimento> Procedimentos = new ArrayList<Procedimento>();
-            PreparedStatement pst = conexao.getConexao().prepareStatement("SELECT * FROM AtendimentoAtendimentos where idAtendimento = " + idAtendimento, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            PreparedStatement pst = conexao.getConexao().prepareStatement("SELECT * FROM AtendimentoProcedimentos where idAtendimento = " + idAtendimento, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
             ResultSet rs = pst.executeQuery();
             while (rs.next())
             {
-                Procedimento Procedimento = new ProcedimentoDAL().getById(rs.getInt("IDProcedimento"));
+                PreparedStatement pst2 = conexao.getConexao().prepareStatement("SELECT * FROM procedimento where idProcedimento = " + rs.getInt("idProcedimento"), ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+                ResultSet rs2 = pst2.executeQuery();
+                rs2.first();
+                
+                TipoProcedimento tipoprocedimento = new TipoProcedimentoDAL().getById(rs2.getInt("idTipoProcedimento"));
+                Procedimento Procedimento = new Procedimento(rs2.getInt("idProcedimento"), rs2.getString("nomeProcedimento"), tipoprocedimento, rs2.getString("dsProcedimento"));
                 Procedimentos.add(Procedimento);
             }
             

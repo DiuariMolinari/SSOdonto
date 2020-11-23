@@ -7,23 +7,23 @@ package businessLogicalLayer;
 
 import dataaccesslayer.BairroDAL;
 import domain.Bairro;
+import java.util.ArrayList;
 import java.sql.SQLException;
-import java.util.List;
+
 
 /**
  *
  * @author Marciele
  */
 public class BairroBLL {
-    //TODO: Obter um registro
 
     BairroDAL dal = new BairroDAL();
 
     //Incluir um registro
-    public String Inserir(Bairro bairro) throws SQLException {
+    public String insert(Bairro bairro) throws SQLException {
         StringBuilder builder = new StringBuilder();
 
-        if (bairro.getNome().isEmpty() ||bairro.getNome().trim().length() == 0) {
+        if (bairro.getNome().isEmpty() || bairro.getNome().trim().length() == 0) {
             builder.append("O nome do bairro deve ser informado.");
         }
 
@@ -34,17 +34,18 @@ public class BairroBLL {
         if (builder.length() != 0) {
             return builder.toString();
         }
+
         String respostaDB = dal.insert(bairro);
         return respostaDB;
     }
 
     //Obter todos os registros
-    public List<Bairro> LerTodos() throws SQLException {
+    public ArrayList<Bairro> getAll() throws SQLException {
         return dal.getAll();
     }
 
     //Atualizar um registro existente
-    public String Atualizar(Bairro bairro) throws SQLException {
+    public String update(Bairro bairro) throws SQLException {
         StringBuilder builder = new StringBuilder();
 
         if (bairro.getNome().isEmpty() || bairro.getNome().trim().length() == 0) {
@@ -64,8 +65,79 @@ public class BairroBLL {
     }
 
     //Excluir um registro
-    public String Deletar(Bairro bairro) throws SQLException {
+    public String delete(Bairro bairro) throws SQLException {
         String respostaDB = dal.delete(bairro);
+        return respostaDB;
+    }
+
+    //Obter um registro
+    public String getById(Bairro bairro) throws SQLException {
+        StringBuilder builder = new StringBuilder();
+
+        if (bairro.getId() != 0 || bairro.getId() < 0) {
+            builder.append("O ID do bairro deve ser informado.");
+        }
+
+        if (builder.length() != 0) {
+            return builder.toString();
+        }
+
+        String respostaDB = dal.getById(bairro);
+        return respostaDB;
+    }
+
+    //Obter todos os bairros por cidade
+    public ArrayList<Bairro> getByCidade(Bairro bairro) throws SQLException {
+        StringBuilder builder = new StringBuilder();
+
+        if (bairro.getCidade().getId()  {
+            builder.append("O ID do bairro deve ser informado.");
+        }
+
+        if (bairro.getCidade().length() > 50) {
+            builder.append("O nome do bairro não pode conter mais que 50 caracteres. ");
+        }
+
+        if (bairro.getCidade().getNome().length() < 0) {
+            builder.append("O ID do bairro deve ser informado.");
+        }
+        if (bairro.getCidade().length() > 50) {
+            builder.append("O nome do bairro não pode conter mais que 50 caracteres. ");
+        }
+
+        if (bairro.getCidade().getEstado().length() < 0) {
+            builder.append("O ID do bairro deve ser informado.");
+        }
+
+        if (bairro.getCidade().length() > 50) {
+            builder.append("O nome do bairro não pode conter mais que 50 caracteres. ");
+        }
+
+        if (builder.length() != 0) {
+            return builder.toString();
+        }
+
+        String respostaDB = dal.getByCidade(bairro);
+        return respostaDB;
+    }
+
+    //Obter último registro
+    public String getLastRegister(Bairro bairro) throws SQLException {
+        StringBuilder builder = new StringBuilder();
+
+        if (bairro.getNome().isEmpty() || bairro.getNome().trim().length() == 0) {
+            builder.append("O nome do bairro deve ser informado.");
+        }
+
+        if (bairro.getNome().length() > 50) {
+            builder.append("O nome do bairro não pode conter mais que 50 caracteres. ");
+        }
+
+        if (builder.length() != 0) {
+            return builder.toString();
+        }
+
+        String respostaDB = dal.getLastRegister(bairro);
         return respostaDB;
     }
 }

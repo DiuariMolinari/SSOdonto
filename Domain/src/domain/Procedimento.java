@@ -21,6 +21,12 @@ public class Procedimento {
     public Procedimento(int id) {
         this.id = id;
     }
+    public Procedimento(int id, String nome, TipoProcedimento tipoProcedimento, String descricaoProcedimento) {
+        this.id = id;
+        this.nome = nome;
+        this.tipoProcedimento = tipoProcedimento;
+        this.descricaoProcedimento = descricaoProcedimento;
+    }
     
     public Procedimento(int id, String nome, TipoProcedimento tipoProcedimento, String descricaoProcedimento, ArrayList<Atendimento> atendimentos) {
         this.id = id;

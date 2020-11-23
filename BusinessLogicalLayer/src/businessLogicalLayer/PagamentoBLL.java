@@ -5,9 +5,10 @@
  */
 package businessLogicalLayer;
 
-import dataAccessLayer.PagamentoDAL;
+import dataaccesslayer.PagamentoDAL;
 import domain.Pagamento;
-import java.util.List;
+import java.util.ArrayList;
+import java.sql.SQLException;
 
 /**
  *
@@ -18,7 +19,7 @@ public class PagamentoBLL {
     PagamentoDAL dal = new PagamentoDAL();
 
     //Incluir um registro
-    public String Inserir(Pagamento pagamento) {
+    public String insert(Pagamento pagamento) throws SQLException{
         StringBuilder builder = new StringBuilder();
 
         if (pagamento.getDataPagamento().equals("") || pagamento.getDataPagamento() == null) {
@@ -28,17 +29,17 @@ public class PagamentoBLL {
         if (builder.length() != 0) {
             return builder.toString();
         }
-        String respostaDB = dal.Inserir(pagamento);
+        String respostaDB = dal.insert(pagamento);
         return respostaDB;
     }
 
     // Obter todos os registros
-    public List<Pagamento> LerTodos() {
-        return dal.LerTodos();
+    public ArrayList<Pagamento> getAll() throws SQLException{
+        return dal.getAll();
     }
 
     //Atualizar um registro existente
-    public String Atualizar(Pagamento pagamento) {
+    public String update(Pagamento pagamento) throws SQLException{
         StringBuilder builder = new StringBuilder();
 
         if (pagamento.getDataPagamento().equals("") || pagamento.getDataPagamento() == null) {
@@ -49,15 +50,23 @@ public class PagamentoBLL {
             return builder.toString();
         }
 
-        String respostaDB = dal.Atualizar(pagamento);
+        String respostaDB = dal.update(pagamento);
         return respostaDB;
     }
 
     //Excluir um registro
-    public String Deletar(Pagamento pagamento) {
-        String respostaDB = dal.Deletar(pagamento);
+    public String delete(Pagamento pagamento) throws SQLException{
+        String respostaDB = dal.delete(pagamento);
         return respostaDB;
     }
 
-    //TODO: Obter um registro  
+    //    //Obter um registro
+//    public String getById(Pagamento pagamento) throws SQLException {
+//
+//    }
+//
+//    //Obter último registro
+//    public String getLastRegister(Pagamento pagamento) throws SQLException {
+//
+//    }
 }

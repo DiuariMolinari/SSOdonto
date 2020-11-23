@@ -7,8 +7,10 @@ package businessLogicalLayer;
 
 import dataaccesslayer.CidadeDAL;
 import domain.Cidade;
+import java.util.ArrayList;
 import java.sql.SQLException;
-import java.util.List;
+import javax.xml.bind.ValidationException;
+
 
 /**
  *
@@ -16,11 +18,10 @@ import java.util.List;
  */
 public class CidadeBLL {
 
-    //TODO: Obter um registro
     CidadeDAL dal = new CidadeDAL();
 
     //Incluir um registro
-    public String Inserir(Cidade cidade) throws SQLException {
+    public String insert(Cidade cidade) throws SQLException {
         StringBuilder builder = new StringBuilder();
 
         if (cidade.getNome().isEmpty() || cidade.getNome().trim().length() == 0) {
@@ -39,12 +40,12 @@ public class CidadeBLL {
     }
 
     // Obter todos os registros
-    public List<Cidade> LerTodos() throws SQLException {
+    public ArrayList<Cidade> getAll() throws SQLException {
         return dal.getAll();
     }
 
     //Atualizar um registro existente
-    public String Atualizar(Cidade cidade) throws SQLException {
+    public String update(Cidade cidade) throws SQLException {
         StringBuilder builder = new StringBuilder();
 
         if (cidade.getNome().length() > 50) {
@@ -64,8 +65,28 @@ public class CidadeBLL {
     }
 
     //Excluir um registro
-    public String Deletar(Cidade cidade) throws SQLException {
+    public String delete(Cidade cidade) throws SQLException {
         String respostaDB = dal.delete(cidade);
         return respostaDB;
     }
+
+//    //Obter um registro
+    public Cidade getById(Cidade cidade) throws Exception {
+        
+        if (cidade.getId() != 0 || cidade.getId() < 0) {
+            throw new ValidationException("O ID da cidade deve ser informado.");
+        }
+
+        return dal.getById(cidade.getId());
+    }
+
+//    //Obter último registro
+//    public String getLastRegister(Cidade cidade) throws SQLException {
+//
+//    }
+//
+//    //Obter registros de determinado estado
+//    public ArrayList<Cidade> getByEstado(Cidade cidade) throws SQLException {
+//
+//    }
 }

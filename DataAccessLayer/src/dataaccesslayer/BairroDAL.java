@@ -145,6 +145,10 @@ public class BairroDAL {
     
     public String delete(Bairro Bairro) throws SQLException {
         try {
+            if (Bairro.getId() == 0) {
+                return "Bairro informada inválido!";
+            }
+            
             PreparedStatement pst = conexao.getConexao().prepareStatement("DELETE FROM Bairro WHERE IDBairro = ?");
             pst.setInt(1, Bairro.getId());
             pst.executeUpdate();

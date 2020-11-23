@@ -26,7 +26,7 @@ public class PacienteDAL {
             rs.first();
             
             Endereco Endereco = new EnderecoDAL().getById(rs.getInt("IDEndereco"));
-            return new Paciente(rs.getInt("IDPaciente"), rs.getString("NOMEPaciente"), rs.getString("SOBRENOME"), rs.getString("rg"), rs.getString("cpf"), rs.getDate("dtNascimento").toLocalDate(), rs.getString("OBS"), Endereco);
+            return new Paciente(rs.getInt("IDPaciente"), rs.getString("nome"), rs.getString("SOBRENOME"), rs.getString("rg"), rs.getString("cpf"), rs.getDate("dtNascimento").toLocalDate(), rs.getString("OBS"), Endereco);
         }
         
         catch (Exception e) {
@@ -46,7 +46,7 @@ public class PacienteDAL {
             ResultSet rs = pst.executeQuery();
             rs.first();
             Endereco Endereco = new EnderecoDAL().getById(rs.getInt("IDEndereco"));
-            return new Paciente(rs.getInt("IDPaciente"), rs.getString("NOMEPaciente"), rs.getString("SOBRENOME"), rs.getString("rg"), rs.getString("cpf"), rs.getDate("dtNascimento").toLocalDate(), rs.getString("OBS"), Endereco);
+            return new Paciente(rs.getInt("IDPaciente"), rs.getString("nome"), rs.getString("SOBRENOME"), rs.getString("rg"), rs.getString("cpf"), rs.getDate("dtNascimento").toLocalDate(), rs.getString("OBS"), Endereco);
         } 
         
         catch (Exception e) {
@@ -70,7 +70,7 @@ public class PacienteDAL {
                 Endereco Endereco = new EnderecoDAL().getById(rs.getInt("IDEndereco"));
                 Pacientes.add(new Paciente(
                         rs.getInt("IDPaciente"), 
-                        rs.getString("NOMEPaciente"), 
+                        rs.getString("nome"), 
                         rs.getString("SOBRENOME"), 
                         rs.getString("rg"), 
                         rs.getString("cpf"), 
@@ -144,6 +144,10 @@ public class PacienteDAL {
     
     public String delete(Paciente Paciente) throws SQLException {
         try {
+            if (Paciente.getId() == 0) {
+                return "Paciente informado inválido!";
+            }
+            
             PreparedStatement pst = conexao.getConexao().prepareStatement("DELETE FROM Paciente WHERE IDPaciente = ?");
             pst.setInt(1, Paciente.getId());
             pst.executeUpdate();

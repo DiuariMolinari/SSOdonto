@@ -211,6 +211,10 @@ public class ColaboradorDAL {
     
     public String delete(Colaborador Colaborador) throws SQLException {
         try {
+            if (Colaborador.getId() == 0) {
+                return "Colaborador informado inválido!";
+            }
+            
             PreparedStatement pst = conexao.getConexao().prepareStatement("DELETE FROM Colaborador WHERE IDColaborador = ?");
             pst.setInt(1, Colaborador.getId());
             pst.executeUpdate();

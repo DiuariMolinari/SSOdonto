@@ -150,6 +150,10 @@ public class ClinicaDAL {
     
     public String delete(Clinica Clinica) throws SQLException {
         try {
+            if (Clinica.getId() == 0) {
+                return "Clínica informada inválida!";
+            }
+            
             PreparedStatement pst = conexao.getConexao().prepareStatement("DELETE FROM Clinica WHERE IDClinica = ?");
             pst.setInt(1, Clinica.getId());
             pst.executeUpdate();

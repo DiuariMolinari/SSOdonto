@@ -120,6 +120,10 @@ public class FuncaoDAL {
     
     public String delete(Funcao Funcao) throws SQLException {
         try {
+            if (Funcao.getId() == 0) {
+                return "Funcao informada inválida!";
+            }
+            
             PreparedStatement pst = conexao.getConexao().prepareStatement("DELETE FROM Funcao WHERE IDFuncao = ?");
             pst.setInt(1, Funcao.getId());
             pst.executeUpdate();

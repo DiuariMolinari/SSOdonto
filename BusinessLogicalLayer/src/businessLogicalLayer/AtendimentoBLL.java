@@ -7,7 +7,9 @@ package businessLogicalLayer;
 
 import dataaccesslayer.AtendimentoDAL;
 import domain.Atendimento;
-import java.util.List;
+import java.util.ArrayList;
+import java.sql.SQLException;
+
 
 /**
  *
@@ -18,12 +20,8 @@ public class AtendimentoBLL {
     AtendimentoDAL dal = new AtendimentoDAL();
 
     //Incluir um registro
-    public String Inserir(Atendimento atendimento) {
+    public String insert(Atendimento atendimento) throws SQLException{
         StringBuilder builder = new StringBuilder();
-
-        if (atendimento.getQtdProcedimento() < 0 || atendimento.getQtdProcedimento() != 0) {
-            builder.append("A quantidade de procedimento deve ser informado.");
-        }
 
         if (builder.length() != 0) {
             return builder.toString();
@@ -33,17 +31,14 @@ public class AtendimentoBLL {
     }
 
     // Obter todos os registros
-    public List<Atendimento> LerTodos() {
-        return dal.LerTodos();
+    public ArrayList<Atendimento> getAll() throws SQLException{
+        return dal.getAll();
     }
 
     //Atualizar um registro existente
-    public String Atualizar(Atendimento atendimento) {
+    public String update(Atendimento atendimento) throws SQLException {
         StringBuilder builder = new StringBuilder();
 
-        if (atendimento.getQtdProcedimento() < 0 || atendimento.getQtdProcedimento() != 0) {
-            builder.append("A quantidade de procedimento deve ser informado.");
-        }
 
         if (builder.length() != 0) {
             return builder.toString();
@@ -54,10 +49,19 @@ public class AtendimentoBLL {
     }
 
     //Excluir um registro
-    public String Deletar(Atendimento atendimento) {
+    public String delete(Atendimento atendimento) throws SQLException {
         String respostaDB = dal.delete(atendimento);
         return respostaDB;
     }
 
-    //TODO: Obter um registro    
+    //    //Obter um registro
+//    public String getById(Atendimento atendimento) throws SQLException {
+//
+//    }
+//
+//    //Obter último registro
+//    public String getLastRegister(Atendimento atendimento) throws SQLException {
+//
+//    }
+//
 }

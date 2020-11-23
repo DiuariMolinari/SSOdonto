@@ -7,8 +7,9 @@ package businessLogicalLayer;
 
 import dataaccesslayer.EstadoDAL;
 import domain.Estado;
+import java.util.ArrayList;
 import java.sql.SQLException;
-import java.util.List;
+
 
 /**
  *
@@ -19,7 +20,7 @@ public class EstadoBLL {
     EstadoDAL dal = new EstadoDAL();
 
     //Incluir um registro
-    public String Inserir(Estado estado) throws SQLException {
+    public String insert(Estado estado) throws SQLException {
         StringBuilder builder = new StringBuilder();
 
         if (estado.getNome().isEmpty() || estado.getNome().trim().length() == 0) {
@@ -38,12 +39,12 @@ public class EstadoBLL {
     }
 
     // Obter todos os registros
-    public List<Estado> LerTodos() throws SQLException {
+    public ArrayList<Estado> gettAll() throws SQLException {
         return dal.getAll();
     }
 
     //Atualizar um registro existente
-    public String Atualizar(Estado estado) throws SQLException {
+    public String update(Estado estado) throws SQLException {
         StringBuilder builder = new StringBuilder();
 
         if (estado.getNome().isEmpty() || estado.getNome().trim().length() == 0) {
@@ -63,10 +64,23 @@ public class EstadoBLL {
     }
 
     //Excluir um registro
-    public String Deletar(Estado estado) throws SQLException {
+    public String delete(Estado estado) throws SQLException {
         String respostaDB = dal.delete(estado);
         return respostaDB;
     }
 
-    //TODO: Obter um registro
+    //    //Obter um registro
+//    public String getById(Estado estado) throws SQLException {
+//
+//    }
+//
+//    //Obter último registro
+//    public String getLastRegister(Estado estado) throws SQLException {
+//
+//    }
+//
+//    //Obter registros de determinado estado
+//    public ArrayList<Estado> getByPais(Estado estado) throws SQLException {
+//
+//    }
 }

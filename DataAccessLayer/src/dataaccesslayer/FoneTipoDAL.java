@@ -116,6 +116,10 @@ public class FoneTipoDAL {
     
     public String delete(FoneTipo FoneTipo) throws SQLException {
         try {
+            if (FoneTipo.getId() == 0) {
+                return "Tipo de telefone informado é inválido!";
+            }
+            
             PreparedStatement pst = conexao.getConexao().prepareStatement("DELETE FROM FoneTipo WHERE IDFoneTipo = ?");
             pst.setInt(1, FoneTipo.getId());
             pst.executeUpdate();

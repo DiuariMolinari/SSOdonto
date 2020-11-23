@@ -21,6 +21,12 @@ public class Atendimento {
         this.id = id;
     }
     
+    public Atendimento(int id, Paciente paciente, Colaborador colaborador) {
+        this.id = id;
+        this.paciente = paciente;
+        this.colaborador = colaborador;
+    }
+    
     public Atendimento(int id, Paciente paciente, Colaborador colaborador, ArrayList<Procedimento> procedimentos) {
         this.id = id;
         this.paciente = paciente;
