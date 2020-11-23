@@ -39,7 +39,7 @@ public class ProcedimentoDAL {
         }
     }
     
-    private ArrayList<Atendimento> getAtendimentos(int idProcedimento) throws SQLException {
+    public ArrayList<Atendimento> getAtendimentos(int idProcedimento) throws SQLException {
         try 
         {
             ArrayList<Atendimento> atendimentos = new ArrayList<Atendimento>();

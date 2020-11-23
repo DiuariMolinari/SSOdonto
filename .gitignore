@@ -120,3 +120,10 @@ nbdist/
 
 # End of https://www.toptal.com/developers/gitignore/api/netbeans,java,code-java,java-web,eclipse
 
+PresentationLayer/dist
+PresentationLayer/build
+Domain/dist
+*.properties
+DataAccessLayer/build
+Domain/build
+DataAccessLayer/dist
