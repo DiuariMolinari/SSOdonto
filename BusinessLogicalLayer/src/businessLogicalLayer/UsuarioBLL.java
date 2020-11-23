@@ -6,6 +6,7 @@
 package businessLogicalLayer;
 
 import dataaccesslayer.UsuarioDAL;
+import domain.Colaborador;
 import domain.Usuario;
 import java.util.ArrayList;
 import java.sql.SQLException;
@@ -44,12 +45,12 @@ public class UsuarioBLL {
         return respostaDB;
     }
 
-
     public String Autenticar(String login, String password) throws ValidatorException {
         Usuario user = dal.Autenticar(login, password);
-        if (user == null)
+        if (user == null) {
             return "Usuário e/ou senha inválidos.";
-      
+        }
+
         Parametros.UsuarioLogado = user;
         return "Usuário autenticado com sucesso!";
     }
@@ -91,13 +92,21 @@ public class UsuarioBLL {
         return respostaDB;
     }
 
-    //    //Obter um registro
-//    public String getById(Usuario usuario) throws SQLException {
-//
-//    }
-//
-//    //Obter último registro
-//    public String getLastRegister(Usuario usuario) throws SQLException {
-//
-//    }
+    //Obter um registro
+    public Usuario getById(Usuario usuario) throws Exception {
+        if (usuario.getId() < 0 || usuario.getId() != 0) {
+            throw new Exception("O ID do usuário deve ser informado.");
+        }
+
+        return dal.getById(usuario.getId());
+    }
+
+    //Obter último registro
+    public Usuario getLastRegister() throws SQLException {
+        return dal.getLastRegister();
+    }
+    
+    public Usuario getByColaborador(Colaborador colaborador) throws SQLException{
+        return dal.getByColaborador(colaborador);
+    }
 }

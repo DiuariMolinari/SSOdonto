@@ -7,9 +7,9 @@ package businessLogicalLayer;
 
 import dataaccesslayer.EstadoDAL;
 import domain.Estado;
+import domain.Pais;
 import java.util.ArrayList;
 import java.sql.SQLException;
-
 
 /**
  *
@@ -69,18 +69,22 @@ public class EstadoBLL {
         return respostaDB;
     }
 
-    //    //Obter um registro
-//    public String getById(Estado estado) throws SQLException {
-//
-//    }
-//
-//    //Obter último registro
-//    public String getLastRegister(Estado estado) throws SQLException {
-//
-//    }
-//
-//    //Obter registros de determinado estado
-//    public ArrayList<Estado> getByPais(Estado estado) throws SQLException {
-//
-//    }
+    //Obter um registro
+    public Estado getById(Estado estado) throws Exception {
+        if (estado.getId() != 0 || estado.getId() < 0) {
+            throw new Exception("O ID do estado deve ser informado.");
+        }
+
+        return dal.getById(estado.getId());
+    }
+
+    //Obter último registro
+    public Estado getLastRegister() throws SQLException {
+        return dal.getLastRegister();
+    }
+
+    //Obter registros de determinado estado
+    public ArrayList<Estado> getByPais(Pais pais) throws SQLException{
+        return dal.getByPais(pais);
+    }
 }

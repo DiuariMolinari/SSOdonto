@@ -19,7 +19,7 @@ public class TipoProcedimentoBLL {
     TipoProcedimentoDAL dal = new TipoProcedimentoDAL();
 
     //Incluir um registro
-    public String insert(TipoProcedimento tipoProcedimento) throws Exception{
+    public String insert(TipoProcedimento tipoProcedimento) throws Exception {
         StringBuilder builder = new StringBuilder();
 
         if (tipoProcedimento.getNome().isEmpty() || tipoProcedimento.getNome().trim().length() == 0) {
@@ -42,12 +42,12 @@ public class TipoProcedimentoBLL {
     }
 
     // Obter todos os registros
-    public ArrayList<TipoProcedimento> getAll() throws Exception{
+    public ArrayList<TipoProcedimento> getAll() throws Exception {
         return dal.getAll();
     }
 
     //Atualizar um registro existente
-    public String update(TipoProcedimento tipoProcedimento) throws Exception{
+    public String update(TipoProcedimento tipoProcedimento) throws Exception {
         StringBuilder builder = new StringBuilder();
 
         if (tipoProcedimento.getNome().isEmpty() || tipoProcedimento.getNome().trim().length() == 0) {
@@ -76,13 +76,17 @@ public class TipoProcedimentoBLL {
         return respostaDB;
     }
 
-    //    //Obter um registro
-//    public String getById(TipoProcedimento tipoProcedimento) throws Exception {
-//
-//    }
-//
-//    //Obter último registro
-//    public String getLastRegister(TipoProcedimento tipoProcedimento) throws Exception {
-//
-//    }
+    //Obter um registro
+    public TipoProcedimento getById(TipoProcedimento tipoProcedimento) throws Exception {
+        if (tipoProcedimento.getId() < 0 || tipoProcedimento.getId() != 0) {
+            throw new Exception("O ID do tipo de procedimento deve ser informado.");
+        }
+
+        return dal.getById(tipoProcedimento.getId());
+    }
+
+    //Obter último registro
+    public TipoProcedimento getLastRegister() throws Exception {
+        return dal.getLastRegister();
+    }
 }

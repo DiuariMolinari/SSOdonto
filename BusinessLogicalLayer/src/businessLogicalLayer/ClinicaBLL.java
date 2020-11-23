@@ -7,9 +7,10 @@ package businessLogicalLayer;
 
 import dataaccesslayer.ClinicaDAL;
 import domain.Clinica;
+import domain.Endereco;
 import java.util.ArrayList;
 import java.sql.SQLException;
-
+//import javax.xml.bind.ValidationException;
 
 /**
  *
@@ -44,7 +45,7 @@ public class ClinicaBLL {
     }
 
     // Obter todos os registros
-    public ArrayList<Clinica> getAll() throws SQLException{
+    public ArrayList<Clinica> getAll() throws SQLException {
         return dal.getAll();
     }
 
@@ -78,18 +79,22 @@ public class ClinicaBLL {
         return respostaDB;
     }
 
-    //    //Obter um registro
-//    public String getById(Clinica clinica) throws SQLException {
-//
-//    }
-//
-//    //Obter último registro
-//    public String getLastRegister(Clinica clinica) throws SQLException {
-//
-//    }
-//
-//    //Obter registros de determinado estado
-//    public  ArrayList<Clinica> getByEndereco(Clinica clinica) throws SQLException {
-//
-//    }
+    //Obter um registro
+    public Clinica getById(Clinica clinica) throws Exception {
+        if (clinica.getId() != 0 || clinica.getId() < 0) {
+            throw new Exception("O ID da clinica deve ser informado.");
+        }
+
+        return dal.getById(clinica.getId());
+    }
+
+    //Obter último registro
+    public Clinica getLastRegister() throws SQLException {
+        return dal.getLastRegister();
+    }
+
+    //Obter registros de determinado estado
+    public ArrayList<Clinica> getByEndereco(Endereco endereco) throws SQLException {
+        return dal.getByEndereco(endereco);
+    }
 }

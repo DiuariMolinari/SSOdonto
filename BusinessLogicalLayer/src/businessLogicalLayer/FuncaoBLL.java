@@ -50,7 +50,7 @@ public class FuncaoBLL {
     }
 
     // Obter todos os registros
-    public  ArrayList<Funcao> getAll() throws SQLException {
+    public ArrayList<Funcao> getAll() throws SQLException {
         return dal.getAll();
     }
 
@@ -76,8 +76,8 @@ public class FuncaoBLL {
 
         if (funcao.getComissao() < 0) {
             builder.append("A comissão deve ser informado.");
-        } 
-        
+        }
+
         if (builder.length() != 0) {
             return builder.toString();
         }
@@ -92,13 +92,17 @@ public class FuncaoBLL {
         return respostaDB;
     }
 
-    //    //Obter um registro
-//    public String getById(Funcao funcao) throws SQLException {
-//
-//    }
-//
-//    //Obter último registro
-//    public String getLastRegister(Funcao funcao) throws SQLException {
-//
-//    }
+    //Obter um registro
+    public Funcao getById(Funcao funcao) throws Exception {
+        if (funcao.getId() < 0 || funcao.getId() != 0) {
+            throw new Exception("O ID da função deve ser informado.");
+        }
+
+        return dal.getById(funcao.getId());
+    }
+
+    //Obter último registro
+    public Funcao getLastRegister() throws SQLException {
+        return dal.getLastRegister();
+    }
 }
