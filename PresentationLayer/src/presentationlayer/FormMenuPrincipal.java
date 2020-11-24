@@ -69,12 +69,27 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
         menuServico.setText("Serviços");
 
         itemAtendimento.setText("Atendimentos");
+        itemAtendimento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemAtendimentoActionPerformed(evt);
+            }
+        });
         menuServico.add(itemAtendimento);
 
         itemProcedimento.setText("Procedimentos");
+        itemProcedimento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemProcedimentoActionPerformed(evt);
+            }
+        });
         menuServico.add(itemProcedimento);
 
         itemTipoProcedimento.setText("Tipo de Procedimento");
+        itemTipoProcedimento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemTipoProcedimentoActionPerformed(evt);
+            }
+        });
         menuServico.add(itemTipoProcedimento);
 
         jMenuBar1.add(menuServico);
@@ -82,9 +97,19 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
         menuFinanceiro.setText("Financeiro");
 
         itemPagamento.setText("Pagamentos");
+        itemPagamento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemPagamentoActionPerformed(evt);
+            }
+        });
         menuFinanceiro.add(itemPagamento);
 
         itemTipoPagamento.setText("Tipo de Pagamento");
+        itemTipoPagamento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemTipoPagamentoActionPerformed(evt);
+            }
+        });
         menuFinanceiro.add(itemTipoPagamento);
 
         jMenuBar1.add(menuFinanceiro);
@@ -92,9 +117,19 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
         menuGestao.setText("Gestão");
 
         itemClinica.setText("Clínicas");
+        itemClinica.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemClinicaActionPerformed(evt);
+            }
+        });
         menuGestao.add(itemClinica);
 
         itemFuncao.setText("Funções");
+        itemFuncao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemFuncaoActionPerformed(evt);
+            }
+        });
         menuGestao.add(itemFuncao);
 
         jMenuBar1.add(menuGestao);
@@ -102,21 +137,51 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
         menuLocais.setText("Locais");
 
         itemEndereco.setText("Endereços");
+        itemEndereco.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemEnderecoActionPerformed(evt);
+            }
+        });
         menuLocais.add(itemEndereco);
 
         itemLogradouro.setText("Logradouros");
+        itemLogradouro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemLogradouroActionPerformed(evt);
+            }
+        });
         menuLocais.add(itemLogradouro);
 
         itemBairro.setText("Bairros");
+        itemBairro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemBairroActionPerformed(evt);
+            }
+        });
         menuLocais.add(itemBairro);
 
         itemCidade.setText("Cidades");
+        itemCidade.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemCidadeActionPerformed(evt);
+            }
+        });
         menuLocais.add(itemCidade);
 
         itemEstado.setText("Estados");
+        itemEstado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemEstadoActionPerformed(evt);
+            }
+        });
         menuLocais.add(itemEstado);
 
         itemPais.setText("Países");
+        itemPais.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemPaisActionPerformed(evt);
+            }
+        });
         menuLocais.add(itemPais);
 
         jMenuBar1.add(menuLocais);
@@ -124,12 +189,27 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
         menuMaterias.setText("Materias");
 
         itemEstoque.setText("Estoques");
+        itemEstoque.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemEstoqueActionPerformed(evt);
+            }
+        });
         menuMaterias.add(itemEstoque);
 
         itemProduto.setText("Produtos");
+        itemProduto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemProdutoActionPerformed(evt);
+            }
+        });
         menuMaterias.add(itemProduto);
 
         itemTipoEmbalagem.setText("Tipo de Embalagem");
+        itemTipoEmbalagem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemTipoEmbalagemActionPerformed(evt);
+            }
+        });
         menuMaterias.add(itemTipoEmbalagem);
 
         jMenuBar1.add(menuMaterias);
@@ -137,12 +217,27 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
         menuPessoas.setText("Pessoas");
 
         itemColaborador.setText("Colaboradores");
+        itemColaborador.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemColaboradorActionPerformed(evt);
+            }
+        });
         menuPessoas.add(itemColaborador);
 
         itemPaciente.setText("Pacientes");
+        itemPaciente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemPacienteActionPerformed(evt);
+            }
+        });
         menuPessoas.add(itemPaciente);
 
         itemUsuario.setText("Usuários");
+        itemUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemUsuarioActionPerformed(evt);
+            }
+        });
         menuPessoas.add(itemUsuario);
 
         jMenuBar1.add(menuPessoas);
@@ -168,6 +263,82 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void itemAtendimentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemAtendimentoActionPerformed
+       new FormCadastroAtendimento().setVisible(true);
+    }//GEN-LAST:event_itemAtendimentoActionPerformed
+
+    private void itemProcedimentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemProcedimentoActionPerformed
+        new FormCadastroProcedimento().setVisible(true);
+    }//GEN-LAST:event_itemProcedimentoActionPerformed
+
+    private void itemTipoProcedimentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemTipoProcedimentoActionPerformed
+        new FormCadastroTipoProcedimento().setVisible(true);
+    }//GEN-LAST:event_itemTipoProcedimentoActionPerformed
+
+    private void itemPagamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemPagamentoActionPerformed
+        new FormCadastroPagamento().setVisible(true);
+    }//GEN-LAST:event_itemPagamentoActionPerformed
+
+    private void itemTipoPagamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemTipoPagamentoActionPerformed
+        new FormCadastroTipoPagamento().setVisible(true);
+    }//GEN-LAST:event_itemTipoPagamentoActionPerformed
+
+    private void itemClinicaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemClinicaActionPerformed
+        new FormCadastroClinica().setVisible(true);
+    }//GEN-LAST:event_itemClinicaActionPerformed
+
+    private void itemFuncaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemFuncaoActionPerformed
+        new FormCadastroFuncao().setVisible(true);
+    }//GEN-LAST:event_itemFuncaoActionPerformed
+
+    private void itemEnderecoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemEnderecoActionPerformed
+        new FormCadastroEndereco().setVisible(true);
+    }//GEN-LAST:event_itemEnderecoActionPerformed
+
+    private void itemLogradouroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemLogradouroActionPerformed
+        new FormCadastroLogradouro().setVisible(true);
+    }//GEN-LAST:event_itemLogradouroActionPerformed
+
+    private void itemBairroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemBairroActionPerformed
+        new FormCadastroBairro().setVisible(true);
+    }//GEN-LAST:event_itemBairroActionPerformed
+
+    private void itemCidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemCidadeActionPerformed
+        new FormCadastroCidade().setVisible(true);
+    }//GEN-LAST:event_itemCidadeActionPerformed
+
+    private void itemEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemEstadoActionPerformed
+        new FormCadastroEstado().setVisible(true);
+    }//GEN-LAST:event_itemEstadoActionPerformed
+
+    private void itemPaisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemPaisActionPerformed
+        new FormCadastroPais().setVisible(true);
+    }//GEN-LAST:event_itemPaisActionPerformed
+
+    private void itemEstoqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemEstoqueActionPerformed
+        new FormCadastroEstoque().setVisible(true);
+    }//GEN-LAST:event_itemEstoqueActionPerformed
+
+    private void itemProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemProdutoActionPerformed
+        new FormCadastroProduto().setVisible(true);
+    }//GEN-LAST:event_itemProdutoActionPerformed
+
+    private void itemTipoEmbalagemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemTipoEmbalagemActionPerformed
+        new FormCadastroTipoEmbalagem().setVisible(true);
+    }//GEN-LAST:event_itemTipoEmbalagemActionPerformed
+
+    private void itemColaboradorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemColaboradorActionPerformed
+        new FormCadastroColaborador().setVisible(true);
+    }//GEN-LAST:event_itemColaboradorActionPerformed
+
+    private void itemPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemPacienteActionPerformed
+        new FormCadastroPaciente().setVisible(true);
+    }//GEN-LAST:event_itemPacienteActionPerformed
+
+    private void itemUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemUsuarioActionPerformed
+        new FormCadastroUsuario().setVisible(true);
+    }//GEN-LAST:event_itemUsuarioActionPerformed
 
     /**
      * @param args the command line arguments
