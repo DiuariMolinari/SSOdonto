@@ -31,44 +31,31 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
         jMenuItem25 = new javax.swing.JMenuItem();
         jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem6 = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
-        jMenuItem7 = new javax.swing.JMenuItem();
-        jMenuItem5 = new javax.swing.JMenuItem();
-        jMenuItem9 = new javax.swing.JMenuItem();
-        jMenuItem8 = new javax.swing.JMenuItem();
-        jMenuItem13 = new javax.swing.JMenuItem();
-        jMenuItem10 = new javax.swing.JMenuItem();
-        jMenuItem14 = new javax.swing.JMenuItem();
-        jMenuItem15 = new javax.swing.JMenuItem();
-        jMenuItem16 = new javax.swing.JMenuItem();
-        jMenuItem17 = new javax.swing.JMenuItem();
-        jMenuItem18 = new javax.swing.JMenuItem();
-        jMenuItem19 = new javax.swing.JMenuItem();
-        jMenuItem20 = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
-        jMenuItem12 = new javax.swing.JMenuItem();
-        jMenuItem21 = new javax.swing.JMenuItem();
-        jMenuItem22 = new javax.swing.JMenuItem();
-        jMenuItem23 = new javax.swing.JMenuItem();
-        jMenuItem24 = new javax.swing.JMenuItem();
-        jMenuItem26 = new javax.swing.JMenuItem();
-        jMenuItem27 = new javax.swing.JMenuItem();
-        jMenuItem28 = new javax.swing.JMenuItem();
-        jMenuItem29 = new javax.swing.JMenuItem();
-        jMenuItem30 = new javax.swing.JMenuItem();
-        jMenuItem31 = new javax.swing.JMenuItem();
-        jMenuItem32 = new javax.swing.JMenuItem();
-        jMenuItem33 = new javax.swing.JMenuItem();
-        jMenuItem34 = new javax.swing.JMenuItem();
-        jMenuItem35 = new javax.swing.JMenuItem();
-        jMenuItem36 = new javax.swing.JMenuItem();
-        jMenuItem37 = new javax.swing.JMenuItem();
-        jMenuItem38 = new javax.swing.JMenuItem();
+        menuServico = new javax.swing.JMenu();
+        itemAtendimento = new javax.swing.JMenuItem();
+        itemProcedimento = new javax.swing.JMenuItem();
+        itemTipoProcedimento = new javax.swing.JMenuItem();
+        menuFinanceiro = new javax.swing.JMenu();
+        itemPagamento = new javax.swing.JMenuItem();
+        itemTipoPagamento = new javax.swing.JMenuItem();
+        menuGestao = new javax.swing.JMenu();
+        itemClinica = new javax.swing.JMenuItem();
+        itemFuncao = new javax.swing.JMenuItem();
+        menuLocais = new javax.swing.JMenu();
+        itemEndereco = new javax.swing.JMenuItem();
+        itemLogradouro = new javax.swing.JMenuItem();
+        itemBairro = new javax.swing.JMenuItem();
+        itemCidade = new javax.swing.JMenuItem();
+        itemEstado = new javax.swing.JMenuItem();
+        itemPais = new javax.swing.JMenuItem();
+        menuMaterias = new javax.swing.JMenu();
+        itemEstoque = new javax.swing.JMenuItem();
+        itemProduto = new javax.swing.JMenuItem();
+        itemTipoEmbalagem = new javax.swing.JMenuItem();
+        menuPessoas = new javax.swing.JMenu();
+        itemColaborador = new javax.swing.JMenuItem();
+        itemPaciente = new javax.swing.JMenuItem();
+        itemUsuario = new javax.swing.JMenuItem();
 
         jMenuItem11.setText("jMenuItem11");
 
@@ -79,121 +66,86 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setText("Menu Principal");
 
-        jMenu1.setText("Cadastrar");
+        menuServico.setText("Serviços");
 
-        jMenuItem1.setText("Atendimento");
-        jMenu1.add(jMenuItem1);
+        itemAtendimento.setText("Atendimentos");
+        menuServico.add(itemAtendimento);
 
-        jMenuItem6.setText("Colaborador");
-        jMenu1.add(jMenuItem6);
+        itemProcedimento.setText("Procedimentos");
+        menuServico.add(itemProcedimento);
 
-        jMenuItem4.setText("Paciente");
-        jMenu1.add(jMenuItem4);
+        itemTipoProcedimento.setText("Tipo de Procedimento");
+        menuServico.add(itemTipoProcedimento);
 
-        jMenuItem2.setText("Procedimento");
-        jMenu1.add(jMenuItem2);
+        jMenuBar1.add(menuServico);
 
-        jMenuItem3.setText("Tipo de Procedimento");
-        jMenu1.add(jMenuItem3);
+        menuFinanceiro.setText("Financeiro");
 
-        jMenuItem7.setText("Clínica");
-        jMenu1.add(jMenuItem7);
+        itemPagamento.setText("Pagamentos");
+        menuFinanceiro.add(itemPagamento);
 
-        jMenuItem5.setText("Função");
-        jMenu1.add(jMenuItem5);
+        itemTipoPagamento.setText("Tipo de Pagamento");
+        menuFinanceiro.add(itemTipoPagamento);
 
-        jMenuItem9.setText("Pagamento");
-        jMenu1.add(jMenuItem9);
+        jMenuBar1.add(menuFinanceiro);
 
-        jMenuItem8.setText("Tipo de Pagamento");
-        jMenu1.add(jMenuItem8);
+        menuGestao.setText("Gestão");
 
-        jMenuItem13.setText("Produto");
-        jMenu1.add(jMenuItem13);
+        itemClinica.setText("Clínicas");
+        menuGestao.add(itemClinica);
 
-        jMenuItem10.setText("Tipo de Embalagem");
-        jMenu1.add(jMenuItem10);
+        itemFuncao.setText("Funções");
+        menuGestao.add(itemFuncao);
 
-        jMenuItem14.setText("Estoque");
-        jMenu1.add(jMenuItem14);
+        jMenuBar1.add(menuGestao);
 
-        jMenuItem15.setText("Endereço");
-        jMenu1.add(jMenuItem15);
+        menuLocais.setText("Locais");
 
-        jMenuItem16.setText("Logradouro");
-        jMenu1.add(jMenuItem16);
+        itemEndereco.setText("Endereços");
+        menuLocais.add(itemEndereco);
 
-        jMenuItem17.setText("Bairro");
-        jMenu1.add(jMenuItem17);
+        itemLogradouro.setText("Logradouros");
+        menuLocais.add(itemLogradouro);
 
-        jMenuItem18.setText("Cidade");
-        jMenu1.add(jMenuItem18);
+        itemBairro.setText("Bairros");
+        menuLocais.add(itemBairro);
 
-        jMenuItem19.setText("Estado");
-        jMenu1.add(jMenuItem19);
+        itemCidade.setText("Cidades");
+        menuLocais.add(itemCidade);
 
-        jMenuItem20.setText("País");
-        jMenu1.add(jMenuItem20);
+        itemEstado.setText("Estados");
+        menuLocais.add(itemEstado);
 
-        jMenuBar1.add(jMenu1);
+        itemPais.setText("Países");
+        menuLocais.add(itemPais);
 
-        jMenu2.setText("Consultar");
+        jMenuBar1.add(menuLocais);
 
-        jMenuItem12.setText("Atendimento");
-        jMenu2.add(jMenuItem12);
+        menuMaterias.setText("Materias");
 
-        jMenuItem21.setText("Colaborador");
-        jMenu2.add(jMenuItem21);
+        itemEstoque.setText("Estoques");
+        menuMaterias.add(itemEstoque);
 
-        jMenuItem22.setText("Paciente");
-        jMenu2.add(jMenuItem22);
+        itemProduto.setText("Produtos");
+        menuMaterias.add(itemProduto);
 
-        jMenuItem23.setText("Procedimento");
-        jMenu2.add(jMenuItem23);
+        itemTipoEmbalagem.setText("Tipo de Embalagem");
+        menuMaterias.add(itemTipoEmbalagem);
 
-        jMenuItem24.setText("Tipo de Procedimento");
-        jMenu2.add(jMenuItem24);
+        jMenuBar1.add(menuMaterias);
 
-        jMenuItem26.setText("Clínica");
-        jMenu2.add(jMenuItem26);
+        menuPessoas.setText("Pessoas");
 
-        jMenuItem27.setText("Função");
-        jMenu2.add(jMenuItem27);
+        itemColaborador.setText("Colaboradores");
+        menuPessoas.add(itemColaborador);
 
-        jMenuItem28.setText("Pagamento");
-        jMenu2.add(jMenuItem28);
+        itemPaciente.setText("Pacientes");
+        menuPessoas.add(itemPaciente);
 
-        jMenuItem29.setText("Tipo de Pagamento");
-        jMenu2.add(jMenuItem29);
+        itemUsuario.setText("Usuários");
+        menuPessoas.add(itemUsuario);
 
-        jMenuItem30.setText("Produto");
-        jMenu2.add(jMenuItem30);
-
-        jMenuItem31.setText("Tipo de Embalagem");
-        jMenu2.add(jMenuItem31);
-
-        jMenuItem32.setText("Estoque");
-        jMenu2.add(jMenuItem32);
-
-        jMenuItem33.setText("Endereço");
-        jMenu2.add(jMenuItem33);
-
-        jMenuItem34.setText("Logradouro");
-        jMenu2.add(jMenuItem34);
-
-        jMenuItem35.setText("Bairro");
-        jMenu2.add(jMenuItem35);
-
-        jMenuItem36.setText("Cidade");
-        jMenu2.add(jMenuItem36);
-
-        jMenuItem37.setText("Estado");
-        jMenu2.add(jMenuItem37);
-
-        jMenuItem38.setText("País");
-        jMenu2.add(jMenuItem38);
-
-        jMenuBar1.add(jMenu2);
+        jMenuBar1.add(menuPessoas);
 
         setJMenuBar(jMenuBar1);
 
@@ -204,14 +156,14 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addContainerGap(326, Short.MAX_VALUE))
+                .addContainerGap(408, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addContainerGap(367, Short.MAX_VALUE))
+                .addContainerGap(294, Short.MAX_VALUE))
         );
 
         pack();
@@ -253,47 +205,34 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem itemAtendimento;
+    private javax.swing.JMenuItem itemBairro;
+    private javax.swing.JMenuItem itemCidade;
+    private javax.swing.JMenuItem itemClinica;
+    private javax.swing.JMenuItem itemColaborador;
+    private javax.swing.JMenuItem itemEndereco;
+    private javax.swing.JMenuItem itemEstado;
+    private javax.swing.JMenuItem itemEstoque;
+    private javax.swing.JMenuItem itemFuncao;
+    private javax.swing.JMenuItem itemLogradouro;
+    private javax.swing.JMenuItem itemPaciente;
+    private javax.swing.JMenuItem itemPagamento;
+    private javax.swing.JMenuItem itemPais;
+    private javax.swing.JMenuItem itemProcedimento;
+    private javax.swing.JMenuItem itemProduto;
+    private javax.swing.JMenuItem itemTipoEmbalagem;
+    private javax.swing.JMenuItem itemTipoPagamento;
+    private javax.swing.JMenuItem itemTipoProcedimento;
+    private javax.swing.JMenuItem itemUsuario;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem11;
-    private javax.swing.JMenuItem jMenuItem12;
-    private javax.swing.JMenuItem jMenuItem13;
-    private javax.swing.JMenuItem jMenuItem14;
-    private javax.swing.JMenuItem jMenuItem15;
-    private javax.swing.JMenuItem jMenuItem16;
-    private javax.swing.JMenuItem jMenuItem17;
-    private javax.swing.JMenuItem jMenuItem18;
-    private javax.swing.JMenuItem jMenuItem19;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem20;
-    private javax.swing.JMenuItem jMenuItem21;
-    private javax.swing.JMenuItem jMenuItem22;
-    private javax.swing.JMenuItem jMenuItem23;
-    private javax.swing.JMenuItem jMenuItem24;
     private javax.swing.JMenuItem jMenuItem25;
-    private javax.swing.JMenuItem jMenuItem26;
-    private javax.swing.JMenuItem jMenuItem27;
-    private javax.swing.JMenuItem jMenuItem28;
-    private javax.swing.JMenuItem jMenuItem29;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem30;
-    private javax.swing.JMenuItem jMenuItem31;
-    private javax.swing.JMenuItem jMenuItem32;
-    private javax.swing.JMenuItem jMenuItem33;
-    private javax.swing.JMenuItem jMenuItem34;
-    private javax.swing.JMenuItem jMenuItem35;
-    private javax.swing.JMenuItem jMenuItem36;
-    private javax.swing.JMenuItem jMenuItem37;
-    private javax.swing.JMenuItem jMenuItem38;
-    private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem6;
-    private javax.swing.JMenuItem jMenuItem7;
-    private javax.swing.JMenuItem jMenuItem8;
-    private javax.swing.JMenuItem jMenuItem9;
+    private javax.swing.JMenu menuFinanceiro;
+    private javax.swing.JMenu menuGestao;
+    private javax.swing.JMenu menuLocais;
+    private javax.swing.JMenu menuMaterias;
+    private javax.swing.JMenu menuPessoas;
+    private javax.swing.JMenu menuServico;
     // End of variables declaration//GEN-END:variables
 }
