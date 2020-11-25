@@ -21,6 +21,11 @@ public class Paciente {
     private String observacao;
     private Endereco endereco;
 
+     @Override
+    public String toString() {
+        return nome + " " + sobrenome;
+    }
+    
     public Paciente(int id) {
         this.id = id;
     }

@@ -14,6 +14,12 @@ public class Cidade {
     private String nome;
     private Estado estado;
 
+    @Override
+    public String toString() {
+        return nome;
+    }
+
+    
     public Cidade(int id) {
         this.id = id;
     }

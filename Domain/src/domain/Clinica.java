@@ -17,6 +17,11 @@ public class Clinica {
     private LocalDate dataInauguracao;
     private Endereco endereco;
 
+     @Override
+    public String toString() {
+        return nome;
+    }
+    
     public Clinica(int id) {
         this.id = id;
     }

@@ -15,6 +15,11 @@ public class Endereco {
     private int numeroCasa;
     private String cep;
 
+     @Override
+    public String toString() {
+        return cep;
+    } 
+    
     public Endereco(int id) {
         this.id = id;
     }

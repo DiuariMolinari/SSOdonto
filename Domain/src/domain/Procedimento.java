@@ -18,6 +18,11 @@ public class Procedimento {
     private String descricaoProcedimento;
     private ArrayList<Atendimento> atendimentos = new ArrayList<Atendimento>();
 
+     @Override
+    public String toString() {
+        return nome;
+    }
+    
     public Procedimento(int id) {
         this.id = id;
     }

@@ -14,6 +14,11 @@ public class TipoProcedimento {
     private String nome;
     private double valor;
 
+     @Override
+    public String toString() {
+        return nome;
+    }
+    
     public TipoProcedimento(int id) {
         this.id = id;
     }

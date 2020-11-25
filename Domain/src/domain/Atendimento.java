@@ -17,6 +17,13 @@ public class Atendimento {
     private Colaborador colaborador;
     private ArrayList<Procedimento> procedimentos = new ArrayList<Procedimento>();
 
+    @Override
+    public String toString() {
+        return String.valueOf(id);
+    }
+
+    
+    
     public Atendimento(int id) {
         this.id = id;
     }

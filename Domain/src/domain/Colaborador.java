@@ -24,6 +24,12 @@ public class Colaborador {
     private boolean ferias;
     private boolean demitido;
 
+    @Override
+    public String toString() {
+        return nome ;
+    }
+
+    
      public Colaborador(int id){
          this.id = id;
      }

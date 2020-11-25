@@ -13,6 +13,11 @@ public class FoneTipo {
     private int id;
     private String tipo;
     
+     @Override
+    public String toString() {
+        return tipo;
+    }
+    
     public FoneTipo(int id) {
         this.id = id;
     }

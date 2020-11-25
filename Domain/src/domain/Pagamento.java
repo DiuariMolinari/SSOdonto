@@ -16,6 +16,10 @@ public class Pagamento {
     private LocalDate dataPagamento;
     private TipoPagamento tipoPagamento;
 
+     @Override
+    public String toString() {
+        return String.valueOf(id);
+    }
     public Pagamento(int id) {
         this.id = id;
     }

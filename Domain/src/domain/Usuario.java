@@ -15,6 +15,11 @@ public class Usuario {
     private String senha;
     private Colaborador colaborador;
 
+     @Override
+    public String toString() {
+        return colaborador.getNome();
+    }
+    
     public Usuario(int id) {
         this.id = id;
     }
