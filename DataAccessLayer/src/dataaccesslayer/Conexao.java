@@ -13,11 +13,11 @@ public class Conexao {
     public Connection getConexao() throws SQLException{
                             //geralmente varia de tipo de banco e so muda o .mysql.
         final String DRIVER = "com.mysql.cj.jdbc.Driver";
-        final String URL = "jdbc:mysql://127.0.0.1:3306/sorrisempre?Timezone=true&serverTimezone=UTC";
+        final String URL = "jdbc:mysql://127.0.0.1:3306/sorrisempre?serverTimezone=UTC";
      // tenta a conexao, [user] root e [password] localhost123 como usuário e senha   
         try{
             Class.forName(DRIVER);
-            connection = DriverManager.getConnection(URL, "root" ,"localhost123");
+            connection = DriverManager.getConnection(URL, "root" ,"090102");
             return connection;
         }catch(ClassNotFoundException e){
             JOptionPane.showMessageDialog(null, "Driver não encontrado: " + e.toString());

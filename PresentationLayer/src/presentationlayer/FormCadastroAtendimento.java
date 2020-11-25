@@ -5,17 +5,43 @@
  */
 package presentationlayer;
 
+import businessLogicalLayer.AtendimentoBLL;
+import businessLogicalLayer.ColaboradorBLL;
+import businessLogicalLayer.PacienteBLL;
+import domain.Atendimento;
+import domain.Colaborador;
+import domain.Paciente;
+import java.awt.Color;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+
 /**
  *
  * @author sabri
  */
 public class FormCadastroAtendimento extends javax.swing.JFrame {
+    
+    private Colaborador lastColaborador;
+    private Paciente lastPaciente;
+    private Atendimento lastAtendimento;
+    
+    private DefaultTableModel model;
 
+    AtendimentoBLL srvAtendimento = new AtendimentoBLL();
+    PacienteBLL srvPaciente = new PacienteBLL();
+    ColaboradorBLL  srvColaborador = new ColaboradorBLL();
+    
     /**
      * Creates new form FormCadastroAtendimento
      */
     public FormCadastroAtendimento() {
         initComponents();
+        model = new DefaultTableModel();
+        grdAtendimento.setModel(model);
     }
 
     /**
@@ -38,8 +64,14 @@ public class FormCadastroAtendimento extends javax.swing.JFrame {
         grdAtendimento = new javax.swing.JTable();
         btnDeletar = new javax.swing.JButton();
         btnAtualizar = new javax.swing.JButton();
+        lblMensagem = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setText("Atendimento");
@@ -50,23 +82,25 @@ public class FormCadastroAtendimento extends javax.swing.JFrame {
 
         btnSalvar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnSalvar.setText("Salvar");
+        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarActionPerformed(evt);
+            }
+        });
 
         grdAtendimento.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+
             },
             new String [] {
                 "Id", "Paciente", "Colaborador"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, true, true
+                false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -77,17 +111,32 @@ public class FormCadastroAtendimento extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        grdAtendimento.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                grdAtendimentoMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(grdAtendimento);
         if (grdAtendimento.getColumnModel().getColumnCount() > 0) {
             grdAtendimento.getColumnModel().getColumn(0).setResizable(false);
-            grdAtendimento.getColumnModel().getColumn(0).setPreferredWidth(5);
+            grdAtendimento.getColumnModel().getColumn(0).setPreferredWidth(30);
         }
 
         btnDeletar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnDeletar.setText("Deletar");
+        btnDeletar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeletarActionPerformed(evt);
+            }
+        });
 
         btnAtualizar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnAtualizar.setText("Atualizar");
+        btnAtualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAtualizarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -95,19 +144,21 @@ public class FormCadastroAtendimento extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(cmbColaborador, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel3)
-                        .addComponent(jLabel2)
-                        .addComponent(jLabel1)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(btnSalvar)
-                            .addGap(18, 18, 18)
-                            .addComponent(btnAtualizar)
-                            .addGap(18, 18, 18)
-                            .addComponent(btnDeletar)))
-                    .addComponent(cmbPaciente, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lblMensagem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(cmbColaborador, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel1)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(btnSalvar)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnAtualizar)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnDeletar)))
+                        .addComponent(cmbPaciente, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(18, 18, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -128,11 +179,13 @@ public class FormCadastroAtendimento extends javax.swing.JFrame {
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cmbColaborador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(28, 28, 28)
+                        .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnDeletar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(btnAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(lblMensagem, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -155,6 +208,109 @@ public class FormCadastroAtendimento extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        try {
+            preencheCombo();
+            preencheGrid(); 
+        } catch (SQLException ex) {
+            Logger.getLogger(FormCadastroAtendimento.class.getName()).log(Level.SEVERE, null, ex);
+        }                  
+    }//GEN-LAST:event_formWindowOpened
+
+    private void preencheGrid() throws SQLException{
+        ArrayList<Atendimento> atendimentos = srvAtendimento.getAll();
+         
+        Object colunas[] = {"Id", "Paciente", "Colaborador"};
+            model = new DefaultTableModel(colunas, 0);
+            for (Atendimento atendimento : atendimentos) {
+                model.addRow( new Object[]{
+                    atendimento.getId(),
+                    atendimento.getPaciente(),
+                    atendimento.getColaborador()
+                });           
+            }  
+            grdAtendimento.setModel(model);
+    }
+    
+    private void preencheCombo() throws SQLException{
+        cmbPaciente.removeAllItems();
+        cmbColaborador.removeAll();            
+
+        ArrayList<Paciente> pacientes = srvPaciente.getAll();
+        ArrayList<Colaborador> colabordores = srvColaborador.getAll();
+
+        for (Colaborador colaborador : colabordores) {
+            cmbColaborador.addItem(colaborador);            
+        }
+        for (Paciente paciente : pacientes) {
+            cmbPaciente.addItem(paciente);
+        }     
+        limpaCombo();
+    }
+    
+    private void limpaCombo(){
+        cmbPaciente.setSelectedItem(null);
+        cmbColaborador.setSelectedItem(null);
+    }
+    
+    private void grdAtendimentoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_grdAtendimentoMouseClicked
+        int row = grdAtendimento.getSelectedRow();
+        TableModel model = grdAtendimento.getModel();
+        
+        int id = (int)model.getValueAt(row, 0);
+                
+        Paciente paciente = (Paciente)model.getValueAt(row, 1);
+        cmbPaciente.getModel().setSelectedItem(paciente);
+        
+        Colaborador colaborador = (Colaborador)model.getValueAt(row, 2);
+        cmbColaborador.getModel().setSelectedItem(colaborador);   
+        
+        lastPaciente = paciente;
+        lastColaborador = colaborador;
+        lastAtendimento = new Atendimento(id, paciente, colaborador);
+    }//GEN-LAST:event_grdAtendimentoMouseClicked
+
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+        try {
+            if (cmbColaborador.getSelectedItem() == null || cmbPaciente.getSelectedItem() == null) {
+                return;
+            }
+            lblMensagem.setText(srvAtendimento.insert(new Atendimento(0,(Paciente)cmbPaciente.getSelectedItem(),(Colaborador)cmbColaborador.getSelectedItem())));
+            lblMensagem.setForeground(new Color(0, 102, 0));
+            preencheGrid();
+            limpaCombo();  
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(FormCadastroAtendimento.class.getName()).log(Level.SEVERE, null, ex);
+        }        
+    }//GEN-LAST:event_btnSalvarActionPerformed
+
+    private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
+        try {
+            if (cmbColaborador.getSelectedItem() != null && cmbPaciente.getSelectedItem() != null && (lastColaborador != cmbColaborador.getSelectedItem() || lastPaciente != cmbPaciente.getSelectedItem()) && lastAtendimento != null){
+                lblMensagem.setText(srvAtendimento.update(new Atendimento(lastAtendimento.getId(), (Paciente)cmbPaciente.getSelectedItem(), (Colaborador)cmbColaborador.getSelectedItem())));
+                lblMensagem.setForeground(Color.blue);
+                preencheGrid();
+                limpaCombo();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(FormCadastroAtendimento.class.getName()).log(Level.SEVERE, null, ex);
+        }         
+    }//GEN-LAST:event_btnAtualizarActionPerformed
+
+    private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarActionPerformed
+        try {
+            if (lastAtendimento != null){
+                lblMensagem.setText(srvAtendimento.delete(lastAtendimento));
+                lblMensagem.setForeground(Color.red);
+                preencheGrid();
+                limpaCombo();                
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(FormCadastroAtendimento.class.getName()).log(Level.SEVERE, null, ex);
+        }        
+    }//GEN-LAST:event_btnDeletarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -195,13 +351,14 @@ public class FormCadastroAtendimento extends javax.swing.JFrame {
     private javax.swing.JButton btnAtualizar;
     private javax.swing.JButton btnDeletar;
     private javax.swing.JButton btnSalvar;
-    private javax.swing.JComboBox<String> cmbColaborador;
-    private javax.swing.JComboBox<String> cmbPaciente;
+    private javax.swing.JComboBox<Colaborador> cmbColaborador;
+    private javax.swing.JComboBox<Paciente> cmbPaciente;
     private javax.swing.JTable grdAtendimento;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblMensagem;
     // End of variables declaration//GEN-END:variables
 }

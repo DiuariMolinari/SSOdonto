@@ -14,6 +14,11 @@ public class Logradouro {
     private String nome;
     private Bairro bairro;
 
+     @Override
+    public String toString() {
+        return nome;
+    }
+    
     public Logradouro(int id) {
         this.id = id;
     }

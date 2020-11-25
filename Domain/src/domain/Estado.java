@@ -14,6 +14,11 @@ public class Estado {
     private String nome;
     private Pais pais;
 
+     @Override
+    public String toString() {
+        return nome;
+    }
+    
     public Estado(int id) {
         this.id = id;
     }

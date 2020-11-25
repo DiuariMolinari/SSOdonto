@@ -15,6 +15,11 @@ public class Funcao {
     private double salario;
     private double comissao;
 
+     @Override
+    public String toString() {
+        return nome;
+    }
+    
     public Funcao(int id) {
         this.id = id;
     }

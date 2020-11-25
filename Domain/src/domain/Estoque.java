@@ -18,6 +18,11 @@ public class Estoque {
     private LocalDate dataEntrada;
     private LocalDate dataSaida;
 
+     @Override
+    public String toString() {
+        return produto.getNome();
+    }
+    
     public Estoque(int id) {
         this.id = id;
     }

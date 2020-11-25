@@ -13,6 +13,11 @@ public class TipoEmbalagem {
     private int id;
     private String descricao;
 
+     @Override
+    public String toString() {
+        return descricao;
+    }
+    
     public TipoEmbalagem(int id, String descricao) {
         this.id = id;
         this.descricao = descricao;

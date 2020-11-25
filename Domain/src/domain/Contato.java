@@ -16,6 +16,12 @@ public class Contato {
     private String email;
     private Paciente paciente;
 
+    
+     @Override
+    public String toString() {
+        return fone;
+    }
+    
     private Colaborador colaborador;
 
      public Contato(int id) {

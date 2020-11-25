@@ -149,7 +149,7 @@ public class AtendimentoDAL {
             PreparedStatement pst = conexao.getConexao().prepareStatement("UPDATE Atendimento SET idPaciente = ?, idcolaborador = ?  WHERE IDAtendimento = ?");
             pst.setInt(1, Atendimento.getPaciente().getId());
             pst.setInt(2, Atendimento.getColaborador().getId());
-            pst.setInt(2, Atendimento.getId());
+            pst.setInt(3, Atendimento.getId());
             pst.executeUpdate();
             return "Atendimento atualizado com sucesso!";
         } 

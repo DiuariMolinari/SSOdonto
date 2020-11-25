@@ -18,6 +18,11 @@ public class Produto {
     private double preco;
     private LocalDate dataCompra;
 
+     @Override
+    public String toString() {
+        return nome;
+    }
+    
     public Produto(int id) {
         this.id = id;
     }

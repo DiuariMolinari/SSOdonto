@@ -13,6 +13,12 @@ public class Pais {
     private int id;
     private String nome;
 
+    
+     @Override
+    public String toString() {
+        return nome;
+    }
+    
     public Pais(int id) {
         this.id = id;
     }

@@ -13,6 +13,11 @@ public class TipoPagamento {
     private int id;
     private String tipoPagamento;
 
+     @Override
+    public String toString() {
+        return tipoPagamento;
+    }
+    
     public TipoPagamento(int id) {
         this.id = id;
     }
