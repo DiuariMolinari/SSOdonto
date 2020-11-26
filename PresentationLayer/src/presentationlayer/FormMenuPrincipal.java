@@ -61,7 +61,7 @@ public class FormMenuPrincipal extends javax.swing.JFrame {
 
         jMenuItem25.setText("jMenuItem25");
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setText("Menu Principal");

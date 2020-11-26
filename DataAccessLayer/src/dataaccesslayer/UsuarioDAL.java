@@ -107,7 +107,7 @@ public class UsuarioDAL {
             PreparedStatement pst = conexao.getConexao().prepareStatement("INSERT INTO Usuario (IDUsuario, login, senha, idcolaborador) VALUES(0, ?, ?, ?)");
             pst.setString(1, Usuario.getLogin());
             pst.setString(2, Usuario.getSenha());
-            pst.setInt(2, Usuario.getColaborador().getId());
+            pst.setInt(3, Usuario.getColaborador().getId());
             pst.executeUpdate();
             return "Usuário inserido com sucesso!";
         } 
@@ -129,7 +129,7 @@ public class UsuarioDAL {
             pst.setString(1, Usuario.getLogin());
             pst.setString(2, Usuario.getSenha());
             pst.setInt(3, Usuario.getColaborador().getId());
-            pst.setInt(3, Usuario.getId());
+            pst.setInt(4, Usuario.getId());
             pst.executeUpdate();
             return "Usuário atualizado com sucesso!";
         } 
@@ -163,11 +163,14 @@ public class UsuarioDAL {
     public Usuario Autenticar(String login, String password) {
         try 
         {
-            PreparedStatement pst = conexao.getConexao().prepareStatement("SELECT * FROM Usuario WHERE login =" + login + " senha = " + password, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            ResultSet rs = pst.executeQuery();
+            PreparedStatement pst = conexao.getConexao().prepareStatement("SELECT * FROM Usuario WHERE login = ? and senha = ? ", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            pst.setString(1, login);
+            pst.setString(2, password);
+            ResultSet rs = pst.executeQuery();            
+            
             rs.first();
-            Colaborador colaborador = new ColaboradorDAL().getById(rs.getInt("IDColaborador"));
-            return new Usuario(rs.getInt("IDUsuario"), rs.getString("LOGIN"), rs.getString("SENHA"), colaborador);
+            
+            return new Usuario(rs.getInt("IDUsuario"), rs.getString("LOGIN"), rs.getString("SENHA"));
         }
         
         catch (Exception e) {
