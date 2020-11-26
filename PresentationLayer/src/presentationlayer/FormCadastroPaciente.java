@@ -1,5 +1,33 @@
 package presentationlayer;
 
+import businessLogicalLayer.BairroBLL;
+import businessLogicalLayer.CidadeBLL;
+import businessLogicalLayer.EnderecoBLL;
+import businessLogicalLayer.EstadoBLL;
+import businessLogicalLayer.LogradouroBLL;
+import businessLogicalLayer.PacienteBLL;
+import businessLogicalLayer.PaisBLL;
+import domain.Bairro;
+import domain.Cidade;
+import domain.Endereco;
+import domain.Estado;
+import domain.Logradouro;
+import domain.Paciente;
+import domain.Pais;
+import java.awt.Color;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.text.DefaultFormatterFactory;
+import javax.swing.text.MaskFormatter;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -12,11 +40,30 @@ package presentationlayer;
  */
 public class FormCadastroPaciente extends javax.swing.JFrame {
 
+    private Paciente lastPaciente;
+    private String lastNome;
+    private String lastSobrenome;
+    private String lastRg;
+    private LocalDate lastDtNascimento;
+    private String lastObs;
+    private Endereco lastEndereco;
+    
+    private DefaultTableModel model;
+
+    PaisBLL srvPais = new PaisBLL();
+    EstadoBLL srvEstado = new EstadoBLL();
+    CidadeBLL srvCidade =  new CidadeBLL();
+    BairroBLL srvBairro = new BairroBLL();
+    EnderecoBLL srvEndereco = new EnderecoBLL();
+    LogradouroBLL srvLogradouro = new LogradouroBLL();
+    PacienteBLL srvPaciente = new PacienteBLL();
     /**
      * Creates new form FormCadastroPaciente
      */
     public FormCadastroPaciente() {
         initComponents();
+        model = new DefaultTableModel();
+        grdPaciente.setModel(model);
     }
 
     /**
@@ -37,12 +84,7 @@ public class FormCadastroPaciente extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
-        txtNumero = new javax.swing.JTextField();
-        jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
         cmbEstado = new javax.swing.JComboBox<>();
@@ -61,16 +103,20 @@ public class FormCadastroPaciente extends javax.swing.JFrame {
         cmbLogradouro = new javax.swing.JComboBox<>();
         ftxtRG = new javax.swing.JFormattedTextField();
         ftxtCPF = new javax.swing.JFormattedTextField();
-        ftxtTelefone = new javax.swing.JFormattedTextField();
-        ftxtCEP = new javax.swing.JFormattedTextField();
-        ftxtCelular = new javax.swing.JFormattedTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         grdPaciente = new javax.swing.JTable();
         btnDeletar = new javax.swing.JButton();
         btnAtualizar = new javax.swing.JButton();
         lblMensagem = new javax.swing.JLabel();
+        cmbEndereco = new javax.swing.JComboBox<>();
+        jLabel21 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setText("Paciente");
@@ -83,15 +129,7 @@ public class FormCadastroPaciente extends javax.swing.JFrame {
 
         jLabel6.setText("Data Nascimento");
 
-        jLabel12.setText("Telefone");
-
-        jLabel13.setText("Celular");
-
-        jLabel14.setText("CEP");
-
         jLabel15.setText("Logradouro");
-
-        jLabel16.setText("N°");
 
         jLabel17.setText("Bairro");
 
@@ -103,8 +141,19 @@ public class FormCadastroPaciente extends javax.swing.JFrame {
 
         btnSalvar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnSalvar.setText("Salvar");
+        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarActionPerformed(evt);
+            }
+        });
 
         jLabel5.setText("Sobrenome");
+
+        try {
+            ftxtDataNasc.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("####-##-##")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
 
         jLabel7.setText("Observação");
 
@@ -123,13 +172,30 @@ public class FormCadastroPaciente extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        grdPaciente.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                grdPacienteMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(grdPaciente);
 
         btnDeletar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnDeletar.setText("Deletar");
+        btnDeletar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeletarActionPerformed(evt);
+            }
+        });
 
         btnAtualizar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnAtualizar.setText("Atualizar");
+        btnAtualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAtualizarActionPerformed(evt);
+            }
+        });
+
+        jLabel21.setText("Endereço");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -137,74 +203,73 @@ public class FormCadastroPaciente extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(lblMensagem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(ftxtDataNasc, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel6))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel14)
-                                .addComponent(ftxtCEP, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addComponent(jScrollPane1)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel15)
-                                .addComponent(cmbLogradouro, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addGap(10, 10, 10)
-                                    .addComponent(jLabel16))
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(txtNumero))))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel18)
-                                .addComponent(cmbCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jLabel17))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel20)
-                                .addComponent(cmbPais, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel19)
-                                .addComponent(cmbEstado, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(ftxtTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel13)
-                                .addComponent(ftxtCelular, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addComponent(jLabel7)
-                        .addComponent(jLabel5)
-                        .addComponent(jLabel2)
-                        .addComponent(jLabel12)
-                        .addComponent(jLabel1)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(ftxtCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel3))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel4)
-                                .addComponent(ftxtRG)))
-                        .addComponent(cmbBairro, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtSobrenome)
-                        .addComponent(txtNome)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(btnSalvar)
-                            .addGap(18, 18, 18)
-                            .addComponent(btnAtualizar)
-                            .addGap(18, 18, 18)
-                            .addComponent(btnDeletar))))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(btnSalvar)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnAtualizar)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnDeletar)))
+                        .addGap(0, 1226, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(6, 6, 6)
+                                        .addComponent(ftxtDataNasc, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(14, 14, 14)
+                                        .addComponent(jLabel6)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 222, Short.MAX_VALUE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel7)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel2)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(lblMensagem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 246, Short.MAX_VALUE)
+                                        .addComponent(jLabel15, javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(cmbLogradouro, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(jLabel20)
+                                                .addComponent(cmbPais, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(jLabel19)
+                                                .addComponent(cmbEstado, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(ftxtCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(jLabel3))
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(jLabel4)
+                                                .addComponent(ftxtRG)))
+                                        .addComponent(txtSobrenome, javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(txtNome, javax.swing.GroupLayout.Alignment.LEADING))
+                                    .addComponent(cmbEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(6, 6, 6)
+                                        .addComponent(jLabel21))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel18)
+                                            .addComponent(cmbCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addGap(52, 52, 52)
+                                                .addComponent(jLabel17))
+                                            .addComponent(cmbBairro, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 87, Short.MAX_VALUE)))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 1149, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -232,14 +297,10 @@ public class FormCadastroPaciente extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(ftxtRG, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel14))
+                        .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(ftxtDataNasc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(ftxtCEP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(ftxtDataNasc, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel20)
                             .addComponent(jLabel19))
@@ -258,22 +319,14 @@ public class FormCadastroPaciente extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(cmbBairro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel16)
-                            .addComponent(jLabel15))
+                        .addComponent(jLabel15)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cmbLogradouro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(cmbLogradouro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel12)
-                            .addComponent(jLabel13))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(ftxtTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(ftxtCelular, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(5, 5, 5)
+                        .addComponent(jLabel21)
+                        .addGap(2, 2, 2)
+                        .addComponent(cmbEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(9, 9, 9)
                         .addComponent(jLabel7))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -295,7 +348,7 @@ public class FormCadastroPaciente extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(98, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -308,6 +361,347 @@ public class FormCadastroPaciente extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+         try {
+            if (cmbBairro.getSelectedItem() == null | txtNome.getText().equals("")
+                    || txtSobrenome.getText().equals("") 
+                    || txtObservacao.getText().equals("")
+                    || ftxtRG.getText().equals("")
+                    || ftxtCPF.getText().equals("")
+                    || ftxtDataNasc.getText().equals("")
+                    || ftxtDataNasc.getText().equals("")) {
+                return;
+            }
+            String retorno = srvPaciente.insert(new Paciente(0, txtNome.getText(), txtSobrenome.getText(), ftxtRG.getText(), ftxtCPF.getText(), LocalDate.parse(ftxtDataNasc.getText()), ftxtRG.getText(), (Endereco)cmbEndereco.getSelectedItem()));
+            lblMensagem.setText(retorno);
+            lblMensagem.setForeground(new Color(0, 102, 0));
+            preencheGrid();
+            deselecionaCombo(); 
+            limpaCampos();
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(FormCadastroAtendimento.class.getName()).log(Level.SEVERE, null, ex);
+        }     
+    }//GEN-LAST:event_btnSalvarActionPerformed
+
+    private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
+        try {
+            if (cmbBairro.getSelectedItem() != null 
+                    && !txtNome.getText().equals("")
+                    && !txtSobrenome.getText().equals("") 
+                    && !txtObservacao.getText().equals("")
+                    && !ftxtRG.getText().equals("")
+                    && !ftxtCPF.getText().equals("")
+                    && !ftxtDataNasc.getText().equals("")
+                    && !ftxtDataNasc.getText().equals("")
+                    && (!lastEndereco.equals(cmbEndereco.getSelectedItem()) 
+                    || !lastDtNascimento.equals(ftxtDataNasc.getText())
+                    || !lastSobrenome.equals(txtSobrenome.getText())
+                    || !lastObs.equals(txtObservacao.getText())
+                    || !lastRg.equals(ftxtRG.getText())
+                    || !lastNome.equals(txtNome.getText())) 
+                    && lastPaciente != null){
+                String retorno = srvPaciente.update(new Paciente(lastPaciente.getId(), txtNome.getText(), txtSobrenome.getText(), ftxtRG.getText(), ftxtCPF.getText(), LocalDate.parse(ftxtDataNasc.getText()), ftxtRG.getText(), (Endereco)cmbEndereco.getSelectedItem()));
+                lblMensagem.setText(retorno);
+                lblMensagem.setForeground(Color.BLUE);
+                preencheGrid();
+                deselecionaCombo();
+                limpaCampos();
+                preenchePais();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(FormCadastroAtendimento.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+    }//GEN-LAST:event_btnAtualizarActionPerformed
+
+    private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarActionPerformed
+        try {
+            if (lastPaciente != null){
+                lblMensagem.setText(srvPaciente.delete(lastPaciente));
+                lblMensagem.setForeground(Color.RED);
+                preencheGrid();
+                deselecionaCombo(); 
+                limpaCampos();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(FormCadastroAtendimento.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+    }//GEN-LAST:event_btnDeletarActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        try {
+            addAllListener();
+            
+            
+            preencheGrid();
+            preencheCombo();
+        } catch (SQLException ex) {
+            Logger.getLogger(FormCadastroLogradouro.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_formWindowOpened
+
+    private void addAllListener(){
+        addListenerPais();
+        addListenerEstado();
+        addListenerCidade();
+        addListenerBairro();
+        addListenerLogradouro();
+    }
+   
+    
+    private void grdPacienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_grdPacienteMouseClicked
+        try {
+            int row = grdPaciente.getSelectedRow();
+            TableModel model = grdPaciente.getModel();
+
+            int id = (int)model.getValueAt(row, 0);
+
+            String nome = (String)model.getValueAt(row, 1);
+            txtNome.setText(nome);
+            
+            String sobrenome = (String)model.getValueAt(row, 2);
+            txtSobrenome.setText(sobrenome);
+            
+            String rg = (String)model.getValueAt(row, 3);
+            ftxtRG.setText(rg);
+            
+            String cpf = (String)model.getValueAt(row, 4);
+            ftxtCPF.setText(cpf);
+            
+            LocalDate nascimento = (LocalDate)model.getValueAt(row, 5);
+            ftxtDataNasc.setText(nascimento.toString());
+            
+            String observacao = (String)model.getValueAt(row, 6);
+            txtObservacao.setText(observacao);
+            
+            int nCasa = (int)model.getValueAt(row, 9);
+            
+            Pais pais = (Pais)model.getValueAt(row, 14);
+            cmbPais.getModel().setSelectedItem(pais);
+            preencheEstado();
+
+            Estado estado = (Estado)model.getValueAt(row, 13);
+            cmbEstado.getModel().setSelectedItem(estado);
+            preencheCidade();
+
+            Cidade cidade = (Cidade)model.getValueAt(row, 12);
+            cmbCidade.getModel().setSelectedItem(cidade);
+            preencheBairro();
+
+            Bairro bairro = (Bairro)model.getValueAt(row, 11);
+            cmbBairro.getModel().setSelectedItem(bairro);
+            
+            Logradouro logradouro = (Logradouro)model.getValueAt(row, 10);
+            cmbLogradouro.getModel().setSelectedItem(logradouro);
+            
+            Endereco endereco = (Endereco)model.getValueAt(row, 7);
+            cmbEndereco.getModel().setSelectedItem(endereco);
+
+            lastNome = nome;
+            lastSobrenome = sobrenome;
+            lastRg = rg;
+            lastDtNascimento = nascimento;
+            lastObs = observacao;
+            lastEndereco = endereco;
+            lastPaciente = new Paciente(id, nome, sobrenome, rg, cpf, nascimento, observacao, lastEndereco);
+        } catch (SQLException ex) {
+            Logger.getLogger(FormCadastroLogradouro.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_grdPacienteMouseClicked
+
+    private void preencheGrid() throws SQLException{
+        ArrayList<Paciente> pacientes = srvPaciente.getAll();
+         
+        Object colunas[] = {"Id", "Nome", "Sobrenome", "RG", "CPF", "Data de Nascimento", "Observação", "Endereco", "CEP", "Número da Casa", "Logradouro","Bairro", "Cidade", "Estado", "País"};
+            model = new DefaultTableModel(colunas, 0);
+            for (Paciente paciente : pacientes) {
+                model.addRow( new Object[]{
+                    paciente.getId(),
+                    paciente.getNome(),
+                    paciente.getSobrenome(),
+                    paciente.getRg(),
+                    paciente.getCpf(),
+                    paciente.getDataNascimento(),
+                    paciente.getObservacao(),
+                    paciente.getEndereco(),
+                    paciente.getEndereco().getCep(),
+                    paciente.getEndereco().getNumeroCasa(),
+                    paciente.getEndereco().getLogradouro(),
+                    paciente.getEndereco().getLogradouro().getBairro(),
+                    paciente.getEndereco().getLogradouro().getBairro().getCidade(),
+                    paciente.getEndereco().getLogradouro().getBairro().getCidade().getEstado(),
+                    paciente.getEndereco().getLogradouro().getBairro().getCidade().getEstado().getPais()
+                });           
+            }  
+        grdPaciente.setModel(model);
+    }
+    
+    private void preencheCombo() throws SQLException{
+        limpaCampos();
+
+        ArrayList<Pais> paises = srvPais.getAll();
+
+        for (Pais pais : paises) {
+            cmbPais.addItem(pais);            
+        }     
+        deselecionaCombo();
+    }
+        
+    private void deselecionaCombo(){
+        cmbPais.setSelectedItem(null);
+        cmbEstado.setSelectedItem(null);
+        cmbCidade.setSelectedItem(null);
+        cmbBairro.setSelectedItem(null);
+        cmbLogradouro.setSelectedItem(null);
+        cmbEndereco.setSelectedItem(null);
+    }
+    
+    private void limpaCampos(){
+        cmbEstado.removeAllItems();  
+        cmbCidade.removeAllItems();
+        cmbBairro.removeAllItems(); 
+        cmbLogradouro.removeAllItems();
+        cmbEndereco.removeAllItems();
+        
+        txtNome.setText("");
+        txtObservacao.setText("");
+        txtSobrenome.setText("");
+        
+        ftxtDataNasc.setText("");
+        ftxtRG.setText("");
+        ftxtCPF.setText("");
+    }
+    
+    private void preenchePais()throws SQLException{
+        cmbPais.removeAllItems();
+        ArrayList<Pais> paises = srvPais.getAll();
+        for (Pais pais : paises) {
+            cmbPais.addItem(pais);
+        }
+    }
+    
+    private void addListenerPais(){
+        cmbPais.addItemListener(new ItemListener(){
+            @Override
+            public void itemStateChanged(ItemEvent eventoItem){
+                if (eventoItem.getStateChange() == ItemEvent.SELECTED) {
+                    try {
+                        preencheEstado();
+                        cmbEstado.setSelectedItem(null);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(FormCadastroLogradouro.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        });
+    }
+    
+    private void preencheEstado() throws SQLException{
+        cmbEstado.removeAllItems();
+        ArrayList<Estado> estados = srvEstado.getByPais((Pais)cmbPais.getSelectedItem());
+        for (Estado estado : estados) {
+            cmbEstado.addItem(estado);
+        }
+    }
+    
+    
+    
+    private void preencheCidade() throws SQLException{
+        cmbCidade.removeAllItems();
+        ArrayList<Cidade> cidades = srvCidade.getByEstado((Estado)cmbEstado.getSelectedItem());
+        for (Cidade cidade : cidades) {
+            cmbCidade.addItem(cidade);
+        }
+    }
+    
+    private void addListenerEstado(){
+        cmbEstado.addItemListener(new ItemListener(){
+            @Override
+            public void itemStateChanged(ItemEvent eventoItem){
+                if (eventoItem.getStateChange() == ItemEvent.SELECTED) {
+                    try {
+                        preencheCidade();
+                        cmbCidade.setSelectedItem(null);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(FormCadastroLogradouro.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        });
+    }
+    
+    private void preencheBairro() throws SQLException{
+        cmbBairro.removeAllItems();
+        ArrayList<Bairro> bairros = srvBairro.getByCidade((Cidade)cmbCidade.getSelectedItem());
+        for (Bairro bairro : bairros) {
+            cmbBairro.addItem(bairro);
+        }
+    }
+    
+    private void addListenerCidade(){
+        cmbCidade.addItemListener(new ItemListener(){
+            @Override
+            public void itemStateChanged(ItemEvent eventoItem){
+                if (eventoItem.getStateChange() == ItemEvent.SELECTED) {
+                    try {
+                        preencheBairro();
+                        cmbBairro.setSelectedItem(null);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(FormCadastroLogradouro.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        });
+    }
+    
+    private void preencheLogradouro() throws SQLException{
+        cmbLogradouro.removeAllItems();
+        ArrayList<Logradouro> logradouros = srvLogradouro.getByBairro((Bairro)cmbBairro.getSelectedItem());
+        for (Logradouro logradouro : logradouros) {
+            cmbLogradouro.addItem(logradouro);
+        }
+    }
+    
+    private void addListenerBairro(){
+        cmbBairro.addItemListener(new ItemListener(){
+            @Override
+            public void itemStateChanged(ItemEvent eventoItem){
+                if (eventoItem.getStateChange() == ItemEvent.SELECTED) {
+                    try {
+                        preencheLogradouro();
+                        cmbLogradouro.setSelectedItem(null);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(FormCadastroLogradouro.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        });
+    }
+    
+    private void preencheEndereco() throws SQLException{
+        cmbEndereco.removeAllItems();
+        ArrayList<Endereco> enderecos = srvEndereco.getByLogradouro((Logradouro)cmbLogradouro.getSelectedItem());
+        for (Endereco endereco : enderecos) {
+            cmbEndereco.addItem(endereco);
+        }
+    }
+    
+    private void addListenerLogradouro(){
+        cmbLogradouro.addItemListener(new ItemListener(){
+            @Override
+            public void itemStateChanged(ItemEvent eventoItem){
+                if (eventoItem.getStateChange() == ItemEvent.SELECTED) {
+                    try {
+                        preencheEndereco();
+                        cmbEndereco.setSelectedItem(null);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(FormCadastroLogradouro.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        });
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -347,30 +741,25 @@ public class FormCadastroPaciente extends javax.swing.JFrame {
     private javax.swing.JButton btnAtualizar;
     private javax.swing.JButton btnDeletar;
     private javax.swing.JButton btnSalvar;
-    private javax.swing.JComboBox<String> cmbBairro;
-    private javax.swing.JComboBox<String> cmbCidade;
-    private javax.swing.JComboBox<String> cmbEstado;
-    private javax.swing.JComboBox<String> cmbLogradouro;
-    private javax.swing.JComboBox<String> cmbPais;
-    private javax.swing.JFormattedTextField ftxtCEP;
+    private javax.swing.JComboBox<Bairro> cmbBairro;
+    private javax.swing.JComboBox<Cidade> cmbCidade;
+    private javax.swing.JComboBox<Endereco> cmbEndereco;
+    private javax.swing.JComboBox<Estado> cmbEstado;
+    private javax.swing.JComboBox<Logradouro> cmbLogradouro;
+    private javax.swing.JComboBox<Pais> cmbPais;
     private javax.swing.JFormattedTextField ftxtCPF;
-    private javax.swing.JFormattedTextField ftxtCelular;
     private javax.swing.JFormattedTextField ftxtDataNasc;
     private javax.swing.JFormattedTextField ftxtRG;
-    private javax.swing.JFormattedTextField ftxtTelefone;
     private javax.swing.JTable grdPaciente;
     private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -382,7 +771,6 @@ public class FormCadastroPaciente extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lblMensagem;
     private javax.swing.JTextField txtNome;
-    private javax.swing.JTextField txtNumero;
     private javax.swing.JTextArea txtObservacao;
     private javax.swing.JTextField txtSobrenome;
     // End of variables declaration//GEN-END:variables
