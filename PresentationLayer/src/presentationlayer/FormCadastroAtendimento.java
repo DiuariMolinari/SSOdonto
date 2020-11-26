@@ -93,7 +93,7 @@ public class FormCadastroAtendimento extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Id", "Paciente", "Colaborador"
+                "title1", "title2", "title3"
             }
         ) {
             Class[] types = new Class [] {
@@ -146,19 +146,18 @@ public class FormCadastroAtendimento extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(lblMensagem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(cmbColaborador, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel1)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(btnSalvar)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnAtualizar)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnDeletar)))
-                        .addComponent(cmbPaciente, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(cmbColaborador, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel3)
+                        .addComponent(jLabel2)
+                        .addComponent(jLabel1)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(btnSalvar)
+                            .addGap(18, 18, 18)
+                            .addComponent(btnAtualizar)
+                            .addGap(18, 18, 18)
+                            .addComponent(btnDeletar)))
+                    .addComponent(cmbPaciente, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -234,8 +233,7 @@ public class FormCadastroAtendimento extends javax.swing.JFrame {
     }
     
     private void preencheCombo() throws SQLException{
-        cmbPaciente.removeAllItems();
-        cmbColaborador.removeAll();            
+        limpaCombo();
 
         ArrayList<Paciente> pacientes = srvPaciente.getAll();
         ArrayList<Colaborador> colabordores = srvColaborador.getAll();
@@ -246,12 +244,17 @@ public class FormCadastroAtendimento extends javax.swing.JFrame {
         for (Paciente paciente : pacientes) {
             cmbPaciente.addItem(paciente);
         }     
-        limpaCombo();
+        deselecionaCombo();
+    }
+    
+    private void deselecionaCombo(){
+        cmbPaciente.setSelectedItem(null);
+        cmbColaborador.setSelectedItem(null);
     }
     
     private void limpaCombo(){
-        cmbPaciente.setSelectedItem(null);
-        cmbColaborador.setSelectedItem(null);
+        cmbPaciente.removeAllItems();
+        cmbColaborador.removeAllItems();    
     }
     
     private void grdAtendimentoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_grdAtendimentoMouseClicked
@@ -279,7 +282,7 @@ public class FormCadastroAtendimento extends javax.swing.JFrame {
             lblMensagem.setText(srvAtendimento.insert(new Atendimento(0,(Paciente)cmbPaciente.getSelectedItem(),(Colaborador)cmbColaborador.getSelectedItem())));
             lblMensagem.setForeground(new Color(0, 102, 0));
             preencheGrid();
-            limpaCombo();  
+            deselecionaCombo();  
             
         } catch (SQLException ex) {
             Logger.getLogger(FormCadastroAtendimento.class.getName()).log(Level.SEVERE, null, ex);
@@ -292,7 +295,7 @@ public class FormCadastroAtendimento extends javax.swing.JFrame {
                 lblMensagem.setText(srvAtendimento.update(new Atendimento(lastAtendimento.getId(), (Paciente)cmbPaciente.getSelectedItem(), (Colaborador)cmbColaborador.getSelectedItem())));
                 lblMensagem.setForeground(Color.blue);
                 preencheGrid();
-                limpaCombo();
+                deselecionaCombo();
             }
         } catch (SQLException ex) {
             Logger.getLogger(FormCadastroAtendimento.class.getName()).log(Level.SEVERE, null, ex);
@@ -305,7 +308,7 @@ public class FormCadastroAtendimento extends javax.swing.JFrame {
                 lblMensagem.setText(srvAtendimento.delete(lastAtendimento));
                 lblMensagem.setForeground(Color.red);
                 preencheGrid();
-                limpaCombo();                
+                deselecionaCombo();                
             }
         } catch (SQLException ex) {
             Logger.getLogger(FormCadastroAtendimento.class.getName()).log(Level.SEVERE, null, ex);

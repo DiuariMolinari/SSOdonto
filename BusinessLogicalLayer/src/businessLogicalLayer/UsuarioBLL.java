@@ -45,14 +45,14 @@ public class UsuarioBLL {
         return respostaDB;
     }
 
-    public String Autenticar(String login, String password) throws ValidatorException {
+    public boolean Autenticar(String login, String password) throws ValidatorException {
         Usuario user = dal.Autenticar(login, password);
         if (user == null) {
-            return "Usuário e/ou senha inválidos.";
+            return false;
         }
 
         Parametros.UsuarioLogado = user;
-        return "Usuário autenticado com sucesso!";
+        return true;
     }
 
     // Obter todos os registros

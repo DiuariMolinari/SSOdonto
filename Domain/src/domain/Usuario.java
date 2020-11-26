@@ -19,6 +19,12 @@ public class Usuario {
     public String toString() {
         return colaborador.getNome();
     }
+
+    public Usuario(int id, String login, String senha) {
+        this.id = id;
+        this.login = login;
+        this.senha = senha;
+    }
     
     public Usuario(int id) {
         this.id = id;
