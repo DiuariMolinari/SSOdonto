@@ -27,7 +27,7 @@ public class FormCadastroUsuario extends javax.swing.JFrame {
     private String lastUsuario;
     private String lastSenha;
     private String lastConfirmaSenha;
-    private Usuario lasCadUsuario;    
+    private Usuario lastCadUsuario;    
     
     private DefaultTableModel model;
     
@@ -256,7 +256,7 @@ public class FormCadastroUsuario extends javax.swing.JFrame {
         lastSenha = senha;
         lastConfirmaSenha = senha;
         lastColaborador = colaborador;
-        lasCadUsuario = new Usuario(id, usuario, senha, colaborador);
+        lastCadUsuario = new Usuario(id, usuario, senha, colaborador);
     }//GEN-LAST:event_grdUsuarioMouseClicked
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
@@ -291,9 +291,9 @@ public class FormCadastroUsuario extends javax.swing.JFrame {
                     || !lastSenha.equals(ptxtSenha.getPassword())
                     || !lastConfirmaSenha.equals(ptxtConfirmaSenha.getPassword())
                     || ptxtSenha.getPassword().equals(ptxtConfirmaSenha.getPassword()))
-                    && lasCadUsuario != null){ 
+                    && lastCadUsuario != null){ 
                 String senha = new String(ptxtSenha.getPassword());
-                lblMensagem.setText(srvUsuario.update(new Usuario(lasCadUsuario.getId(),txtUsuario.getText(), senha, (Colaborador)cmbColaborador.getSelectedItem())));
+                lblMensagem.setText(srvUsuario.update(new Usuario(lastCadUsuario.getId(),txtUsuario.getText(), senha, (Colaborador)cmbColaborador.getSelectedItem())));
                 lblMensagem.setForeground(Color.blue);
                 preencheGrid();
                 deselecionaCombo();
@@ -306,8 +306,8 @@ public class FormCadastroUsuario extends javax.swing.JFrame {
 
     private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarActionPerformed
         try {
-            if (lasCadUsuario != null){
-                lblMensagem.setText(srvUsuario.delete(lasCadUsuario));
+            if (lastCadUsuario != null){
+                lblMensagem.setText(srvUsuario.delete(lastCadUsuario));
                 lblMensagem.setForeground(Color.red);
                 preencheGrid();
                 deselecionaCombo(); 
@@ -357,7 +357,7 @@ public class FormCadastroUsuario extends javax.swing.JFrame {
         deselecionaCombo();
     }
     
-     private void deselecionaCombo(){
+    private void deselecionaCombo(){
         cmbColaborador.setSelectedItem(null);
     }
      

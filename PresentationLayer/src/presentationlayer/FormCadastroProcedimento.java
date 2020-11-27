@@ -5,17 +5,41 @@
  */
 package presentationlayer;
 
+import businessLogicalLayer.ProcedimentoBLL;
+import businessLogicalLayer.TipoProcedimentoBLL;
+import domain.Procedimento;
+import domain.TipoProcedimento;
+import java.awt.Color;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+
 /**
  *
  * @author sabri
  */
 public class FormCadastroProcedimento extends javax.swing.JFrame {
+    
+    private TipoProcedimento lastTipoProcedimento;
+    private String lastProcedimento;
+    private String lastDescricao;
+    private Procedimento lastCadProcedimento;
+    
+    ProcedimentoBLL srvProcedimento = new ProcedimentoBLL();
+    TipoProcedimentoBLL srvTipoProcedimento = new TipoProcedimentoBLL();
 
+    private DefaultTableModel model;
+    
     /**
      * Creates new form FormCadastroProcedimento
      */
     public FormCadastroProcedimento() {
         initComponents();
+        model = new DefaultTableModel();
+        grdProcedimento.setModel(model);
     }
 
     /**
@@ -36,8 +60,6 @@ public class FormCadastroProcedimento extends javax.swing.JFrame {
         btnSalvar = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         txtDescricao = new javax.swing.JTextField();
-        cmbAtendimento = new javax.swing.JComboBox<>();
-        jLabel5 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         grdProcedimento = new javax.swing.JTable();
         btnAtualizar = new javax.swing.JButton();
@@ -45,6 +67,11 @@ public class FormCadastroProcedimento extends javax.swing.JFrame {
         lblMensagem = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setText("Procedimento");
@@ -55,10 +82,13 @@ public class FormCadastroProcedimento extends javax.swing.JFrame {
 
         btnSalvar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnSalvar.setText("Salvar");
+        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarActionPerformed(evt);
+            }
+        });
 
         jLabel3.setText("Descrição");
-
-        jLabel5.setText("Atendimento");
 
         grdProcedimento.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -71,13 +101,28 @@ public class FormCadastroProcedimento extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        grdProcedimento.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                grdProcedimentoMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(grdProcedimento);
 
         btnAtualizar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnAtualizar.setText("Atualizar");
+        btnAtualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAtualizarActionPerformed(evt);
+            }
+        });
 
         btnDeletar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnDeletar.setText("Deletar");
+        btnDeletar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeletarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -86,25 +131,25 @@ public class FormCadastroProcedimento extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnSalvar)
-                        .addGap(18, 18, Short.MAX_VALUE)
-                        .addComponent(btnAtualizar)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnDeletar))
                     .addComponent(txtDescricao, javax.swing.GroupLayout.DEFAULT_SIZE, 294, Short.MAX_VALUE)
                     .addComponent(txtProcedimento)
+                    .addComponent(lblMensagem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5)
-                            .addComponent(cmbAtendimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cmbTipoProcedimento, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel1))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(lblMensagem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(cmbTipoProcedimento, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                        .addComponent(btnSalvar)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(btnAtualizar))
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING))
+                                .addGap(18, 18, 18)
+                                .addComponent(btnDeletar)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -128,10 +173,6 @@ public class FormCadastroProcedimento extends javax.swing.JFrame {
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cmbTipoProcedimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cmbAtendimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -163,6 +204,125 @@ public class FormCadastroProcedimento extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        try {
+            preencheCombo();
+            preencheGrid(); 
+        } catch (Exception ex) {
+            Logger.getLogger(FormCadastroProcedimento.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_formWindowOpened
+
+    private void grdProcedimentoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_grdProcedimentoMouseClicked
+        int row = grdProcedimento.getSelectedRow();
+        TableModel model = grdProcedimento.getModel();
+        
+        int id = (int)model.getValueAt(row, 0);
+        
+        String procedimento = (String)model.getValueAt(row, 1);
+            txtProcedimento.setText(procedimento);
+            
+        String descricao = (String)model.getValueAt(row, 2);
+            txtDescricao.setText(descricao);
+                      
+        TipoProcedimento tipoProcedimento = (TipoProcedimento)model.getValueAt(row, 3);
+        cmbTipoProcedimento.getModel().setSelectedItem(tipoProcedimento);   
+        
+        lastProcedimento = procedimento;
+        lastDescricao = descricao;
+        lastTipoProcedimento = tipoProcedimento;
+        lastCadProcedimento = new Procedimento(id, procedimento, tipoProcedimento, descricao );
+    }//GEN-LAST:event_grdProcedimentoMouseClicked
+
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+        try {
+            if (txtProcedimento.getText().trim().length() == 0 
+                    || txtDescricao.getText().trim().length() == 0 
+                    || cmbTipoProcedimento.getSelectedItem() == null){
+                return;
+            }
+            lblMensagem.setText(srvProcedimento.insert(new Procedimento(0, txtProcedimento.getText(), (TipoProcedimento)cmbTipoProcedimento.getSelectedItem(), txtDescricao.getText())));
+            lblMensagem.setForeground(new Color(0, 102, 0));
+            preencheGrid();
+            limpaCampos();  
+        } catch (Exception ex) {
+            Logger.getLogger(FormCadastroTipoProcedimento.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnSalvarActionPerformed
+
+    private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
+        try {
+            if (cmbTipoProcedimento.getSelectedItem() != null 
+                    && !"".equals(txtProcedimento.getText()) 
+                    && !"".equals(txtDescricao.getText())
+                    && (lastTipoProcedimento != cmbTipoProcedimento.getSelectedItem()
+                    || !lastProcedimento.equals(txtProcedimento.getText()) 
+                    || !lastDescricao.equals(txtDescricao.getText()))
+                    && lastCadProcedimento != null){ 
+                Procedimento procedimento = new Procedimento(lastCadProcedimento.getId(), txtProcedimento.getText(),(TipoProcedimento)cmbTipoProcedimento.getSelectedItem(), txtDescricao.getText());
+                String result = srvProcedimento.update(procedimento);
+                lblMensagem.setText(result);
+                lblMensagem.setForeground(Color.blue);
+                preencheGrid();
+                preencheCombo();
+                deselecionaCombo();                
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(FormCadastroProcedimento.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnAtualizarActionPerformed
+
+    private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarActionPerformed
+         try {
+            if (lastCadProcedimento != null){
+                lblMensagem.setText(srvProcedimento.delete(lastCadProcedimento));
+                lblMensagem.setForeground(Color.red);
+                preencheGrid();
+                deselecionaCombo(); 
+                limpaCampos();
+                preencheCombo();
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(FormCadastroProcedimento.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+    }//GEN-LAST:event_btnDeletarActionPerformed
+
+    private void preencheGrid() throws SQLException, Exception{
+        ArrayList<Procedimento> procedimentos = srvProcedimento.getAll();
+         
+        Object colunas[] = {"Id", "Procedimento", "Descrição", "Tipo Procedimento"};
+            model = new DefaultTableModel(colunas, 0);
+            for (Procedimento procedimeno : procedimentos) {
+                model.addRow( new Object[]{
+                    procedimeno.getId(),
+                    procedimeno.getNome(),
+                    procedimeno.getDescricaoProcedimento(),
+                    procedimeno.getTipoProcedimento()
+                });           
+            }  
+            grdProcedimento.setModel(model);
+    }   
+    
+    private void preencheCombo() throws SQLException, Exception{
+        limpaCampos();
+
+        ArrayList<TipoProcedimento> tipoProcedimentos = srvTipoProcedimento.getAll();
+
+        for (TipoProcedimento tipoProcedimento : tipoProcedimentos) {
+            cmbTipoProcedimento.addItem(tipoProcedimento);            
+        }             
+        deselecionaCombo();
+    }    
+    private void deselecionaCombo(){
+        cmbTipoProcedimento.setSelectedItem(null);
+    }
+    
+    private void limpaCampos(){
+        cmbTipoProcedimento.removeAllItems();
+        txtProcedimento.setText("");
+        txtDescricao.setText("");
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -202,14 +362,12 @@ public class FormCadastroProcedimento extends javax.swing.JFrame {
     private javax.swing.JButton btnAtualizar;
     private javax.swing.JButton btnDeletar;
     private javax.swing.JButton btnSalvar;
-    private javax.swing.JComboBox<String> cmbAtendimento;
-    private javax.swing.JComboBox<String> cmbTipoProcedimento;
+    private javax.swing.JComboBox<TipoProcedimento> cmbTipoProcedimento;
     private javax.swing.JTable grdProcedimento;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblMensagem;

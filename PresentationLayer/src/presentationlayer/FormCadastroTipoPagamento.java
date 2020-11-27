@@ -5,17 +5,38 @@
  */
 package presentationlayer;
 
+
+import businessLogicalLayer.TipoPagamentoBLL;
+import domain.TipoPagamento;
+import java.awt.Color;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+
 /**
  *
  * @author sabri
  */
 public class FormCadastroTipoPagamento extends javax.swing.JFrame {
 
+    private TipoPagamento lastTipoPagamento;
+    private String lastNomeTipoPagamento;
+    
+    TipoPagamentoBLL srvPagamento = new TipoPagamentoBLL();
+    
+    private DefaultTableModel model;
+    
+    
     /**
      * Creates new form FormCadastroTipoPagamento
      */
     public FormCadastroTipoPagamento() {
         initComponents();
+        model = new DefaultTableModel();
+        grdTipoPagamento.setModel(model);
     }
 
     /**
@@ -39,6 +60,11 @@ public class FormCadastroTipoPagamento extends javax.swing.JFrame {
         lblMensagem = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setText("Tipo Pagamento");
@@ -47,6 +73,11 @@ public class FormCadastroTipoPagamento extends javax.swing.JFrame {
 
         btnSalvar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnSalvar.setText("Salvar");
+        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarActionPerformed(evt);
+            }
+        });
 
         grdTipoPagamento.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -59,13 +90,28 @@ public class FormCadastroTipoPagamento extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        grdTipoPagamento.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                grdTipoPagamentoMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(grdTipoPagamento);
 
         btnDeletar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnDeletar.setText("Deletar");
+        btnDeletar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeletarActionPerformed(evt);
+            }
+        });
 
         btnAtualizar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnAtualizar.setText("Atualizar");
+        btnAtualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAtualizarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -133,6 +179,87 @@ public class FormCadastroTipoPagamento extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        try {
+            preencheGrid(); 
+        } catch (Exception ex) {
+            Logger.getLogger(FormCadastroTipoPagamento.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_formWindowOpened
+
+    private void grdTipoPagamentoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_grdTipoPagamentoMouseClicked
+        int row = grdTipoPagamento.getSelectedRow();
+        TableModel model = grdTipoPagamento.getModel();
+        
+        int id = (int)model.getValueAt(row, 0);
+        
+        String tipoPagamento = (String)model.getValueAt(row, 1);
+        txtTipoPagamento.setText(tipoPagamento);
+            
+        lastNomeTipoPagamento = tipoPagamento;
+        lastTipoPagamento = new TipoPagamento(id, tipoPagamento);
+    }//GEN-LAST:event_grdTipoPagamentoMouseClicked
+
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+        try {
+            String descricao = txtTipoPagamento.getText().trim();
+            if (descricao.length() == 0 ){
+                return;
+            }
+            lblMensagem.setText(srvPagamento.insert(new TipoPagamento(0, txtTipoPagamento.getText())));
+            lblMensagem.setForeground(new Color(0, 102, 0));
+            preencheGrid();
+            limpaCampos();  
+        } catch (Exception ex) {
+            Logger.getLogger(FormCadastroTipoPagamento.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnSalvarActionPerformed
+
+    private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
+        try {
+            if (!"".equals(txtTipoPagamento.getText()) 
+                    || !lastNomeTipoPagamento.equals(txtTipoPagamento.getText())
+                    && lastTipoPagamento != null){ 
+                lblMensagem.setText(srvPagamento.update(new TipoPagamento(lastTipoPagamento.getId(),txtTipoPagamento.getText())));
+                lblMensagem.setForeground(Color.blue);
+                preencheGrid();
+                limpaCampos();
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(FormCadastroTipoPagamento.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnAtualizarActionPerformed
+
+    private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarActionPerformed
+        try {
+            if (lastTipoPagamento != null){
+                lblMensagem.setText(srvPagamento.delete(lastTipoPagamento));
+                lblMensagem.setForeground(Color.red);
+                preencheGrid();
+                limpaCampos();
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(FormCadastroTipoPagamento.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+    }//GEN-LAST:event_btnDeletarActionPerformed
+
+    private void preencheGrid() throws SQLException, Exception{
+        ArrayList<TipoPagamento> tipoPagamentos = srvPagamento.getAll();
+         
+        Object colunas[] = {"Id", "Tipo Pagamento"};
+            model = new DefaultTableModel(colunas, 0);
+            for (TipoPagamento tipoPagamento : tipoPagamentos) {
+                model.addRow( new Object[]{
+                    tipoPagamento.getId(),
+                    tipoPagamento.getTipoPagamento()
+                });           
+            }  
+            grdTipoPagamento.setModel(model);
+    }    
+    
+    private void limpaCampos(){
+        txtTipoPagamento.setText("");
+    }
     /**
      * @param args the command line arguments
      */
