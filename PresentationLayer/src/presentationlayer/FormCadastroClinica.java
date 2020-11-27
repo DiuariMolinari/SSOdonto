@@ -110,7 +110,11 @@ public class FormCadastroClinica extends javax.swing.JFrame {
 
         jLabel2.setText("Nome da Clínica");
 
-        ftxtDataInauguracao.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
+        try {
+            ftxtDataInauguracao.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("####-##-##")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
 
         jLabel3.setText("Data de Inauguração");
 
@@ -376,7 +380,7 @@ public class FormCadastroClinica extends javax.swing.JFrame {
             LocalDate inauguracao = (LocalDate) model.getValueAt(row, 2);
             ftxtDataInauguracao.setText(inauguracao.toString());
 
-            int nCasa = (int) model.getValueAt(row, 9);
+            //int nCasa = (int) model.getValueAt(row, 9);
 
             Pais pais = (Pais) model.getValueAt(row, 8);
             cmbPais.getModel().setSelectedItem(pais);
