@@ -99,21 +99,22 @@ public class FormCadastroClinica extends javax.swing.JFrame {
         jLabel18.setText("UF");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setText("Clínica");
 
         jLabel2.setText("Nome da Clínica");
 
-        try {
-            ftxtDataInauguracao.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("####-##-##")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
+        ftxtDataInauguracao.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
 
         jLabel3.setText("Data de Inauguração");
 
-        jLabel11.setText("Endereço");
+        jLabel11.setText("CEP");
 
         jLabel12.setText("Logradouro");
 
@@ -135,20 +136,20 @@ public class FormCadastroClinica extends javax.swing.JFrame {
 
         grdClinica.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Id", "Nome da Clínica", "Data Inauguração", "CEP", "Logradouro", "N°", "Bairro", "Cidade", "Estado", "País"
+                "Id", "Nome da Clínica", "Data Inauguração", "CEP", "Logradouro", "Bairro", "Cidade", "Estado", "País"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, true, true, true, true, true, true, true, true, true
+                false, true, true, true, true, true, true, true, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -332,14 +333,9 @@ public class FormCadastroClinica extends javax.swing.JFrame {
 
     private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
         try {
-            if (cmbBairro.getSelectedItem() != null
-                    && !txtClinica.getText().equals("")
-                    && !ftxtDataInauguracao.getText().equals("")
-                    && (!lastEndereco.equals(cmbEndereco.getSelectedItem())
-                    || !lastDtInauguracao.equals(ftxtDataInauguracao.getText())
-                    || !lastClinica.equals(txtClinica.getText())
-                    || !lastNome.equals(txtClinica.getText()))
-                    && lastClinica != null) {
+            if (cmbBairro.getSelectedItem() != null && !txtClinica.getText().equals("") && !ftxtDataInauguracao.getText().equals("") && (!lastEndereco.equals(cmbEndereco.getSelectedItem())
+                    || !lastDtInauguracao.equals(ftxtDataInauguracao.getText()) || !lastClinica.equals(txtClinica.getText()) || !lastNome.equals(txtClinica.getText())) && lastClinica != null) {
+
                 String retorno = srvClinica.update(new Clinica(lastClinica.getId(), txtClinica.getText(), LocalDate.parse(ftxtDataInauguracao.getText()), (Endereco) cmbEndereco.getSelectedItem()));
                 lblMensagem.setText(retorno);
                 lblMensagem.setForeground(Color.BLUE);
@@ -377,30 +373,30 @@ public class FormCadastroClinica extends javax.swing.JFrame {
             String nomeClinica = (String) model.getValueAt(row, 1);
             txtClinica.setText(nomeClinica);
 
-            LocalDate inauguracao = (LocalDate) model.getValueAt(row, 5);
+            LocalDate inauguracao = (LocalDate) model.getValueAt(row, 2);
             ftxtDataInauguracao.setText(inauguracao.toString());
 
             int nCasa = (int) model.getValueAt(row, 9);
 
-            Pais pais = (Pais) model.getValueAt(row, 14);
+            Pais pais = (Pais) model.getValueAt(row, 8);
             cmbPais.getModel().setSelectedItem(pais);
             preencheEstado();
 
-            Estado estado = (Estado) model.getValueAt(row, 13);
+            Estado estado = (Estado) model.getValueAt(row, 7);
             cmbEstado.getModel().setSelectedItem(estado);
             preencheCidade();
 
-            Cidade cidade = (Cidade) model.getValueAt(row, 12);
+            Cidade cidade = (Cidade) model.getValueAt(row, 6);
             cmbCidade.getModel().setSelectedItem(cidade);
             preencheBairro();
 
-            Bairro bairro = (Bairro) model.getValueAt(row, 11);
+            Bairro bairro = (Bairro) model.getValueAt(row, 5);
             cmbBairro.getModel().setSelectedItem(bairro);
 
-            Logradouro logradouro = (Logradouro) model.getValueAt(row, 10);
+            Logradouro logradouro = (Logradouro) model.getValueAt(row, 4);
             cmbLogradouro.getModel().setSelectedItem(logradouro);
 
-            Endereco endereco = (Endereco) model.getValueAt(row, 7);
+            Endereco endereco = (Endereco) model.getValueAt(row, 3);
             cmbEndereco.getModel().setSelectedItem(endereco);
 
             lastNome = nomeClinica;
@@ -408,14 +404,24 @@ public class FormCadastroClinica extends javax.swing.JFrame {
             lastEndereco = endereco;
             lastClinica = new Clinica(id, nomeClinica, inauguracao, lastEndereco);
         } catch (SQLException ex) {
-            Logger.getLogger(FormCadastroClinica.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FormCadastroLogradouro.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_grdClinicaMouseClicked
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        try {
+            addAllListener();
+            preencheGrid();
+            preencheCombo();
+        } catch (SQLException ex) {
+            Logger.getLogger(FormCadastroLogradouro.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_formWindowOpened
 
     private void preencheGrid() throws SQLException {
         ArrayList<Clinica> clinicas = srvClinica.getAll();
 
-        Object colunas[] = {"Id", "Nome", "Data de Inauguração", "Endereço", "Logradouro", "Bairro", "Cidade", "Estado", "País"};
+        Object colunas[] = {"Id", "Nome", "Data de Inauguração", "CEP", "Logradouro", "Bairro", "Cidade", "Estado", "País"};
         model = new DefaultTableModel(colunas, 0);
         for (Clinica clinica : clinicas) {
             model.addRow(new Object[]{
@@ -444,14 +450,6 @@ public class FormCadastroClinica extends javax.swing.JFrame {
         ftxtDataInauguracao.setText("");
     }
 
-    private void addAllListener() {
-        addListenerPais();
-        addListenerEstado();
-        addListenerCidade();
-        addListenerBairro();
-        addListenerLogradouro();
-    }
-
     private void deselecionaCombo() {
         cmbPais.setSelectedItem(null);
         cmbEstado.setSelectedItem(null);
@@ -459,6 +457,14 @@ public class FormCadastroClinica extends javax.swing.JFrame {
         cmbBairro.setSelectedItem(null);
         cmbLogradouro.setSelectedItem(null);
         cmbEndereco.setSelectedItem(null);
+    }
+
+    private void addAllListener() {
+        addListenerPais();
+        addListenerEstado();
+        addListenerCidade();
+        addListenerBairro();
+        addListenerLogradouro();
     }
 
     private void preencheCombo() throws SQLException {
