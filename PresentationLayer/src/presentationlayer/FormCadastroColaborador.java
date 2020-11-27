@@ -34,14 +34,13 @@ import javax.swing.table.TableModel;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author Sabrina e Marciele
  */
 public class FormCadastroColaborador extends javax.swing.JFrame {
 
-     private Colaborador lastColaborador;
+    private Colaborador lastColaborador;
     private String lastNome;
     private String lastCro;
     private String lastCroEstado;
@@ -64,7 +63,7 @@ public class FormCadastroColaborador extends javax.swing.JFrame {
     ColaboradorBLL srvColaborador = new ColaboradorBLL();
     ClinicaBLL srvClinica = new ClinicaBLL();
     FuncaoBLL srvFuncao = new FuncaoBLL();
-    
+
     /**
      * Creates new form frmCadastroColaborador
      */
@@ -200,6 +199,11 @@ public class FormCadastroColaborador extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        grdColaborador.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                grdColaboradorMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(grdColaborador);
         grdColaborador.getAccessibleContext().setAccessibleParent(jPanel1);
 
@@ -417,20 +421,366 @@ public class FormCadastroColaborador extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        // TODO add your handling code here:
+        try {
+            addAllListener();
+            preencheGrid();
+            preencheCombo();
+        } catch (SQLException ex) {
+            Logger.getLogger(FormCadastroColaborador.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_formWindowOpened
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        // TODO add your handling code here:
+        try {
+            if (cmbBairro.getSelectedItem() == null || txtNomeCompleto.getText().equals("") || ftxtCPF.getText().equals("") || ftxtRG.getText().equals("") || ftxtCRO.getText().equals("") || txtNumero.getText().equals("") || ftxtDataAdmissao.getText().equals("")) {
+                return;
+            }
+
+            String retorno = srvColaborador.insert(new Colaborador(0, txtNomeCompleto.getText(), LocalDate.parse(ftxtDataAdmissao.getText()), (Endereco) cmbEndereco.getSelectedItem()));
+            lblMensagem.setText(retorno);
+            lblMensagem.setForeground(new Color(0, 102, 0));
+            preencheGrid();
+            deselecionaCombo();
+            limpaCampos();
+        } catch (SQLException ex) {
+            Logger.getLogger(FormCadastroColaborador.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
-        // TODO add your handling code here:
+        try {
+            if (cmbBairro.getSelectedItem() != null && !txtNomeCompleto.getText().equals("") && !ftxtDataAdmissao.getText().equals("") && (!lastEndereco.equals(cmbEndereco.getSelectedItem())
+                    || !lastDtAdmissao.equals(ftxtDataAdmissao.getText()) || !lastClinica.equals(txtNomeCompleto.getText()) || !lastNome.equals(txtNomeCompleto.getText())) && lastClinica != null) {
+
+                String retorno = srvColaborador.update(new Colaborador(lastColaborador.getId(), txtNomeCompleto.getText(), ftxtCPF.getText(), ftxtRG.getText(), (Funcao) cmbFuncao.getSelectedItem(),
+                        (Clinica) cmbClinica.getSelectedItem(), ftxtTelefone.getText(), ftxtCelular.getText(), (Endereco) cmbEndereco.getSelectedItem(),
+                        LocalDate.parse(ftxtDataAdmissao.getText()), LocalDate.parse(ftxtDataDemissao.getText()), ftxtCRO.getText()));
+                lblMensagem.setText(retorno);
+                lblMensagem.setForeground(Color.BLUE);
+                preencheGrid();
+                deselecionaCombo();
+                limpaCampos();
+                preenchePais();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(FormCadastroColaborador.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnAtualizarActionPerformed
 
     private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarActionPerformed
-        // TODO add your handling code here:
+        try {
+            if (lastColaborador != null) {
+                lblMensagem.setText(srvColaborador.delete(lastColaborador));
+                lblMensagem.setForeground(Color.RED);
+                preencheGrid();
+                deselecionaCombo();
+                limpaCampos();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(FormCadastroColaborador.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnDeletarActionPerformed
+
+    private void grdColaboradorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_grdColaboradorMouseClicked
+        try {
+            int row = grdColaborador.getSelectedRow();
+            TableModel model = grdColaborador.getModel();
+
+            int id = (int) model.getValueAt(row, 0);
+
+            String nome = (String) model.getValueAt(row, 1);
+            txtNomeCompleto.setText(nome);
+
+            String cpf = (String) model.getValueAt(row, 2);
+            ftxtCPF.setText(cpf);
+
+            String rg = (String) model.getValueAt(row, 3);
+            ftxtCRO.setText(rg);
+
+            String telefone = (String) model.getValueAt(row, 6);
+            ftxtTelefone.setText(telefone);
+
+            String celular = (String) model.getValueAt(row, 7);
+            ftxtCelular.setText(celular);
+
+            String cro = (String) model.getValueAt(row, 5);
+            txtNomeCompleto.setText(cro);
+
+            String croEstado = (String) model.getValueAt(row, 4);
+            txtNomeCompleto.setText(croEstado);
+
+            LocalDate dataAdmissao = (LocalDate) model.getValueAt(row, 2);
+            ftxtDataAdmissao.setText(dataAdmissao.toString());
+
+            LocalDate dataDemissao = (LocalDate) model.getValueAt(row, 2);
+            ftxtDataDemissao.setText(dataDemissao.toString());
+
+            Pais pais = (Pais) model.getValueAt(row, 8);
+            cmbPais.getModel().setSelectedItem(pais);
+            preencheEstado();
+
+            Estado estado = (Estado) model.getValueAt(row, 7);
+            cmbEstado.getModel().setSelectedItem(estado);
+            preencheCidade();
+
+            Cidade cidade = (Cidade) model.getValueAt(row, 6);
+            cmbCidade.getModel().setSelectedItem(cidade);
+            preencheBairro();
+
+            Bairro bairro = (Bairro) model.getValueAt(row, 5);
+            cmbBairro.getModel().setSelectedItem(bairro);
+
+            Logradouro logradouro = (Logradouro) model.getValueAt(row, 4);
+            cmbLogradouro.getModel().setSelectedItem(logradouro);
+
+            Endereco endereco = (Endereco) model.getValueAt(row, 3);
+            cmbEndereco.getModel().setSelectedItem(endereco);
+
+            Funcao funcao = (Funcao) model.getValueAt(row, 4);
+            cmbFuncao.getModel().setSelectedItem(funcao);
+            preencheFuncao();
+
+            Clinica clinica = (Clinica) model.getValueAt(row, 5);
+            cmbFuncao.getModel().setSelectedItem(clinica);
+            preencheClinica();
+
+            boolean ferias = (boolean) model.getValueAt(row, 7);
+            chkFerias.setEnabled(ferias);
+
+            boolean demitido = (boolean) model.getValueAt(row, 7);
+            chkDemitido.setEnabled(demitido);
+
+            lastNome = nome;
+            lastCro = cro;
+            lastCroEstado = croEstado;
+            lastDtAdmissao = dataAdmissao;
+            lastDtDemissao = dataDemissao;
+            lastFerias = ferias;
+            lastDemitido = demitido;
+            lastEndereco = endereco;
+            lastClinica = clinica;
+            lastFuncao = funcao;
+            lastColaborador = new Colaborador(id, nome, funcao, cro, croEstado, dataAdmissao, dataDemissao, endereco, clinica, ferias, demitido);
+        } catch (SQLException ex) {
+            Logger.getLogger(FormCadastroColaborador.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_grdColaboradorMouseClicked
+
+    private void preencheFuncao() {
+        cmbFuncao.removeAllItems();
+        ArrayList<Funcao> funcoes = srvFuncao.getAll();
+        for (Funcao funcao : funcoes) {
+            cmbFuncao.addItem(funcao);
+        }
+    }
+
+    private void preencheClinica() {
+        cmbClinica.removeAllItems();
+        ArrayList<Clinica> clinicas = srvClinica.getAll();
+        for (Clinica clinica : clinicas) {
+            cmbClinica.addItem(clinica);
+        }
+    }
+
+    private void preencheGrid() throws SQLException {
+        ArrayList<Colaborador> colaboradores = srvColaborador.getAll();
+
+        Object colunas[] = {"Id", "Nome", "CRO", "CRO - UF", "Data de Admissão", "Data de Demissão", "Função", "Clínica", "Férias", "Demitido", "CEP", "Logradouro", "Bairro", "Cidade", "Estado", "País"};
+        model = new DefaultTableModel(colunas, 0);
+        for (Colaborador colaborador : colaboradores) {
+            model.addRow(new Object[]{
+                colaborador.getId(),
+                colaborador.getNome(),
+                colaborador.getCro(),
+                colaborador.getCroEstado(),
+                colaborador.getDataAdmissao(),
+                colaborador.getDataDemissao(),
+                colaborador.getFuncao(),
+                colaborador.getClinica(),
+                colaborador.isFerias(),
+                colaborador.isDemitido(),
+                colaborador.getEndereco(),
+                colaborador.getEndereco().getLogradouro(),
+                colaborador.getEndereco().getLogradouro().getBairro(),
+                colaborador.getEndereco().getLogradouro().getBairro().getCidade(),
+                colaborador.getEndereco().getLogradouro().getBairro().getCidade().getEstado(),
+                colaborador.getEndereco().getLogradouro().getBairro().getCidade().getEstado().getPais()
+            });
+        }
+        grdColaborador.setModel(model);
+    }
+
+    private void limpaCampos() {
+        cmbEstado.removeAllItems();
+        cmbCidade.removeAllItems();
+        cmbBairro.removeAllItems();
+        cmbLogradouro.removeAllItems();
+        cmbEndereco.removeAllItems();
+
+        txtNomeCompleto.setText("");
+        ftxtCPF.setText("");
+        ftxtRG.setText("");
+        ftxtTelefone.setText("");
+        ftxtCelular.setText("");
+        txtNumero.setText("");
+        chkDemitido.setEnabled(false); //REVER
+        chkFerias.setEnabled(false);//REVER
+    }
+
+    private void deselecionaCombo() {
+        cmbPais.setSelectedItem(null);
+        cmbEstado.setSelectedItem(null);
+        cmbCidade.setSelectedItem(null);
+        cmbBairro.setSelectedItem(null);
+        cmbLogradouro.setSelectedItem(null);
+        cmbEndereco.setSelectedItem(null);
+    }
+
+    private void addAllListener() {
+        addListenerPais();
+        addListenerEstado();
+        addListenerCidade();
+        addListenerBairro();
+        addListenerLogradouro();
+    }
+
+    private void preencheCombo() throws SQLException {
+        limpaCampos();
+        ArrayList<Pais> paises = srvPais.getAll();
+
+        for (Pais pais : paises) {
+            cmbPais.addItem(pais);
+        }
+        deselecionaCombo();
+    }
+
+    private void preenchePais() throws SQLException {
+        cmbPais.removeAllItems();
+        ArrayList<Pais> paises = srvPais.getAll();
+        for (Pais pais : paises) {
+            cmbPais.addItem(pais);
+        }
+    }
+
+    private void preencheEstado() throws SQLException {
+        cmbEstado.removeAllItems();
+        ArrayList<Estado> estados = srvEstado.getByPais((Pais) cmbPais.getSelectedItem());
+        for (Estado estado : estados) {
+            cmbEstado.addItem(estado);
+        }
+    }
+
+    private void preencheCidade() throws SQLException {
+        cmbCidade.removeAllItems();
+        ArrayList<Cidade> cidades = srvCidade.getByEstado((Estado) cmbEstado.getSelectedItem());
+        for (Cidade cidade : cidades) {
+            cmbCidade.addItem(cidade);
+        }
+    }
+
+    private void preencheBairro() throws SQLException {
+        cmbBairro.removeAllItems();
+        ArrayList<Bairro> bairros = srvBairro.getByCidade((Cidade) cmbCidade.getSelectedItem());
+        for (Bairro bairro : bairros) {
+            cmbBairro.addItem(bairro);
+        }
+    }
+
+    private void preencheLogradouro() throws SQLException {
+        cmbLogradouro.removeAllItems();
+        ArrayList<Logradouro> logradouros = srvLogradouro.getByBairro((Bairro) cmbBairro.getSelectedItem());
+        for (Logradouro logradouro : logradouros) {
+            cmbLogradouro.addItem(logradouro);
+        }
+    }
+
+    private void preencheEndereco() throws SQLException {
+        cmbEndereco.removeAllItems();
+        ArrayList<Endereco> enderecos = srvEndereco.getByLogradouro((Logradouro) cmbLogradouro.getSelectedItem());
+        for (Endereco endereco : enderecos) {
+            cmbEndereco.addItem(endereco);
+        }
+    }
+
+    private void addListenerPais() {
+        cmbPais.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent eventoItem) {
+                if (eventoItem.getStateChange() == ItemEvent.SELECTED) {
+                    try {
+                        preencheEstado();
+                        cmbEstado.setSelectedItem(null);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(FormCadastroLogradouro.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        });
+    }
+
+    private void addListenerEstado() {
+        cmbEstado.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent eventoItem) {
+                if (eventoItem.getStateChange() == ItemEvent.SELECTED) {
+                    try {
+                        preencheCidade();
+                        cmbCidade.setSelectedItem(null);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(FormCadastroLogradouro.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        });
+    }
+
+    private void addListenerCidade() {
+        cmbCidade.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent eventoItem) {
+                if (eventoItem.getStateChange() == ItemEvent.SELECTED) {
+                    try {
+                        preencheBairro();
+                        cmbBairro.setSelectedItem(null);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(FormCadastroLogradouro.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        });
+    }
+
+    private void addListenerBairro() {
+        cmbBairro.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent eventoItem) {
+                if (eventoItem.getStateChange() == ItemEvent.SELECTED) {
+                    try {
+                        preencheLogradouro();
+                        cmbLogradouro.setSelectedItem(null);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(FormCadastroLogradouro.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        });
+    }
+
+    private void addListenerLogradouro() {
+        cmbLogradouro.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent eventoItem) {
+                if (eventoItem.getStateChange() == ItemEvent.SELECTED) {
+                    try {
+                        preencheEndereco();
+                        cmbEndereco.setSelectedItem(null);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(FormCadastroLogradouro.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        });
+    }
 
     /**
      * @param args the command line arguments
@@ -474,14 +824,14 @@ public class FormCadastroColaborador extends javax.swing.JFrame {
     private javax.swing.JButton btnSalvar;
     private javax.swing.JCheckBox chkDemitido;
     private javax.swing.JCheckBox chkFerias;
-    private javax.swing.JComboBox<String> cmbBairro;
-    private javax.swing.JComboBox<String> cmbCidade;
-    private javax.swing.JComboBox<String> cmbClinica;
-    private javax.swing.JComboBox<String> cmbEstado;
+    private javax.swing.JComboBox<Bairro> cmbBairro;
+    private javax.swing.JComboBox<Cidade> cmbCidade;
+    private javax.swing.JComboBox<Clinica> cmbClinica;
+    private javax.swing.JComboBox<Estado> cmbEstado;
     private javax.swing.JComboBox<String> cmbEstadoCRO;
-    private javax.swing.JComboBox<String> cmbFuncao;
-    private javax.swing.JComboBox<String> cmbLogradouro;
-    private javax.swing.JComboBox<String> cmbPais;
+    private javax.swing.JComboBox<Funcao> cmbFuncao;
+    private javax.swing.JComboBox<Logradouro> cmbLogradouro;
+    private javax.swing.JComboBox<Pais> cmbPais;
     private javax.swing.JFormattedTextField ftxtCEP;
     private javax.swing.JFormattedTextField ftxtCRO;
     private javax.swing.JFormattedTextField ftxtCelular;
