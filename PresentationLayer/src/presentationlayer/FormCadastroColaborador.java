@@ -1,5 +1,34 @@
 package presentationlayer;
 
+import businessLogicalLayer.BairroBLL;
+import businessLogicalLayer.CidadeBLL;
+import businessLogicalLayer.ClinicaBLL;
+import businessLogicalLayer.ColaboradorBLL;
+import businessLogicalLayer.EnderecoBLL;
+import businessLogicalLayer.EstadoBLL;
+import businessLogicalLayer.FuncaoBLL;
+import businessLogicalLayer.LogradouroBLL;
+import businessLogicalLayer.PaisBLL;
+import domain.Clinica;
+import domain.Colaborador;
+import domain.Endereco;
+import domain.Logradouro;
+import domain.Bairro;
+import domain.Cidade;
+import domain.Estado;
+import domain.Pais;
+import domain.Funcao;
+import java.awt.Color;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -8,15 +37,41 @@ package presentationlayer;
 
 /**
  *
- * @author sabri
+ * @author Sabrina e Marciele
  */
 public class FormCadastroColaborador extends javax.swing.JFrame {
 
+     private Colaborador lastColaborador;
+    private String lastNome;
+    private String lastCro;
+    private String lastCroEstado;
+    private LocalDate lastDtAdmissao;
+    private LocalDate lastDtDemissao;
+    private Endereco lastEndereco;
+    private Funcao lastFuncao;
+    private Clinica lastClinica;
+    private boolean lastFerias;
+    private boolean lastDemitido;
+
+    private DefaultTableModel model;
+
+    PaisBLL srvPais = new PaisBLL();
+    EstadoBLL srvEstado = new EstadoBLL();
+    CidadeBLL srvCidade = new CidadeBLL();
+    BairroBLL srvBairro = new BairroBLL();
+    EnderecoBLL srvEndereco = new EnderecoBLL();
+    LogradouroBLL srvLogradouro = new LogradouroBLL();
+    ColaboradorBLL srvColaborador = new ColaboradorBLL();
+    ClinicaBLL srvClinica = new ClinicaBLL();
+    FuncaoBLL srvFuncao = new FuncaoBLL();
+    
     /**
      * Creates new form frmCadastroColaborador
      */
     public FormCadastroColaborador() {
         initComponents();
+        model = new DefaultTableModel();
+        grdColaborador.setModel(model);
     }
 
     /**
