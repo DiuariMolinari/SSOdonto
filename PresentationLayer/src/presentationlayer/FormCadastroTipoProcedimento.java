@@ -5,17 +5,37 @@
  */
 package presentationlayer;
 
+import businessLogicalLayer.TipoProcedimentoBLL;
+import domain.TipoProcedimento;
+import java.awt.Color;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+
 /**
  *
  * @author sabri
  */
 public class FormCadastroTipoProcedimento extends javax.swing.JFrame {
 
+    private TipoProcedimento lastCadTipoProcedimento;
+    private String lastTipoProcedimento;
+    private double lastValor;
+    
+    TipoProcedimentoBLL srvProcedimento = new TipoProcedimentoBLL();
+    
+    private DefaultTableModel model;
+    
     /**
      * Creates new form FormTipoProcedimento
      */
     public FormCadastroTipoProcedimento() {
         initComponents();
+        model = new DefaultTableModel();
+        grdTipoProcedimento.setModel(model);
     }
 
     /**
@@ -41,6 +61,11 @@ public class FormCadastroTipoProcedimento extends javax.swing.JFrame {
         lblMensagem = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setText("Tipo Procedimento");
@@ -49,8 +74,16 @@ public class FormCadastroTipoProcedimento extends javax.swing.JFrame {
 
         jLabel3.setText("Valor");
 
+        ftxtValor.setColumns(6);
+        ftxtValor.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,##0.00"))));
+
         btnSalvar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnSalvar.setText("Salvar");
+        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarActionPerformed(evt);
+            }
+        });
 
         grdTipoProcedimento.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -63,13 +96,28 @@ public class FormCadastroTipoProcedimento extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        grdTipoProcedimento.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                grdTipoProcedimentoMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(grdTipoProcedimento);
 
         btnAtualizar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnAtualizar.setText("Atualizar");
+        btnAtualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAtualizarActionPerformed(evt);
+            }
+        });
 
         btnDeletar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnDeletar.setText("Deletar");
+        btnDeletar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeletarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -143,6 +191,100 @@ public class FormCadastroTipoProcedimento extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        try {
+            preencheGrid(); 
+        } catch (Exception ex) {
+            Logger.getLogger(FormCadastroTipoProcedimento.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_formWindowOpened
+
+    private void grdTipoProcedimentoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_grdTipoProcedimentoMouseClicked
+        int row = grdTipoProcedimento.getSelectedRow();
+        TableModel model = grdTipoProcedimento.getModel();
+        
+        int id = (int)model.getValueAt(row, 0);
+        
+        String tipoProcedimento = (String)model.getValueAt(row, 1);
+        txtTipoProcedimento.setText(tipoProcedimento);
+           
+        double valor = ((double)model.getValueAt(row, 2));   
+        ftxtValor.setText(String.valueOf(valor));
+            
+            
+        lastTipoProcedimento = tipoProcedimento;
+        lastValor = valor;
+        lastCadTipoProcedimento = new TipoProcedimento(id, tipoProcedimento, valor);
+    }//GEN-LAST:event_grdTipoProcedimentoMouseClicked
+
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+        try {
+            String procedimento = txtTipoProcedimento.getText().trim();
+            String valortxt = ftxtValor.getText().trim().replace('.', Character.MIN_VALUE).replace(',', '.');
+            if (procedimento.length() == 0 
+                    && valortxt.length() == 0){
+                return;
+            }
+            double valor = Double.valueOf(valortxt);            
+            lblMensagem.setText(srvProcedimento.insert(new TipoProcedimento(0, txtTipoProcedimento.getText(), valor)));
+            lblMensagem.setForeground(new Color(0, 102, 0));
+            preencheGrid();
+            limpaCampos();  
+        } catch (Exception ex) {
+            Logger.getLogger(FormCadastroTipoProcedimento.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnSalvarActionPerformed
+
+    private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
+        try {
+            if (!"".equals(txtTipoProcedimento.getText()) 
+                    && !"".equals(ftxtValor.getText())
+                    || !lastTipoProcedimento.equals(txtTipoProcedimento.getText()) 
+                    || lastValor != Double.valueOf(ftxtValor.getText())
+                    && lastCadTipoProcedimento != null){ 
+                double valor = Double.valueOf(ftxtValor.getText());
+                lblMensagem.setText(srvProcedimento.update(new TipoProcedimento(lastCadTipoProcedimento.getId(),txtTipoProcedimento.getText(), valor)));
+                lblMensagem.setForeground(Color.blue);
+                preencheGrid();
+                limpaCampos();
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(FormCadastroTipoProcedimento.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnAtualizarActionPerformed
+
+    private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarActionPerformed
+        try {
+            if (lastCadTipoProcedimento != null){
+                lblMensagem.setText(srvProcedimento.delete(lastCadTipoProcedimento));
+                lblMensagem.setForeground(Color.red);
+                preencheGrid();
+                limpaCampos();
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(FormCadastroTipoProcedimento.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+    }//GEN-LAST:event_btnDeletarActionPerformed
+
+    private void preencheGrid() throws SQLException, Exception{
+        ArrayList<TipoProcedimento> tipoProcedimentos = srvProcedimento.getAll();
+         
+        Object colunas[] = {"Id", "Tipo Procedimento", "Valor"};
+            model = new DefaultTableModel(colunas, 0);
+            for (TipoProcedimento tipoProcedimento : tipoProcedimentos) {
+                model.addRow( new Object[]{
+                    tipoProcedimento.getId(),
+                    tipoProcedimento.getNome(),
+                    tipoProcedimento.getValor()
+                });           
+            }  
+            grdTipoProcedimento.setModel(model);
+    }    
+    
+    private void limpaCampos(){
+        txtTipoProcedimento.setText("");
+        ftxtValor.setText("");
+    }
     /**
      * @param args the command line arguments
      */

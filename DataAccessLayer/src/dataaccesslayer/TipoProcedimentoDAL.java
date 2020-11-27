@@ -100,7 +100,7 @@ public class TipoProcedimentoDAL {
     public String update(TipoProcedimento TipoProcedimento) throws SQLException{
         try 
         {
-            PreparedStatement pst = conexao.getConexao().prepareStatement("UPDATE TipoProcedimento SET NOMETipoProcedimento = ?, valorProcedimento WHERE IDTipoProcedimento = ?");
+            PreparedStatement pst = conexao.getConexao().prepareStatement("UPDATE TipoProcedimento SET NOMETipoProcedimento = ?, valorProcedimento = ? WHERE IDTipoProcedimento = ?");
             pst.setString(1, TipoProcedimento.getNome());
             pst.setDouble(2, TipoProcedimento.getValor());
             pst.setInt(3, TipoProcedimento.getId());

@@ -20,9 +20,7 @@ public class Atendimento {
     @Override
     public String toString() {
         return String.valueOf(id);
-    }
-
-    
+    }   
     
     public Atendimento(int id) {
         this.id = id;

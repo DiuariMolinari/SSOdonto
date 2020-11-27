@@ -5,17 +5,36 @@
  */
 package presentationlayer;
 
+import businessLogicalLayer.TipoEmbalagemBLL;
+import domain.TipoEmbalagem;
+import java.awt.Color;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+
 /**
  *
  * @author sabri
  */
 public class FormCadastroTipoEmbalagem extends javax.swing.JFrame {
 
+    private TipoEmbalagem lastTipoEmbalagem;
+    private String lastDescricao;
+    
+    TipoEmbalagemBLL srvEmbalagem = new TipoEmbalagemBLL();
+    
+    private DefaultTableModel model;
+    
     /**
      * Creates new form FormCadastroTipoEmbalagem
      */
     public FormCadastroTipoEmbalagem() {
         initComponents();
+        model = new DefaultTableModel();
+        grdTipoEmbalagem.setModel(model);
     }
 
     /**
@@ -39,6 +58,11 @@ public class FormCadastroTipoEmbalagem extends javax.swing.JFrame {
         lblMensagem = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setText("Tipo Embalagem");
@@ -47,6 +71,11 @@ public class FormCadastroTipoEmbalagem extends javax.swing.JFrame {
 
         btnSalvar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnSalvar.setText("Salvar");
+        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarActionPerformed(evt);
+            }
+        });
 
         grdTipoEmbalagem.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -59,13 +88,28 @@ public class FormCadastroTipoEmbalagem extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        grdTipoEmbalagem.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                grdTipoEmbalagemMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(grdTipoEmbalagem);
 
         btnAtualizar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnAtualizar.setText("Atualizar");
+        btnAtualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAtualizarActionPerformed(evt);
+            }
+        });
 
         btnDeletar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnDeletar.setText("Deletar");
+        btnDeletar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeletarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -136,6 +180,88 @@ public class FormCadastroTipoEmbalagem extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        try {
+            preencheGrid(); 
+        } catch (Exception ex) {
+            Logger.getLogger(FormCadastroTipoEmbalagem.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_formWindowOpened
+
+    private void grdTipoEmbalagemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_grdTipoEmbalagemMouseClicked
+        int row = grdTipoEmbalagem.getSelectedRow();
+        TableModel model = grdTipoEmbalagem.getModel();
+        
+        int id = (int)model.getValueAt(row, 0);
+        
+        String deescricao = (String)model.getValueAt(row, 1);
+        txtDescricao.setText(deescricao);
+            
+        lastDescricao = deescricao;
+        lastTipoEmbalagem = new TipoEmbalagem(id, deescricao);
+    }//GEN-LAST:event_grdTipoEmbalagemMouseClicked
+
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+       try {
+            String descricao = txtDescricao.getText().trim();
+            if (descricao.length() == 0 ){
+                return;
+            }
+            lblMensagem.setText(srvEmbalagem.insert(new TipoEmbalagem(0, txtDescricao.getText())));
+            lblMensagem.setForeground(new Color(0, 102, 0));
+            preencheGrid();
+            limpaCampos();  
+        } catch (Exception ex) {
+            Logger.getLogger(FormCadastroTipoEmbalagem.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnSalvarActionPerformed
+
+    private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
+        try {
+            if (!"".equals(txtDescricao.getText()) 
+                    || !lastDescricao.equals(txtDescricao.getText())
+                    && lastTipoEmbalagem != null){ 
+                lblMensagem.setText(srvEmbalagem.update(new TipoEmbalagem(lastTipoEmbalagem.getId(),txtDescricao.getText())));
+                lblMensagem.setForeground(Color.blue);
+                preencheGrid();
+                limpaCampos();
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(FormCadastroTipoEmbalagem.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnAtualizarActionPerformed
+
+    private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarActionPerformed
+        try {
+            if (lastTipoEmbalagem != null){
+                lblMensagem.setText(srvEmbalagem.delete(lastTipoEmbalagem));
+                lblMensagem.setForeground(Color.red);
+                preencheGrid();
+                limpaCampos();
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(FormCadastroTipoEmbalagem.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+    }//GEN-LAST:event_btnDeletarActionPerformed
+    
+    private void preencheGrid() throws SQLException, Exception{
+        ArrayList<TipoEmbalagem> tipoEmbalagens = srvEmbalagem.getAll();
+         
+        Object colunas[] = {"Id", "Tipo Embalagem"};
+            model = new DefaultTableModel(colunas, 0);
+            for (TipoEmbalagem tipoEmbalagem : tipoEmbalagens) {
+                model.addRow( new Object[]{
+                    tipoEmbalagem.getId(),
+                    tipoEmbalagem.getDescricao()
+                });           
+            }  
+            grdTipoEmbalagem.setModel(model);
+    }    
+    
+    private void limpaCampos(){
+        txtDescricao.setText("");
+    }
+    
     /**
      * @param args the command line arguments
      */

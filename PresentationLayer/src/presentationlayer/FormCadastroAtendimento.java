@@ -291,7 +291,11 @@ public class FormCadastroAtendimento extends javax.swing.JFrame {
 
     private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
         try {
-            if (cmbColaborador.getSelectedItem() != null && cmbPaciente.getSelectedItem() != null && (lastColaborador != cmbColaborador.getSelectedItem() || lastPaciente != cmbPaciente.getSelectedItem()) && lastAtendimento != null){
+            if (cmbColaborador.getSelectedItem() != null 
+                    && cmbPaciente.getSelectedItem() != null 
+                    && (lastColaborador != cmbColaborador.getSelectedItem() 
+                    || lastPaciente != cmbPaciente.getSelectedItem()) 
+                    && lastAtendimento != null){
                 lblMensagem.setText(srvAtendimento.update(new Atendimento(lastAtendimento.getId(), (Paciente)cmbPaciente.getSelectedItem(), (Colaborador)cmbColaborador.getSelectedItem())));
                 lblMensagem.setForeground(Color.blue);
                 preencheGrid();

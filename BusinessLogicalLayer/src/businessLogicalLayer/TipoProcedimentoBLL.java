@@ -30,7 +30,7 @@ public class TipoProcedimentoBLL {
             builder.append("O nome do tipo de procedimento não pode conter mais que 60 caracteres.");
         }
 
-        if (tipoProcedimento.getValor() < 0 || tipoProcedimento.getValor() != 0) {
+        if (tipoProcedimento.getValor() < 0 || tipoProcedimento.getValor() == 0) {
             builder.append("O valor do procedimento deve ser informado.");
         }
 
@@ -58,7 +58,7 @@ public class TipoProcedimentoBLL {
             builder.append("O nome do tipo de procedimento não pode conter mais que 60 caracteres. ");
         }
 
-        if (tipoProcedimento.getValor() < 0 || tipoProcedimento.getValor() != 0) {
+        if (tipoProcedimento.getValor() < 0 || tipoProcedimento.getValor() == 0) {
             builder.append("O valor do procedimento deve ser informada.");
         }
 
@@ -78,7 +78,7 @@ public class TipoProcedimentoBLL {
 
     //Obter um registro
     public TipoProcedimento getById(TipoProcedimento tipoProcedimento) throws Exception {
-        if (tipoProcedimento.getId() < 0 || tipoProcedimento.getId() != 0) {
+        if (tipoProcedimento.getId() < 0 || tipoProcedimento.getId() == 0) {
             throw new Exception("O ID do tipo de procedimento deve ser informado.");
         }
 
