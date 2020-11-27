@@ -31,7 +31,7 @@ public class EnderecoBLL {
             builder.append("O CEP não pode conter mais que 9 caracteres.");
         }
 
-        if (endereco.getNumeroCasa() < 0 || endereco.getNumeroCasa() != 0) {
+        if (endereco.getNumeroCasa() <= 0) {
             builder.append("O número da casa deve ser informado.");
         }
 
@@ -59,7 +59,7 @@ public class EnderecoBLL {
             builder.append("O CEP não pode conter mais que 9 caracteres. ");
         }
 
-        if (endereco.getNumeroCasa() < 0 || endereco.getNumeroCasa() != 0) {
+        if (endereco.getNumeroCasa() <= 0) {
             builder.append("O número da casa deve ser informado.");
         }
 
@@ -79,7 +79,7 @@ public class EnderecoBLL {
 
     //Obter um registro
     public Endereco getById(Endereco endereco) throws Exception {
-        if (endereco.getId() != 0 || endereco.getId() < 0) {
+        if (endereco.getId() <= 0) {
             throw new Exception("O ID do endereco deve ser informado.");
         }
 

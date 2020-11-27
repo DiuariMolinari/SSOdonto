@@ -5,17 +5,57 @@
  */
 package presentationlayer;
 
+import businessLogicalLayer.BairroBLL;
+import businessLogicalLayer.CidadeBLL;
+import businessLogicalLayer.EnderecoBLL;
+import businessLogicalLayer.EstadoBLL;
+import businessLogicalLayer.LogradouroBLL;
+import businessLogicalLayer.PacienteBLL;
+import businessLogicalLayer.PaisBLL;
+import domain.Bairro;
+import domain.Cidade;
+import domain.Endereco;
+import domain.Estado;
+import domain.Logradouro;
+import domain.Paciente;
+import domain.Pais;
+import java.awt.Color;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+
 /**
  *
  * @author sabri
  */
 public class FormCadastroEndereco extends javax.swing.JFrame {
 
+    private Endereco lastEndereco;
+    private String lastCep;
+    private String lastNumero;
+    
+    private DefaultTableModel model;
+
+    PaisBLL srvPais = new PaisBLL();
+    EstadoBLL srvEstado = new EstadoBLL();
+    CidadeBLL srvCidade =  new CidadeBLL();
+    BairroBLL srvBairro = new BairroBLL();
+    LogradouroBLL srvLogradouro = new LogradouroBLL();
+    EnderecoBLL srvEndereco = new EnderecoBLL();
+
     /**
      * Creates new form FormCadastroEndereco
      */
     public FormCadastroEndereco() {
         initComponents();
+        model = new DefaultTableModel();
+        grdEndereco.setModel(model);
     }
 
     /**
@@ -51,6 +91,11 @@ public class FormCadastroEndereco extends javax.swing.JFrame {
         lblMensagem = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setText("Endereço");
@@ -63,6 +108,11 @@ public class FormCadastroEndereco extends javax.swing.JFrame {
 
         btnSalvar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnSalvar.setText("Salvar");
+        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarActionPerformed(evt);
+            }
+        });
 
         grdEndereco.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -75,13 +125,28 @@ public class FormCadastroEndereco extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        grdEndereco.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                grdEnderecoMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(grdEndereco);
 
         btnAtualizar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnAtualizar.setText("Atualizar");
+        btnAtualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAtualizarActionPerformed(evt);
+            }
+        });
 
         btnDeletar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnDeletar.setText("Deletar");
+        btnDeletar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeletarActionPerformed(evt);
+            }
+        });
 
         jLabel17.setText("País");
 
@@ -107,9 +172,7 @@ public class FormCadastroEndereco extends javax.swing.JFrame {
                                     .addComponent(cmbBairro, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel2)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(jLabel2)
                                     .addComponent(cmbLogradouro, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(1, 1, 1)
@@ -142,7 +205,7 @@ public class FormCadastroEndereco extends javax.swing.JFrame {
                                             .addComponent(jLabel3))))
                                 .addGap(0, 0, Short.MAX_VALUE)))
                         .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 413, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1077, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
@@ -176,15 +239,16 @@ public class FormCadastroEndereco extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(cmbLogradouro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(ftxtCEP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(4, 4, 4)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(ftxtCEP)
+                            .addComponent(txtNumero, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -193,7 +257,7 @@ public class FormCadastroEndereco extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(lblMensagem, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(79, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -216,6 +280,270 @@ public class FormCadastroEndereco extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+        try {
+            if (    ftxtCEP.getText().equals("")
+                || txtNumero.getText().equals("")
+                || cmbLogradouro.getSelectedItem() == null) {
+                return;
+            }
+            String retorno = srvEndereco.insert(new Endereco(0, (Logradouro)cmbLogradouro.getSelectedItem(), Integer.valueOf(txtNumero.getText()), ftxtCEP.getText()));
+            lblMensagem.setText(retorno);
+            lblMensagem.setForeground(new Color(0, 102, 0));
+            preencheGrid();
+            deselecionaCombo(); 
+            limpaCampos();
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(FormCadastroAtendimento.class.getName()).log(Level.SEVERE, null, ex);
+        }     
+    }//GEN-LAST:event_btnSalvarActionPerformed
+
+    private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
+        try {
+            if (    ftxtCEP.getText().equals("")
+                || txtNumero.getText().equals("")
+                || cmbLogradouro.getSelectedItem() == null
+                || lastEndereco == null
+                || lastEndereco.getId() == 0) {
+                return;
+            }
+            String retorno = srvEndereco.update(new Endereco(lastEndereco.getId(), (Logradouro)cmbLogradouro.getSelectedItem(), Integer.valueOf(txtNumero.getText()), ftxtCEP.getText()));
+            lblMensagem.setText(retorno);
+            lblMensagem.setForeground(Color.BLUE);
+            preencheGrid();
+            deselecionaCombo();
+            limpaCampos();
+            preenchePais();
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(FormCadastroAtendimento.class.getName()).log(Level.SEVERE, null, ex);
+        }     
+    }//GEN-LAST:event_btnAtualizarActionPerformed
+
+    private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarActionPerformed
+        try {
+            if (lastEndereco != null){
+                lblMensagem.setText(srvEndereco.delete(lastEndereco));
+                lblMensagem.setForeground(Color.RED);
+                preencheGrid();
+                deselecionaCombo(); 
+                limpaCampos();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(FormCadastroAtendimento.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+    }//GEN-LAST:event_btnDeletarActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        try {
+            addAllListener();
+            preencheGrid();
+            preencheCombo();
+        } catch (SQLException ex) {
+            Logger.getLogger(FormCadastroLogradouro.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_formWindowOpened
+
+    private void grdEnderecoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_grdEnderecoMouseClicked
+        try {
+            int row = grdEndereco.getSelectedRow();
+            TableModel model = grdEndereco.getModel();
+
+            int id = (int)model.getValueAt(row, 0);
+
+            String cep = (String)model.getValueAt(row, 1);
+            ftxtCEP.setText(cep);
+            
+            int numero = (int)model.getValueAt(row, 2);
+            txtNumero.setText(String.valueOf(numero));
+            
+            Pais pais = (Pais)model.getValueAt(row, 7);
+            cmbPais.getModel().setSelectedItem(pais);
+            preencheEstado();
+
+            Estado estado = (Estado)model.getValueAt(row, 6);
+            cmbEstado.getModel().setSelectedItem(estado);
+            preencheCidade();
+
+            Cidade cidade = (Cidade)model.getValueAt(row, 5);
+            cmbCidade.getModel().setSelectedItem(cidade);
+            preencheBairro();
+
+            Bairro bairro = (Bairro)model.getValueAt(row, 4);
+            cmbBairro.getModel().setSelectedItem(bairro);
+            
+            Logradouro logradouro = (Logradouro)model.getValueAt(row, 3);
+            cmbLogradouro.getModel().setSelectedItem(logradouro);
+            
+            lastCep = cep;
+            lastNumero = String.valueOf(numero);
+            lastEndereco = new Endereco(id, logradouro, Integer.valueOf(numero), cep);
+        } catch (SQLException ex) {
+            Logger.getLogger(FormCadastroLogradouro.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_grdEnderecoMouseClicked
+
+    private void addAllListener(){
+        addListenerPais();
+        addListenerEstado();
+        addListenerCidade();
+        addListenerBairro();
+    }
+    
+    private void preencheGrid() throws SQLException{
+        ArrayList<Endereco> enderecos = srvEndereco.getAll();
+         
+        Object colunas[] = {"Id", "Cep", "Número da Casa", "Logradouro","Bairro", "Cidade", "Estado", "País"};
+            model = new DefaultTableModel(colunas, 0);
+            for (Endereco endereco : enderecos) {
+                model.addRow( new Object[]{
+                    endereco.getId(),
+                    endereco.getCep(),
+                    endereco.getNumeroCasa(),
+                    endereco.getLogradouro(),
+                    endereco.getLogradouro().getBairro(),
+                    endereco.getLogradouro().getBairro().getCidade(),
+                    endereco.getLogradouro().getBairro().getCidade().getEstado(),
+                    endereco.getLogradouro().getBairro().getCidade().getEstado().getPais()
+                });           
+            }  
+        grdEndereco.setModel(model);
+    }
+    
+    private void preencheCombo() throws SQLException{
+        limpaCampos();
+
+        ArrayList<Pais> paises = srvPais.getAll();
+
+        for (Pais pais : paises) {
+            cmbPais.addItem(pais);            
+        }     
+        deselecionaCombo();
+    }
+        
+    private void deselecionaCombo(){
+        cmbPais.setSelectedItem(null);
+        cmbEstado.setSelectedItem(null);
+        cmbCidade.setSelectedItem(null);
+        cmbBairro.setSelectedItem(null);
+        cmbLogradouro.setSelectedItem(null);
+    }
+    
+    private void limpaCampos(){
+        cmbEstado.removeAllItems();  
+        cmbCidade.removeAllItems();
+        cmbBairro.removeAllItems(); 
+        cmbLogradouro.removeAllItems();
+        
+        ftxtCEP.setText("");
+        txtNumero.setText("");
+    }
+    
+    private void preenchePais()throws SQLException{
+        cmbPais.removeAllItems();
+        ArrayList<Pais> paises = srvPais.getAll();
+        for (Pais pais : paises) {
+            cmbPais.addItem(pais);
+        }
+    }
+    
+    private void addListenerPais(){
+        cmbPais.addItemListener(new ItemListener(){
+            @Override
+            public void itemStateChanged(ItemEvent eventoItem){
+                if (eventoItem.getStateChange() == ItemEvent.SELECTED) {
+                    try {
+                        preencheEstado();
+                        cmbEstado.setSelectedItem(null);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(FormCadastroLogradouro.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        });
+    }
+    
+    private void preencheEstado() throws SQLException{
+        cmbEstado.removeAllItems();
+        ArrayList<Estado> estados = srvEstado.getByPais((Pais)cmbPais.getSelectedItem());
+        for (Estado estado : estados) {
+            cmbEstado.addItem(estado);
+        }
+    }
+    
+    private void preencheCidade() throws SQLException{
+        cmbCidade.removeAllItems();
+        ArrayList<Cidade> cidades = srvCidade.getByEstado((Estado)cmbEstado.getSelectedItem());
+        for (Cidade cidade : cidades) {
+            cmbCidade.addItem(cidade);
+        }
+    }
+    
+    private void addListenerEstado(){
+        cmbEstado.addItemListener(new ItemListener(){
+            @Override
+            public void itemStateChanged(ItemEvent eventoItem){
+                if (eventoItem.getStateChange() == ItemEvent.SELECTED) {
+                    try {
+                        preencheCidade();
+                        cmbCidade.setSelectedItem(null);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(FormCadastroLogradouro.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        });
+    }
+    
+    private void preencheBairro() throws SQLException{
+        cmbBairro.removeAllItems();
+        ArrayList<Bairro> bairros = srvBairro.getByCidade((Cidade)cmbCidade.getSelectedItem());
+        for (Bairro bairro : bairros) {
+            cmbBairro.addItem(bairro);
+        }
+    }
+    
+    private void addListenerCidade(){
+        cmbCidade.addItemListener(new ItemListener(){
+            @Override
+            public void itemStateChanged(ItemEvent eventoItem){
+                if (eventoItem.getStateChange() == ItemEvent.SELECTED) {
+                    try {
+                        preencheBairro();
+                        cmbBairro.setSelectedItem(null);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(FormCadastroLogradouro.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        });
+    }
+    
+    private void preencheLogradouro() throws SQLException{
+        cmbLogradouro.removeAllItems();
+        ArrayList<Logradouro> logradouros = srvLogradouro.getByBairro((Bairro)cmbBairro.getSelectedItem());
+        for (Logradouro logradouro : logradouros) {
+            cmbLogradouro.addItem(logradouro);
+        }
+    }
+    
+    private void addListenerBairro(){
+        cmbBairro.addItemListener(new ItemListener(){
+            @Override
+            public void itemStateChanged(ItemEvent eventoItem){
+                if (eventoItem.getStateChange() == ItemEvent.SELECTED) {
+                    try {
+                        preencheLogradouro();
+                        cmbLogradouro.setSelectedItem(null);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(FormCadastroLogradouro.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        });
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -255,11 +583,11 @@ public class FormCadastroEndereco extends javax.swing.JFrame {
     private javax.swing.JButton btnAtualizar;
     private javax.swing.JButton btnDeletar;
     private javax.swing.JButton btnSalvar;
-    private javax.swing.JComboBox<String> cmbBairro;
-    private javax.swing.JComboBox<String> cmbCidade;
-    private javax.swing.JComboBox<String> cmbEstado;
-    private javax.swing.JComboBox<String> cmbLogradouro;
-    private javax.swing.JComboBox<String> cmbPais;
+    private javax.swing.JComboBox<Bairro> cmbBairro;
+    private javax.swing.JComboBox<Cidade> cmbCidade;
+    private javax.swing.JComboBox<Estado> cmbEstado;
+    private javax.swing.JComboBox<Logradouro> cmbLogradouro;
+    private javax.swing.JComboBox<Pais> cmbPais;
     private javax.swing.JFormattedTextField ftxtCEP;
     private javax.swing.JTable grdEndereco;
     private javax.swing.JLabel jLabel1;
