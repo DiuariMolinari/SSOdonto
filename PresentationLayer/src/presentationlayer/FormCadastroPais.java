@@ -5,17 +5,36 @@
  */
 package presentationlayer;
 
+import businessLogicalLayer.PaisBLL;
+import domain.Pais;
+import java.awt.Color;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+
 /**
  *
  * @author sabri
  */
 public class FormCadastroPais extends javax.swing.JFrame {
 
+    private Pais lastPais;
+    private String lastNomePais;
+    
+    PaisBLL srvPais = new PaisBLL();
+    
+    private DefaultTableModel model;
+    
     /**
      * Creates new form FormCadastroPais
      */
     public FormCadastroPais() {
         initComponents();
+        model = new DefaultTableModel();
+        grdPais.setModel(model);
     }
 
     /**
@@ -39,6 +58,11 @@ public class FormCadastroPais extends javax.swing.JFrame {
         lblMensagem = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setText("País");
@@ -47,6 +71,11 @@ public class FormCadastroPais extends javax.swing.JFrame {
 
         btnSalvar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnSalvar.setText("Salvar");
+        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarActionPerformed(evt);
+            }
+        });
 
         grdPais.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -59,13 +88,28 @@ public class FormCadastroPais extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        grdPais.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                grdPaisMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(grdPais);
 
         btnDeletar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnDeletar.setText("Deletar");
+        btnDeletar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeletarActionPerformed(evt);
+            }
+        });
 
         btnAtualizar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnAtualizar.setText("Atualizar");
+        btnAtualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAtualizarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -134,6 +178,89 @@ public class FormCadastroPais extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        try {
+            preencheGrid(); 
+        } catch (Exception ex) {
+            Logger.getLogger(FormCadastroPais.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_formWindowOpened
+
+    private void grdPaisMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_grdPaisMouseClicked
+        int row = grdPais.getSelectedRow();
+        TableModel model = grdPais.getModel();
+        
+        int id = (int)model.getValueAt(row, 0);
+        
+        String nome = (String)model.getValueAt(row, 1);
+        txtPais.setText(nome);
+            
+        lastNomePais = nome;
+        lastPais = new Pais(id, nome);
+    }//GEN-LAST:event_grdPaisMouseClicked
+
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+        try {
+            String nome = txtPais.getText().trim();
+            if (nome.length() == 0 ){
+                return;
+            }
+            lblMensagem.setText(srvPais.insert(new Pais(0, txtPais.getText())));
+            lblMensagem.setForeground(new Color(0, 102, 0));
+            preencheGrid();
+            limpaCampos();  
+        } catch (Exception ex) {
+            Logger.getLogger(FormCadastroPais.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnSalvarActionPerformed
+
+    private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
+        try {
+            if (!"".equals(txtPais.getText()) 
+                    || !lastNomePais.equals(txtPais.getText())
+                    && lastPais != null){ 
+                lblMensagem.setText(srvPais.update(new Pais(lastPais.getId(),txtPais.getText())));
+                lblMensagem.setForeground(Color.blue);
+                preencheGrid();
+                limpaCampos();
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(FormCadastroPais.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnAtualizarActionPerformed
+
+    private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarActionPerformed
+        try {
+            if (lastPais != null){
+                lblMensagem.setText(srvPais.delete(lastPais));
+                lblMensagem.setForeground(Color.red);
+                preencheGrid();
+                limpaCampos();
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(FormCadastroPais.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+    }//GEN-LAST:event_btnDeletarActionPerformed
+
+    private void preencheGrid() throws SQLException, Exception{
+        ArrayList<Pais> paises = srvPais.getAll();
+         
+        Object colunas[] = {"Id", "País"};
+            model = new DefaultTableModel(colunas, 0);
+            for (Pais pais : paises) {
+                model.addRow( new Object[]{
+                    pais.getId(),
+                    pais.getNome()
+                });           
+            }  
+            grdPais.setModel(model);
+    }    
+    
+    private void limpaCampos(){
+        txtPais.setText("");
+    }
+    
+    
     /**
      * @param args the command line arguments
      */
