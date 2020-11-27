@@ -30,7 +30,7 @@ public class FuncaoBLL {
             builder.append("O nome da funçao não pode conter mais que 100 caracteres.");
         }
 
-        if (funcao.getSalario() < 0 || funcao.getSalario() != 0) {
+        if (funcao.getSalario() < 0 || funcao.getSalario() == 0) {
             builder.append("O salário deve ser informado.");
         }
 
@@ -66,7 +66,7 @@ public class FuncaoBLL {
             builder.append("O nome da funçao não pode conter mais que 100 caracteres. ");
         }
 
-        if (funcao.getSalario() < 0 || funcao.getSalario() != 0) {
+        if (funcao.getSalario() < 0 || funcao.getSalario() == 0) {
             builder.append("O salário deve ser informado.");
         }
 
@@ -94,7 +94,7 @@ public class FuncaoBLL {
 
     //Obter um registro
     public Funcao getById(Funcao funcao) throws Exception {
-        if (funcao.getId() < 0 || funcao.getId() != 0) {
+        if (funcao.getId() < 0 || funcao.getId() == 0) {
             throw new Exception("O ID da função deve ser informado.");
         }
 

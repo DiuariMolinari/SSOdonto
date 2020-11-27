@@ -239,8 +239,8 @@ public class FormCadastroTipoProcedimento extends javax.swing.JFrame {
         try {
             if (!"".equals(txtTipoProcedimento.getText()) 
                     && !"".equals(ftxtValor.getText())
-                    || !lastTipoProcedimento.equals(txtTipoProcedimento.getText()) 
-                    || lastValor != Double.valueOf(ftxtValor.getText())
+                    || (!lastTipoProcedimento.equals(txtTipoProcedimento.getText()) 
+                    || lastValor != Double.valueOf(ftxtValor.getText()))
                     && lastCadTipoProcedimento != null){ 
                 double valor = Double.valueOf(ftxtValor.getText());
                 lblMensagem.setText(srvProcedimento.update(new TipoProcedimento(lastCadTipoProcedimento.getId(),txtTipoProcedimento.getText(), valor)));
