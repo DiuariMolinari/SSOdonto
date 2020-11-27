@@ -48,6 +48,8 @@ public class FormCadastroLogradouro extends javax.swing.JFrame {
      */
     public FormCadastroLogradouro() {
         initComponents();
+        model = new DefaultTableModel();
+        grdLogradouro.setModel(model);
     }
 
     /**

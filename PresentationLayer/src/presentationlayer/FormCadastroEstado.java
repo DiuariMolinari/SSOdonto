@@ -5,17 +5,41 @@
  */
 package presentationlayer;
 
+import businessLogicalLayer.EstadoBLL;
+import businessLogicalLayer.PaisBLL;
+import domain.Estado;
+import domain.Pais;
+import java.awt.Color;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+
 /**
  *
  * @author sabri
  */
 public class FormCadastroEstado extends javax.swing.JFrame {
 
+    private Estado lastEstado;
+    private String lastNomeEstado;
+    private Pais lastPais;
+    
+    PaisBLL srvPais = new PaisBLL();
+    EstadoBLL srvEstado = new EstadoBLL();
+    
+    private DefaultTableModel model;
+    
+    
     /**
      * Creates new form FormCadastroEstado
      */
     public FormCadastroEstado() {
         initComponents();
+        model = new DefaultTableModel();
+        grdEstado.setModel(model);
     }
 
     /**
@@ -41,6 +65,11 @@ public class FormCadastroEstado extends javax.swing.JFrame {
         lblMensagem = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setText("Estado");
@@ -51,6 +80,11 @@ public class FormCadastroEstado extends javax.swing.JFrame {
 
         btnSalvar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnSalvar.setText("Salvar");
+        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarActionPerformed(evt);
+            }
+        });
 
         grdEstado.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -63,13 +97,28 @@ public class FormCadastroEstado extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3"
             }
         ));
+        grdEstado.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                grdEstadoMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(grdEstado);
 
         btnAtualizar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnAtualizar.setText("Atualizar");
+        btnAtualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAtualizarActionPerformed(evt);
+            }
+        });
 
         btnDeletar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnDeletar.setText("Deletar");
+        btnDeletar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeletarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -142,6 +191,115 @@ public class FormCadastroEstado extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        try {
+            preencheCombo();
+            preencheGrid(); 
+        } catch (Exception ex) {
+            Logger.getLogger(FormCadastroEstado.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_formWindowOpened
+
+    private void grdEstadoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_grdEstadoMouseClicked
+        int row = grdEstado.getSelectedRow();
+        TableModel model = grdEstado.getModel();
+        
+        int id = (int)model.getValueAt(row, 0);
+        
+        String estado = (String)model.getValueAt(row, 1);
+        txtEstado.setText(estado);
+                     
+        Pais pais = (Pais)model.getValueAt(row, 2);
+        cmbPais.getModel().setSelectedItem(pais);   
+                           
+        lastNomeEstado = estado;
+        lastPais = pais;
+        lastEstado = new Estado(id, estado, pais );
+    }//GEN-LAST:event_grdEstadoMouseClicked
+
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+        try {
+            if (txtEstado.getText().trim().length() == 0 
+                    || cmbPais.getSelectedItem() == null){
+                return;
+            }
+            lblMensagem.setText(srvEstado.insert(new Estado(0, txtEstado.getText(), (Pais)cmbPais.getSelectedItem())));
+            lblMensagem.setForeground(new Color(0, 102, 0));
+            preencheGrid();
+            limpaCampos();  
+        } catch (Exception ex) {
+            Logger.getLogger(FormCadastroEstado.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnSalvarActionPerformed
+
+    private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
+        try {
+            if (cmbPais.getSelectedItem() != null 
+                    && !"".equals(txtEstado.getText()) 
+                    && (lastPais != cmbPais.getSelectedItem()
+                    || !lastNomeEstado.equals(txtEstado.getText()))
+                    && lastEstado != null){ 
+                lblMensagem.setText(srvEstado.update(new Estado(lastEstado.getId(), txtEstado.getText(),(Pais)cmbPais.getSelectedItem())));
+                lblMensagem.setForeground(Color.blue);
+                preencheGrid();
+                preencheCombo();
+                deselecionaCombo();                
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(FormCadastroEstado.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnAtualizarActionPerformed
+
+    private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarActionPerformed
+        try {
+            if (lastEstado != null){
+                lblMensagem.setText(srvEstado.delete(lastEstado));
+                lblMensagem.setForeground(Color.red);
+                preencheGrid();
+                deselecionaCombo(); 
+                limpaCampos();
+                preencheCombo();
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(FormCadastroPagamento.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnDeletarActionPerformed
+
+    private void preencheGrid() throws SQLException, Exception{
+        
+        ArrayList<Estado> estados = srvEstado.gettAll();
+         
+        Object colunas[] = {"Id", "Estado", "País"};
+            model = new DefaultTableModel(colunas, 0);
+            for (Estado estado : estados) {
+                model.addRow( new Object[]{
+                    estado.getId(),
+                    estado.getNome(),
+                    estado.getPais()
+                });           
+            }  
+            grdEstado.setModel(model);
+    }   
+    
+    private void preencheCombo() throws SQLException, Exception{
+        limpaCampos();
+
+        ArrayList<Pais> paises = srvPais.getAll();
+
+        for (Pais pais : paises) {
+            cmbPais.addItem(pais);            
+        }             
+        deselecionaCombo();
+    }    
+    private void deselecionaCombo(){
+        cmbPais.setSelectedItem(null);
+    }
+    
+    private void limpaCampos(){
+        cmbPais.removeAllItems();
+        txtEstado.setText("");
+    }
+            
     /**
      * @param args the command line arguments
      */
@@ -181,7 +339,7 @@ public class FormCadastroEstado extends javax.swing.JFrame {
     private javax.swing.JButton btnAtualizar;
     private javax.swing.JButton btnDeletar;
     private javax.swing.JButton btnSalvar;
-    private javax.swing.JComboBox<String> cmbPais;
+    private javax.swing.JComboBox<Pais> cmbPais;
     private javax.swing.JTable grdEstado;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
