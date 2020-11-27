@@ -109,7 +109,7 @@ public class ColaboradorBLL {
 
     //Obter um registro
     public Colaborador getById(Colaborador colaborador) throws Exception {
-        if (colaborador.getId() != 0 || colaborador.getId() < 0) {
+        if (colaborador.getId() == 0 || colaborador.getId() < 0) {
             throw new Exception("O ID do colaborador deve ser informado.");
         }
         
