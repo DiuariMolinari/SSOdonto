@@ -71,7 +71,7 @@ public class PaisBLL {
 
     //Obter um registro
     public Pais getById(Pais pais) throws Exception {
-        if (pais.getId() < 0 || pais.getId() != 0) {
+        if (pais.getId() < 0 || pais.getId() == 0) {
             throw new Exception("O ID do país deve ser informado.");
         }
 
