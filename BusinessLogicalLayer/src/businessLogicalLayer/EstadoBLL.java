@@ -42,7 +42,7 @@ public class EstadoBLL {
     public ArrayList<Estado> gettAll() throws SQLException {
         return dal.getAll();
     }
-
+    
     //Atualizar um registro existente
     public String update(Estado estado) throws SQLException {
         StringBuilder builder = new StringBuilder();
@@ -71,7 +71,7 @@ public class EstadoBLL {
 
     //Obter um registro
     public Estado getById(Estado estado) throws Exception {
-        if (estado.getId() != 0 || estado.getId() < 0) {
+        if (estado.getId() == 0 || estado.getId() < 0) {
             throw new Exception("O ID do estado deve ser informado.");
         }
 
@@ -86,5 +86,5 @@ public class EstadoBLL {
     //Obter registros de determinado estado
     public ArrayList<Estado> getByPais(Pais pais) throws SQLException{
         return dal.getByPais(pais);
-    }
+    }  
 }
