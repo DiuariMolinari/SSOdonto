@@ -81,7 +81,7 @@ public class ClinicaBLL {
 
     //Obter um registro
     public Clinica getById(Clinica clinica) throws Exception {
-        if (clinica.getId() != 0 || clinica.getId() < 0) {
+        if (clinica.getId() == 0 || clinica.getId() < 0) {
             throw new Exception("O ID da clinica deve ser informado.");
         }
 
