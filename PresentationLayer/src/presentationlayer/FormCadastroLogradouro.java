@@ -360,11 +360,7 @@ public class FormCadastroLogradouro extends javax.swing.JFrame {
     private void preencheCombo() throws SQLException{
         limpaCampos();
 
-        ArrayList<Pais> paises = srvPais.getAll();
-
-        for (Pais pais : paises) {
-            cmbPais.addItem(pais);            
-        }     
+        preenchePais();
         deselecionaCombo();
     }
         
@@ -376,7 +372,6 @@ public class FormCadastroLogradouro extends javax.swing.JFrame {
     }
     
     private void limpaCampos(){
-        cmbPais.removeAllItems();
         cmbEstado.removeAllItems();  
         cmbCidade.removeAllItems();
         cmbBairro.removeAllItems();   
