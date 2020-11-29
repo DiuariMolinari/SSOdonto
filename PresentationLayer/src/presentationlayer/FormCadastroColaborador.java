@@ -443,21 +443,6 @@ public class FormCadastroColaborador extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
 
-//    && !txtNome.getText().equals("")
-//                    && !txtSobrenome.getText().equals("") 
-//                    && !txtObservacao.getText().equals("")
-//                    && !ftxtRG.getText().equals("")
-//                    && !ftxtCPF.getText().equals("")
-//                    && !ftxtDataNasc.getText().equals("")
-//                    && (!lastEndereco.equals(cmbEndereco.getSelectedItem()) 
-//                    || !lastDtNascimento.equals(ftxtDataNasc.getText())
-//                    || !lastSobrenome.equals(txtSobrenome.getText())
-//                    || !lastObs.equals(txtObservacao.getText())
-//                    || !lastRg.equals(ftxtRG.getText())
-//                    || !lastCpf.equals(ftxtCPF.getText())
-//                    || !lastNome.equals(txtNome.getText())) 
-//                    && lastPaciente != null
-
     private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
         try {
             if (cmbBairro.getSelectedItem() != null 
@@ -572,7 +557,7 @@ public class FormCadastroColaborador extends javax.swing.JFrame {
             lastClinica = clinica;
             lastColaborador = new Colaborador(id, nome, cro, croEstado, dataAdmissao, dataDemissao, endereco, funcao, clinica, ferias, demitido);
         } catch (SQLException ex) {
-            Logger.getLogger(FormCadastroLogradouro.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FormCadastroColaborador.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_grdColaboradorMouseClicked
 
