@@ -23,7 +23,7 @@ public class EstoqueBLL {
     public String insert(Estoque estoque) throws SQLException {
         StringBuilder builder = new StringBuilder();
 
-        if (estoque.getQtdProduto() < 0 || estoque.getQtdProduto() != 0) {
+        if (estoque.getQtdProduto() < 0 || estoque.getQtdProduto() == 0) {
             builder.append("A quantidade de produto deve ser informado.");
         }
 
@@ -51,7 +51,7 @@ public class EstoqueBLL {
     public String update(Estoque estoque) throws SQLException {
         StringBuilder builder = new StringBuilder();
 
-        if (estoque.getQtdProduto() < 0) {
+        if (estoque.getQtdProduto() < 0 || estoque.getQtdProduto() == 0) {
             builder.append("A quantidade de produto deve ser informado.");
         }
 
@@ -79,7 +79,7 @@ public class EstoqueBLL {
 
     //Obter um registro
     public Estoque getById(Estoque estoque) throws Exception {
-        if (estoque.getId() < 0 || estoque.getId() != 0) {
+        if (estoque.getId() < 0 || estoque.getId() == 0) {
             throw new Exception("O ID do estoque deve ser informado.");
         }
 
