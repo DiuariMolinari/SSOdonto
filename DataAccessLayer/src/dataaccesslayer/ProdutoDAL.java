@@ -134,7 +134,7 @@ public class ProdutoDAL {
             pst.setInt(2, Produto.getTipoEmbalagem().getId());
             pst.setDouble(3, Produto.getPreco());
             pst.setDate(4, Date.valueOf(Produto.getDataCompra()));
-            pst.setInt(2, Produto.getId());
+            pst.setInt(5, Produto.getId());
             pst.executeUpdate();
             return "Produto atualizado com sucesso!";
         } 
