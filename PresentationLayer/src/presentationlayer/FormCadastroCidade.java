@@ -5,17 +5,46 @@
  */
 package presentationlayer;
 
+import businessLogicalLayer.CidadeBLL;
+import businessLogicalLayer.EstadoBLL;
+import businessLogicalLayer.PaisBLL;
+import domain.Cidade;
+import domain.Estado;
+import domain.Pais;
+import java.awt.Color;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+
 /**
  *
  * @author sabri
  */
 public class FormCadastroCidade extends javax.swing.JFrame {
 
+    private Estado lastEstado;
+    private String lastNomeCidade;
+    private Cidade lastCidade;
+    
+    PaisBLL srvPais = new PaisBLL();
+    EstadoBLL srvEstado = new EstadoBLL();
+    CidadeBLL srvCidade = new CidadeBLL();
+    
+    private DefaultTableModel model;
+    
+    
     /**
      * Creates new form FormCadastroCidade
      */
     public FormCadastroCidade() {
         initComponents();
+        model = new DefaultTableModel();
+        grdCidade.setModel(model);
     }
 
     /**
@@ -43,12 +72,22 @@ public class FormCadastroCidade extends javax.swing.JFrame {
         lblMensagem = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setText("Cidade");
 
         btnSalvar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnSalvar.setText("Salvar");
+        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Nome da Cidade");
 
@@ -82,6 +121,11 @@ public class FormCadastroCidade extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        grdCidade.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                grdCidadeMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(grdCidade);
         if (grdCidade.getColumnModel().getColumnCount() > 0) {
             grdCidade.getColumnModel().getColumn(0).setResizable(false);
@@ -90,9 +134,19 @@ public class FormCadastroCidade extends javax.swing.JFrame {
 
         btnAtualizar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnAtualizar.setText("Atualizar");
+        btnAtualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAtualizarActionPerformed(evt);
+            }
+        });
 
         btnDeletar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnDeletar.setText("Deletar");
+        btnDeletar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeletarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -178,6 +232,157 @@ public class FormCadastroCidade extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        try {
+            addListenerPais();
+            
+            preencheCombo();
+            preencheGrid(); 
+        } catch (Exception ex) {
+            Logger.getLogger(FormCadastroCidade.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_formWindowOpened
+
+    private void grdCidadeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_grdCidadeMouseClicked
+        try {
+            int row = grdCidade.getSelectedRow();
+            TableModel model = grdCidade.getModel();
+
+            int id = (int)model.getValueAt(row, 0);
+
+            String nome = (String)model.getValueAt(row, 1);
+            txtCidade.setText(nome);
+
+            Pais pais = (Pais)model.getValueAt(row, 3);
+            cmbPais.getModel().setSelectedItem(pais);
+            
+            preencheEstado();
+            Estado estado = (Estado)model.getValueAt(row, 2);
+            cmbEstado.getModel().setSelectedItem(estado);
+                               
+            lastNomeCidade = nome;
+            lastEstado = estado;
+            lastCidade = new Cidade(id, nome, estado);
+        } catch (SQLException ex) {
+            Logger.getLogger(FormCadastroCidade.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_grdCidadeMouseClicked
+
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+        try {
+            if (cmbEstado.getSelectedItem() == null || txtCidade.getText().trim().length() == 0) {
+                return;
+            }
+            lblMensagem.setText(srvCidade.insert(new Cidade(0, txtCidade.getText(),(Estado)cmbEstado.getSelectedItem())));
+            lblMensagem.setForeground(new Color(0, 102, 0));
+            preencheGrid();
+            deselecionaCombo(); 
+            limpaCampos();
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(FormCadastroCidade.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnSalvarActionPerformed
+
+    private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
+        try {
+            if (cmbEstado.getSelectedItem() != null 
+                    && !"".equals(txtCidade.getText()) 
+                    && (lastEstado != cmbEstado.getSelectedItem() 
+                    || !lastNomeCidade.equals(txtCidade.getText())) 
+                    && lastCidade != null){
+                lblMensagem.setText(srvCidade.update(new Cidade(lastCidade.getId(), txtCidade.getText(), (Estado)cmbEstado.getSelectedItem())));
+                lblMensagem.setForeground(Color.blue);
+                preencheGrid();
+                deselecionaCombo();
+                limpaCampos();
+                preenchePais();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(FormCadastroCidade.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnAtualizarActionPerformed
+
+    private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarActionPerformed
+        try {
+            if (lastCidade != null){
+                lblMensagem.setText(srvCidade.delete(lastCidade));
+                lblMensagem.setForeground(Color.red);
+                preencheGrid();
+                deselecionaCombo(); 
+                limpaCampos();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(FormCadastroCidade.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnDeletarActionPerformed
+
+    private void preencheGrid() throws SQLException{
+        ArrayList<Cidade> ciadades = srvCidade.getAll();
+         
+        Object colunas[] = {"Id", "Cidade", "Estado", "Pais"};
+            model = new DefaultTableModel(colunas, 0);
+            for (Cidade cidade : ciadades) {
+                model.addRow( new Object[]{
+                    cidade.getId(),
+                    cidade.getNome(),
+                    cidade.getEstado(),
+                    cidade.getEstado().getPais()
+                });           
+            }  
+            grdCidade.setModel(model);
+    }
+    
+    private void preencheCombo() throws SQLException{
+        limpaCampos();
+
+        preenchePais();
+        deselecionaCombo();
+    }
+        
+    private void deselecionaCombo(){
+        cmbPais.setSelectedItem(null);
+        cmbEstado.setSelectedItem(null);
+    }
+    
+    private void limpaCampos(){
+        cmbPais.removeAllItems();
+        cmbEstado.removeAllItems();  
+        txtCidade.setText("");
+    }
+    
+    private void preenchePais()throws SQLException{
+        cmbPais.removeAllItems();
+        ArrayList<Pais> paises = srvPais.getAll();
+        for (Pais pais : paises) {
+            cmbPais.addItem(pais);
+        }
+    }
+    
+    private void preencheEstado() throws SQLException{
+        cmbEstado.removeAllItems();
+        ArrayList<Estado> estados = srvEstado.getByPais((Pais)cmbPais.getSelectedItem());
+        for (Estado estado : estados) {
+            cmbEstado.addItem(estado);
+        }
+    }
+    
+    private void addListenerPais(){
+        cmbPais.addItemListener(new ItemListener(){
+            @Override
+            public void itemStateChanged(ItemEvent eventoItem){
+                if (eventoItem.getStateChange() == ItemEvent.SELECTED) {
+                    try {
+                        preencheEstado();
+                        cmbEstado.setSelectedItem(null);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(FormCadastroCidade.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        });
+    }   
+    
     /**
      * @param args the command line arguments
      */
@@ -217,8 +422,8 @@ public class FormCadastroCidade extends javax.swing.JFrame {
     private javax.swing.JButton btnAtualizar;
     private javax.swing.JButton btnDeletar;
     private javax.swing.JButton btnSalvar;
-    private javax.swing.JComboBox<String> cmbEstado;
-    private javax.swing.JComboBox<String> cmbPais;
+    private javax.swing.JComboBox<Estado> cmbEstado;
+    private javax.swing.JComboBox<Pais> cmbPais;
     private javax.swing.JTable grdCidade;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

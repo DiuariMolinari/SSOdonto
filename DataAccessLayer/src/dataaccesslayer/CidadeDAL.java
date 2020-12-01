@@ -128,8 +128,8 @@ public class CidadeDAL {
         {
             PreparedStatement pst = conexao.getConexao().prepareStatement("UPDATE CIDADE SET NOMECIDADE = ?, IDESTADO = ? WHERE IDCIDADE = ?");
             pst.setString(1, cidade.getNome());
-            pst.setInt(1, cidade.getEstado().getId());
-            pst.setInt(2, cidade.getId());
+            pst.setInt(2, cidade.getEstado().getId());
+            pst.setInt(3, cidade.getId());
             pst.executeUpdate();
             return "Cidade atualizada com sucesso!";
         } 

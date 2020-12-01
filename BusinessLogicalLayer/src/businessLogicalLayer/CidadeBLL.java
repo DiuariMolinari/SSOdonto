@@ -71,7 +71,7 @@ public class CidadeBLL {
 
     //Obter um registro
     public Cidade getById(Cidade cidade) throws Exception {
-        if (cidade.getId() != 0 || cidade.getId() < 0) {
+        if (cidade.getId() == 0 || cidade.getId() < 0) {
             throw new Exception("O ID da cidade deve ser informado.");
         }
 
