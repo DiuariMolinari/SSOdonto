@@ -31,7 +31,7 @@ public class ProdutoBLL {
             builder.append("O nome do produto não pode conter mais que 60 caracteres.");
         }
 
-        if (produto.getPreco() < 0 || produto.getPreco() != 0) {
+        if (produto.getPreco() < 0 || produto.getPreco() == 0) {
             builder.append("O preço do produto deve ser informado.");
         }
 
@@ -63,7 +63,7 @@ public class ProdutoBLL {
             builder.append("O nome do produto não pode conter mais que 60 caracteres.");
         }
 
-        if (produto.getPreco() < 0 || produto.getPreco() != 0) {
+        if (produto.getPreco() < 0 || produto.getPreco() == 0) {
             builder.append("O preço do produto deve ser informado.");
         }
 
@@ -87,7 +87,7 @@ public class ProdutoBLL {
 
     //Obter um registro
     public Produto getById(Produto produto) throws Exception {
-        if (produto.getId() < 0 || produto.getId() != 0) {
+        if (produto.getId() < 0 || produto.getId() == 0) {
             throw new Exception("O ID do produto deve ser informado.");
         }
 
