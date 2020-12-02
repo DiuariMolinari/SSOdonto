@@ -67,7 +67,7 @@ public class EstoqueDAL {
             ResultSet rs = pst.executeQuery();
             rs.first();
             Produto Produto = new ProdutoDAL().getById(rs.getInt("IDProduto"));
-            return new Estoque(rs.getInt("idEstoque"), Produto, rs.getInt("qtsProduto"), rs.getDate("dtEntrada").toLocalDate(), rs.getDate("dtSaida").toLocalDate());
+            return new Estoque(rs.getInt("idEstoque"), Produto, rs.getInt("qtsProduto"),  rs.getDate("dtEntrada").toLocalDate(), rs.getDate("dtSaida").toLocalDate());
         } 
         
         catch (Exception e) {
@@ -89,7 +89,7 @@ public class EstoqueDAL {
             while (rs.next())
             {
                 Produto Produto = new ProdutoDAL().getById(rs.getInt("IDProduto"));
-                Estoques.add(new Estoque(rs.getInt("idEstoque"), Produto, rs.getInt("qtsProduto"), rs.getDate("dtEntrada").toLocalDate(), rs.getDate("dtSaida").toLocalDate()));
+                Estoques.add(new Estoque(rs.getInt("idEstoque"), Produto, rs.getInt("qtdProduto"), rs.getDate("dtEntrada").toLocalDate(), rs.getDate("dtSaida").toLocalDate()));
             }
             
             return Estoques;

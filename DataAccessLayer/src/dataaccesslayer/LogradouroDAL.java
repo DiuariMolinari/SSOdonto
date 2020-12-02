@@ -39,7 +39,7 @@ public class LogradouroDAL {
     public ArrayList<Logradouro> getByBairro(Bairro bairro) throws SQLException{
         try 
         {
-            PreparedStatement pst = conexao.getConexao().prepareStatement("SELECT * FROM Logradouro WHERE IDLogradouro =" + bairro.getId(), ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            PreparedStatement pst = conexao.getConexao().prepareStatement("SELECT * FROM Logradouro WHERE IDBairro =" + bairro.getId(), ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
             ArrayList<Logradouro> Logradouros = new ArrayList<Logradouro>();
             ResultSet rs = pst.executeQuery();
             while (rs.next())               
