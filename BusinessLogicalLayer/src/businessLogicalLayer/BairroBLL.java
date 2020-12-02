@@ -72,7 +72,7 @@ public class BairroBLL {
 
     //Obter um registro
     public Bairro getById(Bairro bairro) throws Exception {
-        if (bairro.getId() != 0 || bairro.getId() < 0) {
+        if (bairro.getId() == 0 || bairro.getId() < 0) {
             throw new Exception("O ID do bairro deve ser informado.");
         }
 

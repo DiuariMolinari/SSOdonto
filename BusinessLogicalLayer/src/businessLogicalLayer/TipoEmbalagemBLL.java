@@ -71,7 +71,7 @@ public class TipoEmbalagemBLL {
 
     //Obter um registro
     public TipoEmbalagem getById(TipoEmbalagem tipoEmbalagem) throws Exception {
-        if (tipoEmbalagem.getId() < 0 || tipoEmbalagem.getId() != 0) {
+        if (tipoEmbalagem.getId() < 0 || tipoEmbalagem.getId() == 0) {
             throw new Exception("O ID do tipo de embalagem deve ser informado.");
         }
 

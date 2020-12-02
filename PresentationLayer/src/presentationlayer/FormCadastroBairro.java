@@ -252,7 +252,7 @@ public class FormCadastroBairro extends javax.swing.JFrame {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         try {
-            addListenerPais();
+            addAllListener();
             
             preencheGrid();
             preencheCombo();
@@ -292,7 +292,7 @@ public class FormCadastroBairro extends javax.swing.JFrame {
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         try {
-            if (cmbCidade.getSelectedItem() == null || txtBairro.getText().trim().length() == 0) {
+            if (cmbCidade.getSelectedItem() == null || txtBairro.getText().equals("")) {
                 return;
             }
             lblMensagem.setText(srvBairro.insert(new Bairro(0, txtBairro.getText(),(Cidade)cmbCidade.getSelectedItem())));
@@ -318,7 +318,7 @@ public class FormCadastroBairro extends javax.swing.JFrame {
                 preencheGrid();
                 deselecionaCombo();
                 limpaCampos();
-                preenchePais();
+                preencheCombo();
             }
         } catch (SQLException ex) {
             Logger.getLogger(FormCadastroBairro.class.getName()).log(Level.SEVERE, null, ex);
@@ -358,12 +358,10 @@ public class FormCadastroBairro extends javax.swing.JFrame {
     
     private void preencheCombo() throws SQLException{
         limpaCampos();
-
         ArrayList<Pais> paises = srvPais.getAll();
-
         for (Pais pais : paises) {
-            cmbPais.addItem(pais);            
-        }     
+            cmbPais.addItem(pais);
+        }
         deselecionaCombo();
     }
         
@@ -377,14 +375,11 @@ public class FormCadastroBairro extends javax.swing.JFrame {
         cmbEstado.removeAllItems();  
         cmbCidade.removeAllItems();   
         txtBairro.setText("");
-    }
-    
-    private void preenchePais()throws SQLException{
-        cmbPais.removeAllItems();
-        ArrayList<Pais> paises = srvPais.getAll();
-        for (Pais pais : paises) {
-            cmbPais.addItem(pais);
-        }
+    }    
+      
+    private void addAllListener(){
+        addListenerPais();
+        addListenerEstado();
     }
     
     private void preencheEstado() throws SQLException{
@@ -405,7 +400,7 @@ public class FormCadastroBairro extends javax.swing.JFrame {
                         cmbEstado.setSelectedItem(null);
                         addListenerEstado();
                     } catch (SQLException ex) {
-                        Logger.getLogger(FormCadastroLogradouro.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(FormCadastroBairro.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             }
@@ -429,7 +424,7 @@ public class FormCadastroBairro extends javax.swing.JFrame {
                         preencheCidade();
                         cmbCidade.setSelectedItem(null);
                     } catch (SQLException ex) {
-                        Logger.getLogger(FormCadastroLogradouro.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(FormCadastroBairro.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             }

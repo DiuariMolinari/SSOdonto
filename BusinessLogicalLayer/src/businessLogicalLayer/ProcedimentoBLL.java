@@ -84,7 +84,7 @@ public class ProcedimentoBLL {
 
     //Obter um registro
     public Procedimento getById(Procedimento procedimento) throws Exception {
-        if (procedimento.getId() < 0 || procedimento.getId() != 0) {
+        if (procedimento.getId() < 0 || procedimento.getId() == 0) {
             throw new Exception("O ID do procedimento deve ser informado.");
         }
 

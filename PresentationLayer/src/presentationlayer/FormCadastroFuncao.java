@@ -133,29 +133,32 @@ public class FormCadastroFuncao extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblMensagem, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jLabel2)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(btnSalvar)
-                                        .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(textSalario, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                            .addGap(18, 18, 18)
-                                            .addComponent(btnAtualizar)
-                                            .addGap(18, 18, 18)
-                                            .addComponent(btnDeletar))
-                                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                            .addGap(1, 1, 1)
-                                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(jLabel4)
-                                                .addComponent(textComissao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                                .addComponent(txtFuncao)))
+                            .addComponent(txtFuncao)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(textSalario, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(textComissao, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(lblMensagem, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel2)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel3)
+                                            .addComponent(btnSalvar))
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addGap(18, 18, 18)
+                                                .addComponent(btnAtualizar)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(btnDeletar))
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addGap(23, 23, 23)
+                                                .addComponent(jLabel4)))))
+                                .addGap(0, 0, Short.MAX_VALUE)))
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 533, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addContainerGap(30, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -192,8 +195,8 @@ public class FormCadastroFuncao extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -225,10 +228,10 @@ public class FormCadastroFuncao extends javax.swing.JFrame {
         txtFuncao.setText(funcao);
            
         double salario = ((double)model.getValueAt(row, 2));   
-        textSalario.setText(String.valueOf(salario));
+        textSalario.setText(String.valueOf(salario).replace('.', ','));
             
         double comissao = ((double)model.getValueAt(row, 3));   
-        textComissao.setText(String.valueOf(comissao));
+        textComissao.setText(String.valueOf(comissao).replace('.', ','));
         
         lastNomeFuncao = funcao;   
         lastSalario = salario;
@@ -238,10 +241,9 @@ public class FormCadastroFuncao extends javax.swing.JFrame {
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         try {
-            String funcao = txtFuncao.getText();
-            String salariotxt = textSalario.getText();
-            String comissaotxt = textComissao.getText();
-            if (funcao.length() == 0 
+            String salariotxt = textSalario.getText().trim().replace('.', Character.MIN_VALUE).replace(',', '.');
+            String comissaotxt = textComissao.getText().trim().replace('.', Character.MIN_VALUE).replace(',', '.');
+            if (!"".equals(txtFuncao.getText())
                     && salariotxt.length() == 0
                     && comissaotxt.length() == 0){
                 return;
@@ -259,16 +261,17 @@ public class FormCadastroFuncao extends javax.swing.JFrame {
 
     private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
         try {
+            String salariotxt = textSalario.getText().trim().replace('.', Character.MIN_VALUE).replace(',', '.');
+            String comissaotxt = textComissao.getText().trim().replace('.', Character.MIN_VALUE).replace(',', '.');
             if (!"".equals(txtFuncao.getText()) 
-                    && !"".equals(textSalario.getText())
-                    && !"".equals(textComissao.getText())
-                    && lastNomeFuncao != ""
-                    || (lastNomeFuncao != txtFuncao.getText()
-                    || lastSalario != Double.valueOf(textSalario.getText())
-                    || lastComissao != Double.valueOf(textComissao.getText()))
+                    && salariotxt.length() != 0
+                    && comissaotxt.length() != 0
+                    && (!lastNomeFuncao.equals(txtFuncao.getText())
+                    || lastSalario != Double.valueOf(salariotxt)
+                    || lastComissao != Double.valueOf(comissaotxt))
                     && lastFuncao != null){ 
-                double salario = Double.valueOf(textSalario.getText());
-                double comissao = Double.valueOf(textComissao.getText());
+                double salario = Double.valueOf(salariotxt);
+                double comissao = Double.valueOf(comissaotxt);
                 lblMensagem.setText(srvFuncao.update(new Funcao(lastFuncao.getId(),txtFuncao.getText(), salario, comissao)));
                 lblMensagem.setForeground(Color.blue);
                 preencheGrid();

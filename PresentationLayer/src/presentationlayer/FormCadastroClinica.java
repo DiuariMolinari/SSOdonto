@@ -69,8 +69,6 @@ public class FormCadastroClinica extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jComboUF = new javax.swing.JComboBox<>();
-        jLabel18 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -95,8 +93,6 @@ public class FormCadastroClinica extends javax.swing.JFrame {
         btnDeletar = new javax.swing.JButton();
         lblMensagem = new javax.swing.JLabel();
         cmbEndereco = new javax.swing.JComboBox<>();
-
-        jLabel18.setText("UF");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -205,7 +201,7 @@ public class FormCadastroClinica extends javax.swing.JFrame {
                             .addComponent(lblMensagem, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(cmbEndereco, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(cmbBairro, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -241,9 +237,9 @@ public class FormCadastroClinica extends javax.swing.JFrame {
                                             .addComponent(ftxtDataInauguracao, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(btnSalvar)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGap(18, 18, 18)
                                         .addComponent(btnAtualizar)
-                                        .addGap(62, 62, 62)
+                                        .addGap(18, 18, 18)
                                         .addComponent(btnDeletar)))
                                 .addGap(0, 0, Short.MAX_VALUE)))
                         .addGap(18, 18, 18)
@@ -379,9 +375,7 @@ public class FormCadastroClinica extends javax.swing.JFrame {
 
             LocalDate inauguracao = (LocalDate) model.getValueAt(row, 2);
             ftxtDataInauguracao.setText(inauguracao.toString());
-
-            //int nCasa = (int) model.getValueAt(row, 9);
-
+            
             Pais pais = (Pais) model.getValueAt(row, 8);
             cmbPais.getModel().setSelectedItem(pais);
             preencheEstado();
@@ -408,24 +402,26 @@ public class FormCadastroClinica extends javax.swing.JFrame {
             lastEndereco = endereco;
             lastClinica = new Clinica(id, nomeClinica, inauguracao, lastEndereco);
         } catch (SQLException ex) {
-            Logger.getLogger(FormCadastroLogradouro.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FormCadastroClinica.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_grdClinicaMouseClicked
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         try {
             addAllListener();
+            
             preencheGrid();
-            preencheCombo();
+            preenchePais();
+            deselecionaCombo();
         } catch (SQLException ex) {
-            Logger.getLogger(FormCadastroLogradouro.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FormCadastroClinica.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_formWindowOpened
 
     private void preencheGrid() throws SQLException {
         ArrayList<Clinica> clinicas = srvClinica.getAll();
 
-        Object colunas[] = {"Id", "Nome", "Data de Inauguração", "CEP", "Logradouro", "Bairro", "Cidade", "Estado", "País"};
+        Object colunas[] = {"Id", "Nome", "Data Inauguração", "CEP", "Logradouro", "Bairro", "Cidade", "Estado", "País"};
         model = new DefaultTableModel(colunas, 0);
         for (Clinica clinica : clinicas) {
             model.addRow(new Object[]{
@@ -463,22 +459,12 @@ public class FormCadastroClinica extends javax.swing.JFrame {
         cmbEndereco.setSelectedItem(null);
     }
 
-    private void addAllListener() {
+    private void addAllListener(){
         addListenerPais();
         addListenerEstado();
         addListenerCidade();
         addListenerBairro();
         addListenerLogradouro();
-    }
-
-    private void preencheCombo() throws SQLException {
-        limpaCampos();
-        ArrayList<Pais> paises = srvPais.getAll();
-
-        for (Pais pais : paises) {
-            cmbPais.addItem(pais);
-        }
-        deselecionaCombo();
     }
 
     private void preenchePais() throws SQLException {
@@ -497,38 +483,6 @@ public class FormCadastroClinica extends javax.swing.JFrame {
         }
     }
 
-    private void preencheCidade() throws SQLException {
-        cmbCidade.removeAllItems();
-        ArrayList<Cidade> cidades = srvCidade.getByEstado((Estado) cmbEstado.getSelectedItem());
-        for (Cidade cidade : cidades) {
-            cmbCidade.addItem(cidade);
-        }
-    }
-
-    private void preencheBairro() throws SQLException {
-        cmbBairro.removeAllItems();
-        ArrayList<Bairro> bairros = srvBairro.getByCidade((Cidade) cmbCidade.getSelectedItem());
-        for (Bairro bairro : bairros) {
-            cmbBairro.addItem(bairro);
-        }
-    }
-
-    private void preencheLogradouro() throws SQLException {
-        cmbLogradouro.removeAllItems();
-        ArrayList<Logradouro> logradouros = srvLogradouro.getByBairro((Bairro) cmbBairro.getSelectedItem());
-        for (Logradouro logradouro : logradouros) {
-            cmbLogradouro.addItem(logradouro);
-        }
-    }
-
-    private void preencheEndereco() throws SQLException {
-        cmbEndereco.removeAllItems();
-        ArrayList<Endereco> enderecos = srvEndereco.getByLogradouro((Logradouro) cmbLogradouro.getSelectedItem());
-        for (Endereco endereco : enderecos) {
-            cmbEndereco.addItem(endereco);
-        }
-    }
-
     private void addListenerPais() {
         cmbPais.addItemListener(new ItemListener() {
             @Override
@@ -538,11 +492,19 @@ public class FormCadastroClinica extends javax.swing.JFrame {
                         preencheEstado();
                         cmbEstado.setSelectedItem(null);
                     } catch (SQLException ex) {
-                        Logger.getLogger(FormCadastroLogradouro.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(FormCadastroClinica.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             }
         });
+    }
+    
+    private void preencheCidade() throws SQLException {
+        cmbCidade.removeAllItems();
+        ArrayList<Cidade> cidades = srvCidade.getByEstado((Estado) cmbEstado.getSelectedItem());
+        for (Cidade cidade : cidades) {
+            cmbCidade.addItem(cidade);
+        }
     }
 
     private void addListenerEstado() {
@@ -554,13 +516,21 @@ public class FormCadastroClinica extends javax.swing.JFrame {
                         preencheCidade();
                         cmbCidade.setSelectedItem(null);
                     } catch (SQLException ex) {
-                        Logger.getLogger(FormCadastroLogradouro.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(FormCadastroClinica.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             }
         });
     }
-
+    
+    private void preencheBairro() throws SQLException {
+        cmbBairro.removeAllItems();
+        ArrayList<Bairro> bairros = srvBairro.getByCidade((Cidade) cmbCidade.getSelectedItem());
+        for (Bairro bairro : bairros) {
+            cmbBairro.addItem(bairro);
+        }
+    }
+    
     private void addListenerCidade() {
         cmbCidade.addItemListener(new ItemListener() {
             @Override
@@ -570,13 +540,21 @@ public class FormCadastroClinica extends javax.swing.JFrame {
                         preencheBairro();
                         cmbBairro.setSelectedItem(null);
                     } catch (SQLException ex) {
-                        Logger.getLogger(FormCadastroLogradouro.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(FormCadastroClinica.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             }
         });
     }
 
+    private void preencheLogradouro() throws SQLException {
+        cmbLogradouro.removeAllItems();
+        ArrayList<Logradouro> logradouros = srvLogradouro.getByBairro((Bairro) cmbBairro.getSelectedItem());
+        for (Logradouro logradouro : logradouros) {
+            cmbLogradouro.addItem(logradouro);
+        }
+    }
+    
     private void addListenerBairro() {
         cmbBairro.addItemListener(new ItemListener() {
             @Override
@@ -586,13 +564,21 @@ public class FormCadastroClinica extends javax.swing.JFrame {
                         preencheLogradouro();
                         cmbLogradouro.setSelectedItem(null);
                     } catch (SQLException ex) {
-                        Logger.getLogger(FormCadastroLogradouro.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(FormCadastroClinica.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             }
         });
     }
 
+    private void preencheEndereco() throws SQLException {
+        cmbEndereco.removeAllItems();
+        ArrayList<Endereco> enderecos = srvEndereco.getByLogradouro((Logradouro) cmbLogradouro.getSelectedItem());
+        for (Endereco endereco : enderecos) {
+            cmbEndereco.addItem(endereco);
+        }
+    }
+    
     private void addListenerLogradouro() {
         cmbLogradouro.addItemListener(new ItemListener() {
             @Override
@@ -602,7 +588,7 @@ public class FormCadastroClinica extends javax.swing.JFrame {
                         preencheEndereco();
                         cmbEndereco.setSelectedItem(null);
                     } catch (SQLException ex) {
-                        Logger.getLogger(FormCadastroLogradouro.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(FormCadastroClinica.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             }
@@ -656,12 +642,10 @@ public class FormCadastroClinica extends javax.swing.JFrame {
     private javax.swing.JComboBox<Pais> cmbPais;
     private javax.swing.JFormattedTextField ftxtDataInauguracao;
     private javax.swing.JTable grdClinica;
-    private javax.swing.JComboBox<String> jComboUF;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

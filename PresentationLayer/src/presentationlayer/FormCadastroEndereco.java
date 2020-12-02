@@ -202,8 +202,8 @@ public class FormCadastroEndereco extends javax.swing.JFrame {
                                             .addComponent(jLabel3))))
                                 .addGap(0, 0, Short.MAX_VALUE)))
                         .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1077, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 824, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(206, 206, 206))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(0, 0, Short.MAX_VALUE))))
@@ -254,7 +254,7 @@ public class FormCadastroEndereco extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(lblMensagem, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(79, Short.MAX_VALUE))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -263,7 +263,7 @@ public class FormCadastroEndereco extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 1212, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -279,7 +279,7 @@ public class FormCadastroEndereco extends javax.swing.JFrame {
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         try {
-            if (    ftxtCEP.getText().equals("")
+            if (ftxtCEP.getText().equals("")
                 || txtNumero.getText().equals("")
                 || cmbLogradouro.getSelectedItem() == null) {
                 return;
@@ -292,17 +292,18 @@ public class FormCadastroEndereco extends javax.swing.JFrame {
             limpaCampos();
             
         } catch (SQLException ex) {
-            Logger.getLogger(FormCadastroAtendimento.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FormCadastroEndereco.class.getName()).log(Level.SEVERE, null, ex);
         }     
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
         try {
-            if (    ftxtCEP.getText().equals("")
-                || txtNumero.getText().equals("")
-                || cmbLogradouro.getSelectedItem() == null
-                || lastEndereco == null
-                || lastEndereco.getId() == 0) {
+            if (cmbLogradouro.getSelectedItem() == null
+                    && ftxtCEP.getText().equals("")
+                    && txtNumero.getText().equals("")
+                    &&(!lastCep.equals(txtNumero.getText()) 
+                    || !lastNumero.equals(txtNumero.getText())) 
+                    && lastEndereco != null){
                 return;
             }
             String retorno = srvEndereco.update(new Endereco(lastEndereco.getId(), (Logradouro)cmbLogradouro.getSelectedItem(), Integer.valueOf(txtNumero.getText()), ftxtCEP.getText()));
@@ -314,7 +315,7 @@ public class FormCadastroEndereco extends javax.swing.JFrame {
             preenchePais();
             
         } catch (SQLException ex) {
-            Logger.getLogger(FormCadastroAtendimento.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FormCadastroEndereco.class.getName()).log(Level.SEVERE, null, ex);
         }     
     }//GEN-LAST:event_btnAtualizarActionPerformed
 
@@ -328,17 +329,18 @@ public class FormCadastroEndereco extends javax.swing.JFrame {
                 limpaCampos();
             }
         } catch (SQLException ex) {
-            Logger.getLogger(FormCadastroAtendimento.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FormCadastroEndereco.class.getName()).log(Level.SEVERE, null, ex);
         } 
     }//GEN-LAST:event_btnDeletarActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         try {
-            addAllListener();
+            addListenerPais();
+            
             preencheGrid();
             preencheCombo();
         } catch (SQLException ex) {
-            Logger.getLogger(FormCadastroLogradouro.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FormCadastroEndereco.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_formWindowOpened
 
@@ -375,18 +377,11 @@ public class FormCadastroEndereco extends javax.swing.JFrame {
             
             lastCep = cep;
             lastNumero = String.valueOf(numero);
-            lastEndereco = new Endereco(id, logradouro, Integer.valueOf(numero), cep);
+            lastEndereco = new Endereco(id, logradouro, numero, cep);
         } catch (SQLException ex) {
-            Logger.getLogger(FormCadastroLogradouro.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FormCadastroEndereco.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_grdEnderecoMouseClicked
-
-    private void addAllListener(){
-        addListenerPais();
-        addListenerEstado();
-        addListenerCidade();
-        addListenerBairro();
-    }
     
     private void preencheGrid() throws SQLException{
         ArrayList<Endereco> enderecos = srvEndereco.getAll();
@@ -410,12 +405,7 @@ public class FormCadastroEndereco extends javax.swing.JFrame {
     
     private void preencheCombo() throws SQLException{
         limpaCampos();
-
-        ArrayList<Pais> paises = srvPais.getAll();
-
-        for (Pais pais : paises) {
-            cmbPais.addItem(pais);            
-        }     
+        preenchePais();
         deselecionaCombo();
     }
         
@@ -443,6 +433,14 @@ public class FormCadastroEndereco extends javax.swing.JFrame {
         for (Pais pais : paises) {
             cmbPais.addItem(pais);
         }
+    }    
+    
+    private void preencheEstado() throws SQLException{
+        cmbEstado.removeAllItems();
+        ArrayList<Estado> estados = srvEstado.getByPais((Pais)cmbPais.getSelectedItem());
+        for (Estado estado : estados) {
+            cmbEstado.addItem(estado);
+        }
     }
     
     private void addListenerPais(){
@@ -453,22 +451,15 @@ public class FormCadastroEndereco extends javax.swing.JFrame {
                     try {
                         preencheEstado();
                         cmbEstado.setSelectedItem(null);
+                        addListenerEstado();
                     } catch (SQLException ex) {
-                        Logger.getLogger(FormCadastroLogradouro.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(FormCadastroEndereco.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             }
         });
     }
-    
-    private void preencheEstado() throws SQLException{
-        cmbEstado.removeAllItems();
-        ArrayList<Estado> estados = srvEstado.getByPais((Pais)cmbPais.getSelectedItem());
-        for (Estado estado : estados) {
-            cmbEstado.addItem(estado);
-        }
-    }
-    
+        
     private void preencheCidade() throws SQLException{
         cmbCidade.removeAllItems();
         ArrayList<Cidade> cidades = srvCidade.getByEstado((Estado)cmbEstado.getSelectedItem());
@@ -485,8 +476,9 @@ public class FormCadastroEndereco extends javax.swing.JFrame {
                     try {
                         preencheCidade();
                         cmbCidade.setSelectedItem(null);
+                        addListenerCidade();
                     } catch (SQLException ex) {
-                        Logger.getLogger(FormCadastroLogradouro.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(FormCadastroEndereco.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             }
@@ -509,8 +501,9 @@ public class FormCadastroEndereco extends javax.swing.JFrame {
                     try {
                         preencheBairro();
                         cmbBairro.setSelectedItem(null);
+                        addListenerBairro();
                     } catch (SQLException ex) {
-                        Logger.getLogger(FormCadastroLogradouro.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(FormCadastroEndereco.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             }
@@ -534,7 +527,7 @@ public class FormCadastroEndereco extends javax.swing.JFrame {
                         preencheLogradouro();
                         cmbLogradouro.setSelectedItem(null);
                     } catch (SQLException ex) {
-                        Logger.getLogger(FormCadastroLogradouro.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(FormCadastroEndereco.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             }

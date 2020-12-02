@@ -269,7 +269,7 @@ public class FormCadastroLogradouro extends javax.swing.JFrame {
             limpaCampos();
             
         } catch (SQLException ex) {
-            Logger.getLogger(FormCadastroAtendimento.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FormCadastroLogradouro.class.getName()).log(Level.SEVERE, null, ex);
         }     
     }//GEN-LAST:event_btnSalvarActionPerformed
 
@@ -288,7 +288,7 @@ public class FormCadastroLogradouro extends javax.swing.JFrame {
                 preenchePais();
             }
         } catch (SQLException ex) {
-            Logger.getLogger(FormCadastroAtendimento.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FormCadastroLogradouro.class.getName()).log(Level.SEVERE, null, ex);
         } 
     }//GEN-LAST:event_btnAtualizarActionPerformed
 

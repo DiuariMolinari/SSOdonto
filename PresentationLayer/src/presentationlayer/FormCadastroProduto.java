@@ -278,10 +278,13 @@ public class FormCadastroProduto extends javax.swing.JFrame {
         
         String nomeProduto = (String)model.getValueAt(row,1);
         txtProduto.setText(nomeProduto);
+        
         TipoEmbalagem embalagem = (TipoEmbalagem)model.getValueAt(row, 2);
         cmbEmbalagem.getModel().setSelectedItem(embalagem);
+        
         double preco = (double)model.getValueAt(row, 3);
-        ftxtPreco.setText(String.valueOf(preco));
+        ftxtPreco.setText(String.valueOf(preco).replace('.', ','));
+        
         LocalDate dataCompra = (LocalDate)model.getValueAt(row, 4);
         ftxtDataCompra.setText(dataCompra.toString());
         
@@ -295,10 +298,13 @@ public class FormCadastroProduto extends javax.swing.JFrame {
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         try {
-            if (txtProduto.getText().isEmpty() && cmbEmbalagem.getModel().getSelectedItem() == null && ftxtPreco.getText().isEmpty()) {
+            String precotxt = ftxtPreco.getText().trim().replace('.', Character.MIN_VALUE).replace(',', '.');
+            if (txtProduto.getText().isEmpty() 
+                    && cmbEmbalagem.getModel().getSelectedItem() == null 
+                    && precotxt.isEmpty()) {
                 return;
             }
-            double preco = Double.valueOf(ftxtPreco.getText());
+            double preco = Double.valueOf(precotxt);
             lblMensagem.setText(srvProduto.insert(new Produto(0,txtProduto.getText(),(TipoEmbalagem)cmbEmbalagem.getSelectedItem(),preco,LocalDate.parse(ftxtDataCompra.getText()))));
             lblMensagem.setForeground(new Color(0, 102, 0));
             preencheGrid();
@@ -310,14 +316,24 @@ public class FormCadastroProduto extends javax.swing.JFrame {
 
     private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
         try {
-            if (cmbEmbalagem.getSelectedItem() != null && lastProduto != null && !ftxtDataCompra.getText().equals("") && !ftxtPreco.getText().equals("") && !txtProduto.getText().equals("")){
-                lblMensagem.setText(srvProduto.update(new Produto(lastProduto.getId(), txtProduto.getText(), (TipoEmbalagem)cmbEmbalagem.getSelectedItem(), Double.valueOf(ftxtPreco.getText()), LocalDate.parse(ftxtDataCompra.getText())) ));
+            String precotxt = ftxtPreco.getText().trim().replace('.', Character.MIN_VALUE).replace(',', '.');
+            if (cmbEmbalagem.getSelectedItem() != null 
+                    && !txtProduto.getText().equals("")
+                    && !ftxtDataCompra.getText().equals("") 
+                    && !precotxt.equals("") 
+                    && (lastTipoEmbalagem != cmbEmbalagem.getSelectedItem()
+                    || !lastNomeProduto.equals(txtProduto.getText())
+                    || !lastDataCompra.equals(ftxtDataCompra.getText())
+                    || lastPreco != Double.valueOf(precotxt))                    
+                    && lastProduto != null){
+                double preco = Double.valueOf(precotxt);
+                lblMensagem.setText(srvProduto.update(new Produto(lastProduto.getId(), txtProduto.getText(), (TipoEmbalagem)cmbEmbalagem.getSelectedItem(), preco, LocalDate.parse(ftxtDataCompra.getText()))));
                 lblMensagem.setForeground(Color.blue);
                 preencheGrid();
                 limpaCombo();
             }
         } catch (SQLException ex) {
-            Logger.getLogger(FormCadastroAtendimento.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FormCadastroProduto.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnAtualizarActionPerformed
 
@@ -330,7 +346,7 @@ public class FormCadastroProduto extends javax.swing.JFrame {
                 limpaCombo();                
             }
         } catch (SQLException ex) {
-            Logger.getLogger(FormCadastroAtendimento.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FormCadastroProduto.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnDeletarActionPerformed
 

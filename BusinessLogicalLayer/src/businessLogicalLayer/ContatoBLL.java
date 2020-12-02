@@ -86,7 +86,7 @@ public class ContatoBLL {
 
     //Obter um registro
     public Contato getById(Contato contato) throws Exception {
-        if (contato.getId() != 0 || contato.getId() < 0) {
+        if (contato.getId() == 0 || contato.getId() < 0) {
             throw new Exception("O ID do contato deve ser informado.");
         }
         return dal.getById(contato.getId());

@@ -15,15 +15,13 @@ public class Contato {
     private FoneTipo foneTipo;
     private String email;
     private Paciente paciente;
-
+    private Colaborador colaborador;
     
      @Override
     public String toString() {
         return fone;
     }
     
-    private Colaborador colaborador;
-
      public Contato(int id) {
         this.id = id;
     }

@@ -63,7 +63,7 @@ public class PagamentoBLL {
 
     //Obter um registro
     public Pagamento getById(Pagamento pagamento) throws Exception {
-        if (pagamento.getId() < 0 || pagamento.getId() != 0) {
+        if (pagamento.getId() < 0 || pagamento.getId() == 0) {
             throw new Exception("O ID do pagamento deve ser informado.");
         }
 

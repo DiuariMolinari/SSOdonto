@@ -13,8 +13,8 @@ import java.time.LocalDate;
  */
 public class Estoque {
     private int id;
-    private int qtdProduto;
     private Produto produto;
+    private int qtdProduto;    
     private LocalDate dataEntrada;
     private LocalDate dataSaida;
 
@@ -27,10 +27,10 @@ public class Estoque {
         this.id = id;
     }
     
-    public Estoque(int id, Produto produto, int qtdProduto, LocalDate dataEntrada, LocalDate dataSaida) {
+    public Estoque(int id, Produto produto,int qtdProduto, LocalDate dataEntrada, LocalDate dataSaida) {
         this.id = id;
-        this.qtdProduto = qtdProduto;
         this.produto = produto;
+        this.qtdProduto = qtdProduto;
         this.dataEntrada = dataEntrada;
         this.dataSaida = dataSaida;
     }

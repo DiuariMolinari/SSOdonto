@@ -71,7 +71,7 @@ public class TipoPagamentoBLL {
 
     //Obter um registro
     public TipoPagamento getById(TipoPagamento tipoPagamento) throws Exception {
-        if (tipoPagamento.getId() < 0 || tipoPagamento.getId() != 0) {
+        if (tipoPagamento.getId() < 0 || tipoPagamento.getId() == 0) {
             throw new Exception("O ID do tipo de pagamento deve ser informado.");
         }
 

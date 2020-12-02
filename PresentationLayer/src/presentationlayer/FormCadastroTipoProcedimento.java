@@ -52,13 +52,13 @@ public class FormCadastroTipoProcedimento extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         txtTipoProcedimento = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        ftxtValor = new javax.swing.JFormattedTextField();
         btnSalvar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         grdTipoProcedimento = new javax.swing.JTable();
         btnAtualizar = new javax.swing.JButton();
         btnDeletar = new javax.swing.JButton();
         lblMensagem = new javax.swing.JLabel();
+        ftxtValor = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -73,9 +73,6 @@ public class FormCadastroTipoProcedimento extends javax.swing.JFrame {
         jLabel2.setText("Nome do Tipo de Procedimento");
 
         jLabel3.setText("Valor");
-
-        ftxtValor.setColumns(6);
-        ftxtValor.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,##0.00"))));
 
         btnSalvar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnSalvar.setText("Salvar");
@@ -129,7 +126,6 @@ public class FormCadastroTipoProcedimento extends javax.swing.JFrame {
                     .addComponent(jLabel1)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(ftxtValor, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2)
                             .addComponent(jLabel3)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -139,7 +135,8 @@ public class FormCadastroTipoProcedimento extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(btnDeletar))
                             .addComponent(txtTipoProcedimento, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblMensagem, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lblMensagem, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(ftxtValor, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -209,9 +206,8 @@ public class FormCadastroTipoProcedimento extends javax.swing.JFrame {
         txtTipoProcedimento.setText(tipoProcedimento);
            
         double valor = ((double)model.getValueAt(row, 2));   
-        ftxtValor.setText(String.valueOf(valor));
-            
-            
+        ftxtValor.setText(String.valueOf(valor).replace('.', ','));       
+                        
         lastTipoProcedimento = tipoProcedimento;
         lastValor = valor;
         lastCadTipoProcedimento = new TipoProcedimento(id, tipoProcedimento, valor);
@@ -237,12 +233,13 @@ public class FormCadastroTipoProcedimento extends javax.swing.JFrame {
 
     private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
         try {
+            String valortxt = ftxtValor.getText().trim().replace('.', Character.MIN_VALUE).replace(',', '.');
             if (!"".equals(txtTipoProcedimento.getText()) 
-                    && !"".equals(ftxtValor.getText())
-                    || (!lastTipoProcedimento.equals(txtTipoProcedimento.getText()) 
-                    || lastValor != Double.valueOf(ftxtValor.getText()))
+                    && valortxt.length() != 0
+                    && (!lastTipoProcedimento.equals(txtTipoProcedimento.getText()) 
+                    || lastValor != Double.valueOf(valortxt))
                     && lastCadTipoProcedimento != null){ 
-                double valor = Double.valueOf(ftxtValor.getText());
+                double valor = Double.valueOf(valortxt);
                 lblMensagem.setText(srvProcedimento.update(new TipoProcedimento(lastCadTipoProcedimento.getId(),txtTipoProcedimento.getText(), valor)));
                 lblMensagem.setForeground(Color.blue);
                 preencheGrid();
@@ -325,7 +322,7 @@ public class FormCadastroTipoProcedimento extends javax.swing.JFrame {
     private javax.swing.JButton btnAtualizar;
     private javax.swing.JButton btnDeletar;
     private javax.swing.JButton btnSalvar;
-    private javax.swing.JFormattedTextField ftxtValor;
+    private javax.swing.JTextField ftxtValor;
     private javax.swing.JTable grdTipoProcedimento;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

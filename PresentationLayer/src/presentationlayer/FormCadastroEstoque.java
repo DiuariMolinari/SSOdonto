@@ -7,13 +7,9 @@ package presentationlayer;
 
 import businessLogicalLayer.EstoqueBLL;
 import businessLogicalLayer.ProdutoBLL;
-import domain.Clinica;
 import domain.Estoque;
-import domain.Funcao;
 import domain.Produto;
 import java.awt.Color;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -89,6 +85,18 @@ public class FormCadastroEstoque extends javax.swing.JFrame {
         jLabel3.setText("Qtde. Produto");
 
         jLabel4.setText("Data Entrada");
+
+        try {
+            ftxtDataEntrada.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("####-##-##")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
+        try {
+            ftxtDataSaida.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("####-##-##")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
 
         jLabel5.setText("Data Saída");
 
@@ -230,47 +238,38 @@ public class FormCadastroEstoque extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void grdEstoqueMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_grdEstoqueMouseClicked
-        try {
-            int row = grdEstoque.getSelectedRow();
-            TableModel model = grdEstoque.getModel();
-
-            int id = (int) model.getValueAt(row, 0);
-
-            int qtdProduto = (int) model.getValueAt(row, 1);
-            //txtQtdeProduto.setText(qtdProduto);
-            txtQtdeProduto.setText(Integer.toString(qtdProduto));
-
-            LocalDate dataEntrada = (LocalDate) model.getValueAt(row, 5);
-            ftxtDataEntrada.setText(dataEntrada.toString());
-
-            LocalDate dataSaida = (LocalDate) model.getValueAt(row, 6);
-            ftxtDataSaida.setText(dataSaida.toString());
-
-            Produto produto = (Produto) model.getValueAt(row, 12);
-            cmbProduto.getModel().setSelectedItem(produto);
-            preencheProduto();
-
-            lastProduto = produto;
-            lastQtdProduto = qtdProduto;
-            lastDataEntrada = dataEntrada;
-            lastDataSaida = dataSaida;
-            lastEstoque = new Estoque(id, produto, qtdProduto, dataEntrada, dataSaida);
-        } 
-        catch (SQLException ex) {
-            Logger.getLogger(FormCadastroEstoque.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        int row = grdEstoque.getSelectedRow();
+        TableModel model = grdEstoque.getModel();
+        
+        int id = (int) model.getValueAt(row, 0);
+        
+        int qtdProduto = (int) model.getValueAt(row, 2);
+        txtQtdeProduto.setText(Integer.toString(qtdProduto));
+        
+        LocalDate dataEntrada = (LocalDate) model.getValueAt(row, 3);
+        ftxtDataEntrada.setText(dataEntrada.toString());
+        
+        LocalDate dataSaida = (LocalDate) model.getValueAt(row, 4);
+        ftxtDataSaida.setText(dataSaida.toString());
+        
+        Produto produto = (Produto) model.getValueAt(row, 1);
+        cmbProduto.getModel().setSelectedItem(produto);
+        
+        lastProduto = produto;
+        lastQtdProduto = qtdProduto;
+        lastDataEntrada = dataEntrada;
+        lastDataSaida = dataSaida;
+        lastEstoque = new Estoque(id, produto, qtdProduto, dataEntrada, dataSaida);
     }//GEN-LAST:event_grdEstoqueMouseClicked
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         try {
-            //ftxtDataDemissao.getText().equals("")
             if (cmbProduto.getSelectedItem() == null
                     || txtQtdeProduto.getText().equals("")
                     || ftxtDataEntrada.getText().equals("")
                     || ftxtDataSaida.getText().equals("")) {
                 return;
             }
-
             String retorno = srvEstoque.insert(new Estoque(0, (Produto) cmbProduto.getSelectedItem(), Integer.parseInt(txtQtdeProduto.getText()), LocalDate.parse(ftxtDataEntrada.getText()), LocalDate.parse(ftxtDataSaida.getText())));
             lblMensagem.setText(retorno);
             lblMensagem.setForeground(new Color(0, 102, 0));
@@ -288,10 +287,10 @@ public class FormCadastroEstoque extends javax.swing.JFrame {
                     && !txtQtdeProduto.getText().equals("")
                     && !ftxtDataEntrada.getText().equals("")
                     && !ftxtDataSaida.getText().equals("")
-                    && (!lastDataEntrada.equals(ftxtDataEntrada.getText()))
+                    && (!lastDataEntrada.equals(ftxtDataEntrada.getText())
                     || !lastDataSaida.equals(ftxtDataSaida.getText())
-                    //|| !lastQtdProduto.equals(txtQtdeProduto.getText())
-                    || !lastProduto.equals(cmbProduto.getSelectedItem())
+                    || lastQtdProduto != Integer.parseInt(txtQtdeProduto.getText())
+                    || !lastProduto.equals(cmbProduto.getSelectedItem()))
                     && lastEstoque != null) {
 
                 String retorno = srvEstoque.update(new Estoque(lastEstoque.getId(), (Produto) cmbProduto.getSelectedItem(), Integer.parseInt(txtQtdeProduto.getText()), LocalDate.parse(ftxtDataEntrada.getText()), LocalDate.parse(ftxtDataSaida.getText())));
@@ -301,7 +300,7 @@ public class FormCadastroEstoque extends javax.swing.JFrame {
                 preencheGrid();
                 deselecionaCombo();
                 limpaCampos();
-                preencheProduto();
+                preencheCombo();
             }
         } catch (SQLException ex) {
             Logger.getLogger(FormCadastroEstoque.class.getName()).log(Level.SEVERE, null, ex);
@@ -324,7 +323,6 @@ public class FormCadastroEstoque extends javax.swing.JFrame {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         try {
-            addAllListener();
             preencheGrid();
             preencheCombo();
         } catch (SQLException ex) {
@@ -335,7 +333,7 @@ public class FormCadastroEstoque extends javax.swing.JFrame {
     private void preencheGrid() throws SQLException {
         ArrayList<Estoque> estoques = srvEstoque.getAll();
 
-        Object colunas[] = {"Id", "IdProduto", "QtdProduto", "DtEntrada", "DtSaída"};
+        Object colunas[] = {"Id", "Produto", "Qtde. Produto", "Data Entrada", "Data Saída"};
         model = new DefaultTableModel(colunas, 0);
         for (Estoque estoque : estoques) {
             model.addRow(new Object[]{
@@ -370,34 +368,6 @@ public class FormCadastroEstoque extends javax.swing.JFrame {
         txtQtdeProduto.setText("");
         ftxtDataEntrada.setText("");
         ftxtDataSaida.setText("");
-    }
-
-    private void addAllListener() {
-        addListenerProduto();
-    }
-
-    private void addListenerProduto() {
-        cmbProduto.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent eventoItem) {
-                if (eventoItem.getStateChange() == ItemEvent.SELECTED) {
-                    try {
-                        preencheProduto();
-                        cmbProduto.setSelectedItem(null);
-                    } catch (SQLException ex) {
-                        Logger.getLogger(FormCadastroEstoque.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
-            }
-        });
-    }
-
-    private void preencheProduto() throws SQLException {
-        cmbProduto.removeAllItems();
-        ArrayList<Produto> produtos = srvProduto.getAll();
-        for (Produto produto : produtos) {
-            cmbProduto.addItem(produto);
-        }
     }
 
     /**
