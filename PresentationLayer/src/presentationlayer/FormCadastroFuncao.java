@@ -228,10 +228,10 @@ public class FormCadastroFuncao extends javax.swing.JFrame {
         txtFuncao.setText(funcao);
            
         double salario = ((double)model.getValueAt(row, 2));   
-        textSalario.setText(String.valueOf(salario));
+        textSalario.setText(String.valueOf(salario).replace('.', ','));
             
         double comissao = ((double)model.getValueAt(row, 3));   
-        textComissao.setText(String.valueOf(comissao));
+        textComissao.setText(String.valueOf(comissao).replace('.', ','));
         
         lastNomeFuncao = funcao;   
         lastSalario = salario;
@@ -241,10 +241,9 @@ public class FormCadastroFuncao extends javax.swing.JFrame {
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         try {
-            String funcao = txtFuncao.getText();
-            String salariotxt = textSalario.getText();
-            String comissaotxt = textComissao.getText();
-            if (funcao.length() == 0 
+            String salariotxt = textSalario.getText().trim().replace('.', Character.MIN_VALUE).replace(',', '.');
+            String comissaotxt = textComissao.getText().trim().replace('.', Character.MIN_VALUE).replace(',', '.');
+            if (!"".equals(txtFuncao.getText())
                     && salariotxt.length() == 0
                     && comissaotxt.length() == 0){
                 return;
@@ -262,16 +261,17 @@ public class FormCadastroFuncao extends javax.swing.JFrame {
 
     private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
         try {
+            String salariotxt = textSalario.getText().trim().replace('.', Character.MIN_VALUE).replace(',', '.');
+            String comissaotxt = textComissao.getText().trim().replace('.', Character.MIN_VALUE).replace(',', '.');
             if (!"".equals(txtFuncao.getText()) 
-                    && !"".equals(textSalario.getText())
-                    && !"".equals(textComissao.getText())
-                    && lastNomeFuncao != ""
-                    || (lastNomeFuncao != txtFuncao.getText()
-                    || lastSalario != Double.valueOf(textSalario.getText())
-                    || lastComissao != Double.valueOf(textComissao.getText()))
+                    && salariotxt.length() != 0
+                    && comissaotxt.length() != 0
+                    && (!lastNomeFuncao.equals(txtFuncao.getText())
+                    || lastSalario != Double.valueOf(salariotxt)
+                    || lastComissao != Double.valueOf(comissaotxt))
                     && lastFuncao != null){ 
-                double salario = Double.valueOf(textSalario.getText());
-                double comissao = Double.valueOf(textComissao.getText());
+                double salario = Double.valueOf(salariotxt);
+                double comissao = Double.valueOf(comissaotxt);
                 lblMensagem.setText(srvFuncao.update(new Funcao(lastFuncao.getId(),txtFuncao.getText(), salario, comissao)));
                 lblMensagem.setForeground(Color.blue);
                 preencheGrid();

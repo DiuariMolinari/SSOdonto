@@ -191,23 +191,21 @@ public class ContatoDAL {
         try 
         {
             if (Contato.getPaciente() == null) {
-                PreparedStatement pst = conexao.getConexao().prepareStatement("UPDATE Contato SET fone = ?, idfonetipo = ?, email = ?, idPaciente = ?, idColaborador = ? WHERE IDContato = ?");
+                PreparedStatement pst = conexao.getConexao().prepareStatement("UPDATE Contato SET fone = ?, idFoneTipo = ?, email = ?,  idColaborador = ? WHERE idContato = ?");
                 pst.setString(1, Contato.getFone());
                 pst.setInt(2, Contato.getFoneTipo().getId());
                 pst.setString(3, Contato.getEmail());
-                pst.setInt(4, 0);
-                pst.setInt(5, Contato.getColaborador().getId());
-                pst.setInt(6, Contato.getId());
+                pst.setInt(4, Contato.getColaborador().getId());
+                pst.setInt(5, Contato.getId());
                 pst.executeUpdate();
             }
             else{
-                PreparedStatement pst = conexao.getConexao().prepareStatement("UPDATE Contato SET fone = ?, idfonetipo = ?, email = ?, idPaciente = ?, idColaborador = ? WHERE IDContato = ?");
+                PreparedStatement pst = conexao.getConexao().prepareStatement("UPDATE Contato SET fone = ?, idFoneTipo = ?, email = ?, idPaciente = ? WHERE idContato = ?");
                 pst.setString(1, Contato.getFone());
                 pst.setInt(2, Contato.getFoneTipo().getId());
                 pst.setString(3, Contato.getEmail());
                 pst.setInt(4, Contato.getPaciente().getId());
-                pst.setInt(5, 0);
-                pst.setInt(6, Contato.getId());
+                pst.setInt(5, Contato.getId());
                 pst.executeUpdate();
             }
             return "Contato atualizado com sucesso!";

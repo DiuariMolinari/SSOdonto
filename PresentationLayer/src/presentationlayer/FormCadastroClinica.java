@@ -408,10 +408,11 @@ public class FormCadastroClinica extends javax.swing.JFrame {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         try {
-            addListenerPais();
+            addAllListener();
             
             preencheGrid();
-            preencheCombo();
+            preenchePais();
+            deselecionaCombo();
         } catch (SQLException ex) {
             Logger.getLogger(FormCadastroClinica.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -458,10 +459,12 @@ public class FormCadastroClinica extends javax.swing.JFrame {
         cmbEndereco.setSelectedItem(null);
     }
 
-    private void preencheCombo() throws SQLException {
-        limpaCampos();
-        preenchePais();
-        deselecionaCombo();
+    private void addAllListener(){
+        addListenerPais();
+        addListenerEstado();
+        addListenerCidade();
+        addListenerBairro();
+        addListenerLogradouro();
     }
 
     private void preenchePais() throws SQLException {
@@ -488,7 +491,6 @@ public class FormCadastroClinica extends javax.swing.JFrame {
                     try {
                         preencheEstado();
                         cmbEstado.setSelectedItem(null);
-                        addListenerEstado();
                     } catch (SQLException ex) {
                         Logger.getLogger(FormCadastroClinica.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -513,7 +515,6 @@ public class FormCadastroClinica extends javax.swing.JFrame {
                     try {
                         preencheCidade();
                         cmbCidade.setSelectedItem(null);
-                        addListenerCidade();
                     } catch (SQLException ex) {
                         Logger.getLogger(FormCadastroClinica.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -538,7 +539,6 @@ public class FormCadastroClinica extends javax.swing.JFrame {
                     try {
                         preencheBairro();
                         cmbBairro.setSelectedItem(null);
-                        addListenerBairro();
                     } catch (SQLException ex) {
                         Logger.getLogger(FormCadastroClinica.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -563,7 +563,6 @@ public class FormCadastroClinica extends javax.swing.JFrame {
                     try {
                         preencheLogradouro();
                         cmbLogradouro.setSelectedItem(null);
-                        addListenerLogradouro();
                     } catch (SQLException ex) {
                         Logger.getLogger(FormCadastroClinica.class.getName()).log(Level.SEVERE, null, ex);
                     }

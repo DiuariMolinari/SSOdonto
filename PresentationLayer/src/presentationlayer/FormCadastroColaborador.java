@@ -116,6 +116,7 @@ public class FormCadastroColaborador extends javax.swing.JFrame {
         lblMensagem = new javax.swing.JLabel();
         cmbEndereco = new javax.swing.JComboBox<>();
         ftxtCroEstado = new javax.swing.JFormattedTextField();
+        btnMeusContatos = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -212,6 +213,13 @@ public class FormCadastroColaborador extends javax.swing.JFrame {
             }
         });
 
+        btnMeusContatos.setText("Meus Contatos");
+        btnMeusContatos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMeusContatosActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -270,26 +278,28 @@ public class FormCadastroColaborador extends javax.swing.JFrame {
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel10)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(btnAtualizar)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(btnDeletar))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                             .addComponent(jLabel6)
                                             .addComponent(ftxtDataDemissao, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(chkDemitido))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(btnAtualizar)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(btnDeletar))))
+                                        .addComponent(chkDemitido)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(chkFerias))))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel14)
                                 .addGap(78, 78, 78)
                                 .addComponent(jLabel12))
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel11)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(cmbEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(chkFerias))
-                            .addComponent(jLabel9)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel11))
+                                .addComponent(btnMeusContatos, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 900, Short.MAX_VALUE)
@@ -338,7 +348,7 @@ public class FormCadastroColaborador extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(cmbEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(chkFerias))
+                            .addComponent(btnMeusContatos))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel9)
@@ -347,7 +357,8 @@ public class FormCadastroColaborador extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(ftxtDataDemissao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(ftxtDataAdmissao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(chkDemitido))
+                            .addComponent(chkDemitido)
+                            .addComponent(chkFerias))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
@@ -356,7 +367,7 @@ public class FormCadastroColaborador extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(ftxtCroEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(ftxtCRO, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
+                        .addGap(55, 55, 55)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -542,6 +553,12 @@ public class FormCadastroColaborador extends javax.swing.JFrame {
             Logger.getLogger(FormCadastroColaborador.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_grdColaboradorMouseClicked
+
+    private void btnMeusContatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMeusContatosActionPerformed
+        if (lastColaborador != null && lastColaborador.getId() > 0) {
+            new FormCadastroContato(0, lastColaborador.getId()).setVisible(true);
+        }
+    }//GEN-LAST:event_btnMeusContatosActionPerformed
 
     private void preencheGrid() throws SQLException {
         ArrayList<Colaborador> colaboradores = srvColaborador.getAll();
@@ -797,6 +814,7 @@ public class FormCadastroColaborador extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAtualizar;
     private javax.swing.JButton btnDeletar;
+    private javax.swing.JButton btnMeusContatos;
     private javax.swing.JButton btnSalvar;
     private javax.swing.JCheckBox chkDemitido;
     private javax.swing.JCheckBox chkFerias;

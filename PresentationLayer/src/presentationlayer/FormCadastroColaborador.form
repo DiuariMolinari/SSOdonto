@@ -119,17 +119,19 @@
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
                                       <Group type="102" alignment="0" attributes="0">
+                                          <Component id="btnAtualizar" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Component id="btnDeletar" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="0">
                                           <Group type="103" groupAlignment="1" attributes="0">
                                               <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
                                               <Component id="ftxtDataDemissao" min="-2" pref="102" max="-2" attributes="0"/>
                                           </Group>
                                           <EmptySpace max="-2" attributes="0"/>
                                           <Component id="chkDemitido" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <Component id="btnAtualizar" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                                          <Component id="btnDeletar" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="chkFerias" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                               </Group>
@@ -138,14 +140,14 @@
                                   <EmptySpace min="-2" pref="78" max="-2" attributes="0"/>
                                   <Component id="jLabel12" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="cmbEndereco" min="-2" pref="232" max="-2" attributes="0"/>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="chkFerias" min="-2" max="-2" attributes="0"/>
-                              </Group>
                               <Component id="jLabel9" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel5" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel11" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="cmbEndereco" min="-2" pref="232" max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Component id="btnMeusContatos" min="-2" pref="121" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
@@ -205,7 +207,7 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="cmbEndereco" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="chkFerias" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnMeusContatos" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
@@ -217,6 +219,7 @@
                               <Component id="ftxtDataDemissao" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="ftxtDataAdmissao" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="chkDemitido" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="chkFerias" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
@@ -228,7 +231,7 @@
                               <Component id="ftxtCroEstado" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="ftxtCRO" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="btnSalvar" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
                               <Component id="btnAtualizar" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
@@ -595,6 +598,14 @@
           </AuxValues>
         </Component>
         <Component class="javax.swing.JFormattedTextField" name="ftxtCroEstado">
+        </Component>
+        <Component class="javax.swing.JButton" name="btnMeusContatos">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Meus Contatos"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnMeusContatosActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
