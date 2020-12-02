@@ -49,8 +49,6 @@ public class FormCadastroColaborador extends javax.swing.JFrame {
     private Endereco lastEndereco;
     private Funcao lastFuncao;
     private Clinica lastClinica;
-    private boolean lastFerias;
-    private boolean lastDemitido;
 
     private DefaultTableModel model;
 
@@ -82,17 +80,12 @@ public class FormCadastroColaborador extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenu2 = new javax.swing.JMenu();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         txtNomeCompleto = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
-        txtNumero = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
@@ -124,12 +117,6 @@ public class FormCadastroColaborador extends javax.swing.JFrame {
         cmbEndereco = new javax.swing.JComboBox<>();
         ftxtCroEstado = new javax.swing.JFormattedTextField();
 
-        jMenu1.setText("File");
-        jMenuBar1.add(jMenu1);
-
-        jMenu2.setText("Edit");
-        jMenuBar1.add(jMenu2);
-
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
@@ -142,11 +129,9 @@ public class FormCadastroColaborador extends javax.swing.JFrame {
 
         jLabel3.setText("Nome Completo ");
 
-        jLabel11.setText("CEP ");
+        jLabel11.setText("Endereço ");
 
         jLabel12.setText("Logradouro");
-
-        jLabel13.setText("N° ");
 
         jLabel14.setText("Bairro");
 
@@ -278,7 +263,9 @@ public class FormCadastroColaborador extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(ftxtCroEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(ftxtDataAdmissao, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(ftxtDataAdmissao, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnSalvar))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel10)
@@ -286,30 +273,23 @@ public class FormCadastroColaborador extends javax.swing.JFrame {
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                             .addComponent(jLabel6)
                                             .addComponent(ftxtDataDemissao, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(chkFerias)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(chkDemitido))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(33, 33, 33)
                                         .addComponent(btnAtualizar)
-                                        .addGap(39, 39, 39)
+                                        .addGap(18, 18, 18)
                                         .addComponent(btnDeletar))))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel14)
                                 .addGap(78, 78, 78)
                                 .addComponent(jLabel12))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(cmbEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel11))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel13)
-                                    .addComponent(txtNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(cmbEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(chkFerias))
                             .addComponent(jLabel9)
                             .addComponent(jLabel5)
-                            .addComponent(btnSalvar))
+                            .addComponent(jLabel11))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 900, Short.MAX_VALUE)
@@ -353,14 +333,12 @@ public class FormCadastroColaborador extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(cmbBairro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(cmbLogradouro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel11)
-                            .addComponent(jLabel13))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel11)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cmbEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cmbEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(chkFerias))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel9)
@@ -369,9 +347,8 @@ public class FormCadastroColaborador extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(ftxtDataDemissao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(ftxtDataAdmissao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(chkFerias)
                             .addComponent(chkDemitido))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
                             .addComponent(jLabel6))
@@ -379,14 +356,14 @@ public class FormCadastroColaborador extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(ftxtCroEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(ftxtCRO, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(34, 34, 34)
+                        .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnDeletar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(109, 109, 109)
+                .addGap(18, 18, 18)
                 .addComponent(lblMensagem, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(97, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -412,8 +389,12 @@ public class FormCadastroColaborador extends javax.swing.JFrame {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         try {
             addAllListener();
+            
             preencheGrid();
-            preencheCombo();
+            preenchePais();
+            preencheFuncao();
+            preencheClinica();
+            deselecionaCombo();
         } catch (SQLException ex) {
             Logger.getLogger(FormCadastroColaborador.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -421,15 +402,12 @@ public class FormCadastroColaborador extends javax.swing.JFrame {
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         try {
-            //ftxtDataDemissao.getText().equals("")
             if (cmbBairro.getSelectedItem() == null 
                     || txtNomeCompleto.getText().equals("") 
                     || ftxtCRO.getText().equals("") 
                     || ftxtCroEstado.getText().equals("") 
-                    || txtNumero.getText().equals("") 
                     || ftxtDataAdmissao.getText().equals("")
-                    || chkFerias.getText().equals("")
-                    || chkDemitido.getText().equals("")) {
+                    || ftxtDataDemissao.getText().equals("")) {
                 return;
             }
             String retorno = srvColaborador.insert(new Colaborador(0, txtNomeCompleto.getText(), ftxtCRO.getText(), ftxtCroEstado.getText(), LocalDate.parse(ftxtDataAdmissao.getText()), LocalDate.parse(ftxtDataDemissao.getText()), (Endereco) cmbEndereco.getSelectedItem(), (Funcao) cmbFuncao.getSelectedItem(), (Clinica) cmbClinica.getSelectedItem(), false, false));
@@ -438,6 +416,7 @@ public class FormCadastroColaborador extends javax.swing.JFrame {
             preencheGrid();
             deselecionaCombo();
             limpaCampos();
+            preencheCombo();
         } catch (SQLException ex) {
             Logger.getLogger(FormCadastroColaborador.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -450,23 +429,28 @@ public class FormCadastroColaborador extends javax.swing.JFrame {
                     && !ftxtCRO.getText().equals("")  
                     && !ftxtCroEstado.getText().equals("") 
                     && !ftxtDataAdmissao.getText().equals("") 
+                    && !ftxtDataDemissao.getText().equals("")
                     && (!lastNome.equals(txtNomeCompleto.getText()) 
                     || !lastCro.equals(ftxtCRO.getText())
-                    || !lastCroEstado.equals(ftxtCroEstado.getText())) 
-                    || !lastDtAdmissao.equals(ftxtDataAdmissao.getText()) 
-                    || !lastEndereco.equals(cmbEndereco.getSelectedItem()) 
-                    || !lastDtAdmissao.equals(ftxtDataAdmissao.getText()) 
+                    || !lastCroEstado.equals(ftxtCroEstado.getText()) 
+                    || !lastDtAdmissao.equals(ftxtDataAdmissao.getText())
+                    || !lastDtDemissao.equals(ftxtDataDemissao.getText())
+                    || !lastEndereco.equals(cmbEndereco.getSelectedItem())
                     || !lastClinica.equals(cmbClinica.getSelectedItem()) 
-                    || !lastFuncao.equals(cmbFuncao.getSelectedItem()) 
+                    || !lastFuncao.equals(cmbFuncao.getSelectedItem()))
                     && lastColaborador != null) {
                 
-                String retorno = srvColaborador.update(new Colaborador(lastColaborador.getId(), txtNomeCompleto.getText(), ftxtCRO.getText(), ftxtCroEstado.getText(), LocalDate.parse(ftxtDataAdmissao.getText()), LocalDate.parse(ftxtDataDemissao.getText()), (Endereco) cmbEndereco.getSelectedItem(), (Funcao) cmbFuncao.getSelectedItem(), (Clinica) cmbClinica.getSelectedItem(), false, false));
-                
+                String retorno = srvColaborador.update(new Colaborador(lastColaborador.getId(),
+                        txtNomeCompleto.getText(), ftxtCRO.getText(), ftxtCroEstado.getText(),
+                        LocalDate.parse(ftxtDataAdmissao.getText()), LocalDate.parse(ftxtDataDemissao.getText()), 
+                        (Endereco) cmbEndereco.getSelectedItem(), (Funcao) cmbFuncao.getSelectedItem(), (Clinica) 
+                                cmbClinica.getSelectedItem(), chkFerias.isSelected(), chkDemitido.isSelected()));
                 lblMensagem.setText(retorno);
                 lblMensagem.setForeground(Color.BLUE);
                 preencheGrid();
                 deselecionaCombo();
                 limpaCampos();
+                preencheCombo();                
                 preenchePais();
             }
         } catch (SQLException ex) {
@@ -498,60 +482,58 @@ public class FormCadastroColaborador extends javax.swing.JFrame {
             String nome = (String) model.getValueAt(row, 1);
             txtNomeCompleto.setText(nome);
 
-            String cro = (String) model.getValueAt(row, 3);
+            String cro = (String) model.getValueAt(row, 2);
             ftxtCRO.setText(cro);
 
-            String croEstado = (String) model.getValueAt(row, 4);
+            String croEstado = (String) model.getValueAt(row, 3);
             ftxtCroEstado.setText(croEstado);
 
-            LocalDate dataAdmissao = (LocalDate) model.getValueAt(row, 5);
+            LocalDate dataAdmissao = (LocalDate) model.getValueAt(row, 4);
             ftxtDataAdmissao.setText(dataAdmissao.toString());
 
-            LocalDate dataDemissao = (LocalDate) model.getValueAt(row, 6);
+            LocalDate dataDemissao = (LocalDate) model.getValueAt(row, 5);
             ftxtDataDemissao.setText(dataDemissao.toString());
 
-            Pais pais = (Pais) model.getValueAt(row, 11);
+            Pais pais = (Pais) model.getValueAt(row, 15);
             cmbPais.getModel().setSelectedItem(pais);
             preencheEstado();
 
-            Estado estado = (Estado) model.getValueAt(row, 7);
+            Estado estado = (Estado) model.getValueAt(row, 14);
             cmbEstado.getModel().setSelectedItem(estado);
             preencheCidade();
 
-            Cidade cidade = (Cidade) model.getValueAt(row, 10);
+            Cidade cidade = (Cidade) model.getValueAt(row, 13);
             cmbCidade.getModel().setSelectedItem(cidade);
             preencheBairro();
 
-            Bairro bairro = (Bairro) model.getValueAt(row, 9);
+            Bairro bairro = (Bairro) model.getValueAt(row, 12);
             cmbBairro.getModel().setSelectedItem(bairro);
 
-            Logradouro logradouro = (Logradouro) model.getValueAt(row, 8);
+            Logradouro logradouro = (Logradouro) model.getValueAt(row, 11);
             cmbLogradouro.getModel().setSelectedItem(logradouro);
 
-            Endereco endereco = (Endereco) model.getValueAt(row, 7);
+            Endereco endereco = (Endereco) model.getValueAt(row, 10);
             cmbEndereco.getModel().setSelectedItem(endereco);
 
-            Funcao funcao = (Funcao) model.getValueAt(row, 2);
+            Funcao funcao = (Funcao) model.getValueAt(row, 6);
             cmbFuncao.getModel().setSelectedItem(funcao);
             preencheFuncao();
 
-            Clinica clinica = (Clinica) model.getValueAt(row, 12);
-            cmbFuncao.getModel().setSelectedItem(clinica);
+            Clinica clinica = (Clinica) model.getValueAt(row, 7);
+            cmbClinica.getModel().setSelectedItem(clinica);
             preencheClinica();
-            //REVER
-            boolean ferias = (boolean) model.getValueAt(row, 13);
-            chkFerias.setEnabled(ferias);
-            //REVER
-            boolean demitido = (boolean) model.getValueAt(row, 14);
-            chkDemitido.setEnabled(demitido);
+            
+            boolean ferias = (boolean) model.getValueAt(row, 8);
+            chkFerias.setSelected(ferias);
+            
+            boolean demitido = (boolean) model.getValueAt(row, 9);
+            chkDemitido.setSelected(demitido);
 
             lastNome = nome;
             lastCro = cro;
             lastCroEstado = croEstado;
             lastDtAdmissao = dataAdmissao;
             lastDtDemissao = dataDemissao;
-            lastFerias = ferias;
-            lastDemitido = demitido;
             lastFuncao = funcao;
             lastEndereco = endereco;
             lastClinica = clinica;
@@ -561,28 +543,10 @@ public class FormCadastroColaborador extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_grdColaboradorMouseClicked
 
-    private void preencheFuncao() throws SQLException {
-        cmbFuncao.removeAllItems();
-        
-        ArrayList<Funcao> funcoes = srvFuncao.getAll();
-        for (Funcao funcao : funcoes) {
-            cmbFuncao.addItem(funcao);
-        }
-    }
-
-    private void preencheClinica() throws SQLException {
-        cmbClinica.removeAllItems();
-        
-        ArrayList<Clinica> clinicas = srvClinica.getAll();
-        for (Clinica clinica : clinicas) {
-            cmbClinica.addItem(clinica);
-        }
-    }
-
     private void preencheGrid() throws SQLException {
         ArrayList<Colaborador> colaboradores = srvColaborador.getAll();
 
-        Object colunas[] = {"Id", "Nome", "CRO", "UF", "DtAdmissão", "DtDemissão", "Função", "Clínica", "Férias", "Demitido", "CEP", "Logradouro", "Bairro", "Cidade", "Estado", "País"};
+        Object colunas[] = {"Id", "Nome", "CRO", "UF CRO", "Admissão", "Demissão", "Função", "Clínica", "Férias", "Demitido", "CEP", "Logradouro", "Bairro", "Cidade", "Estado", "País"};
         model = new DefaultTableModel(colunas, 0);
         for (Colaborador colaborador : colaboradores) {
             model.addRow(new Object[]{
@@ -621,9 +585,6 @@ public class FormCadastroColaborador extends javax.swing.JFrame {
         ftxtCroEstado.setText("");
         ftxtDataAdmissao.setText("");
         ftxtDataDemissao.setText("");
-        txtNumero.setText("");
-        chkDemitido.setText("");//REVER
-        chkFerias.setText("");//REVER
     }
 
     private void deselecionaCombo() {
@@ -633,26 +594,42 @@ public class FormCadastroColaborador extends javax.swing.JFrame {
         cmbBairro.setSelectedItem(null);
         cmbLogradouro.setSelectedItem(null);
         cmbEndereco.setSelectedItem(null);
+        cmbClinica.setSelectedItem(null);
+        cmbFuncao.setSelectedItem(null);
     }
 
-    private void addAllListener() {
+    private void preencheCombo() throws SQLException {
+        limpaCampos();
+        preenchePais();
+        preencheClinica();
+        preencheFuncao();
+        deselecionaCombo();
+    }    
+    
+    private void preencheFuncao() throws SQLException {
+        cmbFuncao.removeAllItems();
+        ArrayList<Funcao> funcoes = srvFuncao.getAll();
+        for (Funcao funcao : funcoes) {
+            cmbFuncao.addItem(funcao);
+        }
+    }
+
+    private void preencheClinica() throws SQLException {
+        cmbClinica.removeAllItems();
+        ArrayList<Clinica> clinicas = srvClinica.getAll();
+        for (Clinica clinica : clinicas) {
+            cmbClinica.addItem(clinica);
+        }
+    }
+    
+    private void addAllListener(){
         addListenerPais();
         addListenerEstado();
         addListenerCidade();
         addListenerBairro();
         addListenerLogradouro();
     }
-
-    private void preencheCombo() throws SQLException {
-        limpaCampos();
-        ArrayList<Pais> paises = srvPais.getAll();
-
-        for (Pais pais : paises) {
-            cmbPais.addItem(pais);
-        }
-        deselecionaCombo();
-    }
-
+    
     private void preenchePais() throws SQLException {
         cmbPais.removeAllItems();
         ArrayList<Pais> paises = srvPais.getAll();
@@ -667,40 +644,8 @@ public class FormCadastroColaborador extends javax.swing.JFrame {
         for (Estado estado : estados) {
             cmbEstado.addItem(estado);
         }
-    }
-
-    private void preencheCidade() throws SQLException {
-        cmbCidade.removeAllItems();
-        ArrayList<Cidade> cidades = srvCidade.getByEstado((Estado) cmbEstado.getSelectedItem());
-        for (Cidade cidade : cidades) {
-            cmbCidade.addItem(cidade);
-        }
-    }
-
-    private void preencheBairro() throws SQLException {
-        cmbBairro.removeAllItems();
-        ArrayList<Bairro> bairros = srvBairro.getByCidade((Cidade) cmbCidade.getSelectedItem());
-        for (Bairro bairro : bairros) {
-            cmbBairro.addItem(bairro);
-        }
-    }
-
-    private void preencheLogradouro() throws SQLException {
-        cmbLogradouro.removeAllItems();
-        ArrayList<Logradouro> logradouros = srvLogradouro.getByBairro((Bairro) cmbBairro.getSelectedItem());
-        for (Logradouro logradouro : logradouros) {
-            cmbLogradouro.addItem(logradouro);
-        }
-    }
-
-    private void preencheEndereco() throws SQLException {
-        cmbEndereco.removeAllItems();
-        ArrayList<Endereco> enderecos = srvEndereco.getByLogradouro((Logradouro) cmbLogradouro.getSelectedItem());
-        for (Endereco endereco : enderecos) {
-            cmbEndereco.addItem(endereco);
-        }
-    }
-
+    }    
+    
     private void addListenerPais() {
         cmbPais.addItemListener(new ItemListener() {
             @Override
@@ -710,13 +655,21 @@ public class FormCadastroColaborador extends javax.swing.JFrame {
                         preencheEstado();
                         cmbEstado.setSelectedItem(null);
                     } catch (SQLException ex) {
-                        Logger.getLogger(FormCadastroLogradouro.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(FormCadastroColaborador.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             }
         });
     }
 
+    private void preencheCidade() throws SQLException {
+        cmbCidade.removeAllItems();
+        ArrayList<Cidade> cidades = srvCidade.getByEstado((Estado) cmbEstado.getSelectedItem());
+        for (Cidade cidade : cidades) {
+            cmbCidade.addItem(cidade);
+        }
+    }
+    
     private void addListenerEstado() {
         cmbEstado.addItemListener(new ItemListener() {
             @Override
@@ -726,13 +679,21 @@ public class FormCadastroColaborador extends javax.swing.JFrame {
                         preencheCidade();
                         cmbCidade.setSelectedItem(null);
                     } catch (SQLException ex) {
-                        Logger.getLogger(FormCadastroLogradouro.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(FormCadastroColaborador.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             }
         });
     }
 
+    private void preencheBairro() throws SQLException {
+        cmbBairro.removeAllItems();
+        ArrayList<Bairro> bairros = srvBairro.getByCidade((Cidade) cmbCidade.getSelectedItem());
+        for (Bairro bairro : bairros) {
+            cmbBairro.addItem(bairro);
+        }
+    }
+    
     private void addListenerCidade() {
         cmbCidade.addItemListener(new ItemListener() {
             @Override
@@ -742,13 +703,21 @@ public class FormCadastroColaborador extends javax.swing.JFrame {
                         preencheBairro();
                         cmbBairro.setSelectedItem(null);
                     } catch (SQLException ex) {
-                        Logger.getLogger(FormCadastroLogradouro.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(FormCadastroColaborador.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             }
         });
     }
-
+    
+    private void preencheLogradouro() throws SQLException {
+        cmbLogradouro.removeAllItems();
+        ArrayList<Logradouro> logradouros = srvLogradouro.getByBairro((Bairro) cmbBairro.getSelectedItem());
+        for (Logradouro logradouro : logradouros) {
+            cmbLogradouro.addItem(logradouro);
+        }
+    }
+    
     private void addListenerBairro() {
         cmbBairro.addItemListener(new ItemListener() {
             @Override
@@ -758,11 +727,19 @@ public class FormCadastroColaborador extends javax.swing.JFrame {
                         preencheLogradouro();
                         cmbLogradouro.setSelectedItem(null);
                     } catch (SQLException ex) {
-                        Logger.getLogger(FormCadastroLogradouro.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(FormCadastroColaborador.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             }
         });
+    }
+    
+    private void preencheEndereco() throws SQLException {
+        cmbEndereco.removeAllItems();
+        ArrayList<Endereco> enderecos = srvEndereco.getByLogradouro((Logradouro) cmbLogradouro.getSelectedItem());
+        for (Endereco endereco : enderecos) {
+            cmbEndereco.addItem(endereco);
+        }
     }
 
     private void addListenerLogradouro() {
@@ -774,7 +751,7 @@ public class FormCadastroColaborador extends javax.swing.JFrame {
                         preencheEndereco();
                         cmbEndereco.setSelectedItem(null);
                     } catch (SQLException ex) {
-                        Logger.getLogger(FormCadastroLogradouro.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(FormCadastroColaborador.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             }
@@ -840,7 +817,6 @@ public class FormCadastroColaborador extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
@@ -851,13 +827,9 @@ public class FormCadastroColaborador extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblMensagem;
     private javax.swing.JTextField txtNomeCompleto;
-    private javax.swing.JTextField txtNumero;
     // End of variables declaration//GEN-END:variables
 }

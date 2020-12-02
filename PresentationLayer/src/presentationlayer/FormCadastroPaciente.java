@@ -18,15 +18,12 @@ import java.awt.Color;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
-import javax.swing.text.DefaultFormatterFactory;
-import javax.swing.text.MaskFormatter;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -76,8 +73,6 @@ public class FormCadastroPaciente extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jSeparator1 = new javax.swing.JSeparator();
-        jFileChooser1 = new javax.swing.JFileChooser();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -97,20 +92,20 @@ public class FormCadastroPaciente extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         ftxtDataNasc = new javax.swing.JFormattedTextField();
         jLabel7 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        txtObservacao = new javax.swing.JTextArea();
         cmbBairro = new javax.swing.JComboBox<>();
         cmbCidade = new javax.swing.JComboBox<>();
         cmbLogradouro = new javax.swing.JComboBox<>();
         ftxtRG = new javax.swing.JFormattedTextField();
         ftxtCPF = new javax.swing.JFormattedTextField();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        grdPaciente = new javax.swing.JTable();
         btnDeletar = new javax.swing.JButton();
         btnAtualizar = new javax.swing.JButton();
         lblMensagem = new javax.swing.JLabel();
         cmbEndereco = new javax.swing.JComboBox<>();
         jLabel21 = new javax.swing.JLabel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        txtObservacao = new javax.swing.JTextArea();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        grdPaciente = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -158,28 +153,6 @@ public class FormCadastroPaciente extends javax.swing.JFrame {
 
         jLabel7.setText("Observação");
 
-        txtObservacao.setColumns(20);
-        txtObservacao.setRows(5);
-        jScrollPane1.setViewportView(txtObservacao);
-
-        grdPaciente.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        grdPaciente.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                grdPacienteMouseClicked(evt);
-            }
-        });
-        jScrollPane2.setViewportView(grdPaciente);
-
         btnDeletar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnDeletar.setText("Deletar");
         btnDeletar.addActionListener(new java.awt.event.ActionListener() {
@@ -198,6 +171,28 @@ public class FormCadastroPaciente extends javax.swing.JFrame {
 
         jLabel21.setText("Endereço");
 
+        txtObservacao.setColumns(20);
+        txtObservacao.setRows(5);
+        jScrollPane5.setViewportView(txtObservacao);
+
+        grdPaciente.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        grdPaciente.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                grdPacienteMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(grdPaciente);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -205,51 +200,8 @@ public class FormCadastroPaciente extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(btnSalvar)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnAtualizar)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnDeletar)))
-                        .addGap(0, 1226, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addComponent(ftxtDataNasc, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(14, 14, 14)
-                                .addComponent(jLabel6))
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel2)
-                            .addComponent(lblMensagem, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 246, Short.MAX_VALUE)
-                            .addComponent(jLabel15)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel20)
-                                    .addComponent(cmbPais, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel19)
-                                    .addComponent(cmbEstado, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(ftxtCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel3))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel4)
-                                    .addComponent(ftxtRG)))
-                            .addComponent(txtSobrenome)
-                            .addComponent(txtNome)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addComponent(jLabel21))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel18)
@@ -257,12 +209,62 @@ public class FormCadastroPaciente extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel17)
-                                    .addComponent(cmbBairro, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addComponent(cmbLogradouro, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cmbEndereco, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 1149, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                                    .addComponent(cmbBairro, 0, 144, Short.MAX_VALUE)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(87, 87, 87))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel20)
+                                    .addComponent(cmbPais, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel19)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(cmbEstado, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))))
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(txtSobrenome)
+                                .addComponent(txtNome, javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(cmbLogradouro, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(cmbEndereco, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(ftxtCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(jLabel3))
+                                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                    .addComponent(jLabel4))
+                                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                                    .addGap(12, 12, 12)
+                                                    .addComponent(ftxtRG, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                        .addComponent(jLabel6)
+                                        .addComponent(jLabel7)
+                                        .addComponent(jLabel5)
+                                        .addComponent(jLabel2)
+                                        .addComponent(jLabel15)
+                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                            .addGap(6, 6, 6)
+                                            .addComponent(jLabel21))
+                                        .addComponent(ftxtDataNasc, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jScrollPane5))
+                                    .addGap(0, 0, Short.MAX_VALUE)))
+                            .addGap(31, 31, 31)))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(lblMensagem, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(btnSalvar)
+                            .addGap(18, 18, 18)
+                            .addComponent(btnAtualizar)
+                            .addGap(18, 18, 18)
+                            .addComponent(btnDeletar))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 936, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 16, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -270,7 +272,7 @@ public class FormCadastroPaciente extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -284,16 +286,16 @@ public class FormCadastroPaciente extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(ftxtCPF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(ftxtCPF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(ftxtRG, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(ftxtRG, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGap(28, 28, 28)))
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(ftxtDataNasc, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(ftxtDataNasc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel20)
                             .addComponent(jLabel19))
@@ -319,18 +321,18 @@ public class FormCadastroPaciente extends javax.swing.JFrame {
                         .addGap(2, 2, 2)
                         .addComponent(cmbEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(9, 9, 9)
-                        .addComponent(jLabel7))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnDeletar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnDeletar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jScrollPane1))
+                .addGap(28, 28, 28)
                 .addComponent(lblMensagem, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -339,8 +341,8 @@ public class FormCadastroPaciente extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(98, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -353,45 +355,33 @@ public class FormCadastroPaciente extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-         try {
-            if (cmbBairro.getSelectedItem() == null | txtNome.getText().equals("")
-                    || txtSobrenome.getText().equals("") 
-                    || txtObservacao.getText().equals("")
-                    || ftxtRG.getText().equals("")
-                    || ftxtCPF.getText().equals("")
-                    || ftxtDataNasc.getText().equals("")) {
-                return;
-            }
-            String retorno = srvPaciente.insert(new Paciente(0, txtNome.getText(), txtSobrenome.getText(), ftxtRG.getText(), ftxtCPF.getText(), LocalDate.parse(ftxtDataNasc.getText()), txtObservacao.getText(), (Endereco)cmbEndereco.getSelectedItem()));
-            lblMensagem.setText(retorno);
-            lblMensagem.setForeground(new Color(0, 102, 0));
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        try {
+            addAllListener();
             preencheGrid();
-            deselecionaCombo(); 
-            limpaCampos();
-            
+            preencheCombo();
         } catch (SQLException ex) {
-            Logger.getLogger(FormCadastroAtendimento.class.getName()).log(Level.SEVERE, null, ex);
-        }     
-    }//GEN-LAST:event_btnSalvarActionPerformed
+            Logger.getLogger(FormCadastroPaciente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_formWindowOpened
 
     private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
         try {
-            if (cmbBairro.getSelectedItem() != null 
-                    && !txtNome.getText().equals("")
-                    && !txtSobrenome.getText().equals("") 
-                    && !txtObservacao.getText().equals("")
-                    && !ftxtRG.getText().equals("")
-                    && !ftxtCPF.getText().equals("")
-                    && !ftxtDataNasc.getText().equals("")
-                    && (!lastEndereco.equals(cmbEndereco.getSelectedItem()) 
+            if (cmbBairro.getSelectedItem() != null
+                && !txtNome.getText().equals("")
+                && !txtSobrenome.getText().equals("")
+                && !txtObservacao.getText().equals("")
+                && !ftxtRG.getText().equals("")
+                && !ftxtCPF.getText().equals("")
+                && !ftxtDataNasc.getText().equals("")
+                && (!lastEndereco.equals(cmbEndereco.getSelectedItem())
                     || !lastDtNascimento.equals(ftxtDataNasc.getText())
                     || !lastSobrenome.equals(txtSobrenome.getText())
                     || !lastObs.equals(txtObservacao.getText())
                     || !lastRg.equals(ftxtRG.getText())
                     || !lastCpf.equals(ftxtCPF.getText())
-                    || !lastNome.equals(txtNome.getText())) 
-                    && lastPaciente != null){
+                    || !lastNome.equals(txtNome.getText()))
+                && lastPaciente != null){
                 String retorno = srvPaciente.update(new Paciente(lastPaciente.getId(), txtNome.getText(), txtSobrenome.getText(), ftxtRG.getText(), ftxtCPF.getText(), LocalDate.parse(ftxtDataNasc.getText()), txtObservacao.getText(), (Endereco)cmbEndereco.getSelectedItem()));
                 lblMensagem.setText(retorno);
                 lblMensagem.setForeground(Color.BLUE);
@@ -401,8 +391,8 @@ public class FormCadastroPaciente extends javax.swing.JFrame {
                 preenchePais();
             }
         } catch (SQLException ex) {
-            Logger.getLogger(FormCadastroAtendimento.class.getName()).log(Level.SEVERE, null, ex);
-        } 
+            Logger.getLogger(FormCadastroPaciente.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnAtualizarActionPerformed
 
     private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarActionPerformed
@@ -411,33 +401,36 @@ public class FormCadastroPaciente extends javax.swing.JFrame {
                 lblMensagem.setText(srvPaciente.delete(lastPaciente));
                 lblMensagem.setForeground(Color.RED);
                 preencheGrid();
-                deselecionaCombo(); 
+                deselecionaCombo();
                 limpaCampos();
             }
         } catch (SQLException ex) {
-            Logger.getLogger(FormCadastroAtendimento.class.getName()).log(Level.SEVERE, null, ex);
-        } 
+            Logger.getLogger(FormCadastroPaciente.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnDeletarActionPerformed
 
-    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         try {
-            addAllListener();
+            if (cmbBairro.getSelectedItem() == null | txtNome.getText().equals("")
+                || txtSobrenome.getText().equals("")
+                || txtObservacao.getText().equals("")
+                || ftxtRG.getText().equals("")
+                || ftxtCPF.getText().equals("")
+                || ftxtDataNasc.getText().equals("")) {
+                return;
+            }
+            String retorno = srvPaciente.insert(new Paciente(0, txtNome.getText(), txtSobrenome.getText(), ftxtRG.getText(), ftxtCPF.getText(), LocalDate.parse(ftxtDataNasc.getText()), txtObservacao.getText(), (Endereco)cmbEndereco.getSelectedItem()));
+            lblMensagem.setText(retorno);
+            lblMensagem.setForeground(new Color(0, 102, 0));
             preencheGrid();
-            preencheCombo();
-        } catch (SQLException ex) {
-            Logger.getLogger(FormCadastroLogradouro.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_formWindowOpened
+            deselecionaCombo();
+            limpaCampos();
 
-    private void addAllListener(){
-        addListenerPais();
-        addListenerEstado();
-        addListenerCidade();
-        addListenerBairro();
-        addListenerLogradouro();
-    }
-   
-    
+        } catch (SQLException ex) {
+            Logger.getLogger(FormCadastroPaciente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnSalvarActionPerformed
+
     private void grdPacienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_grdPacienteMouseClicked
         try {
             int row = grdPaciente.getSelectedRow();
@@ -462,9 +455,7 @@ public class FormCadastroPaciente extends javax.swing.JFrame {
             
             String observacao = (String)model.getValueAt(row, 6);
             txtObservacao.setText(observacao);
-            
-            int nCasa = (int)model.getValueAt(row, 9);
-            
+                        
             Pais pais = (Pais)model.getValueAt(row, 14);
             cmbPais.getModel().setSelectedItem(pais);
             preencheEstado();
@@ -493,11 +484,20 @@ public class FormCadastroPaciente extends javax.swing.JFrame {
             lastDtNascimento = nascimento;
             lastObs = observacao;
             lastEndereco = endereco;
-            lastPaciente = new Paciente(id, nome, sobrenome, rg, cpf, nascimento, observacao, lastEndereco);
+            lastPaciente = new Paciente(id, nome, sobrenome, rg, cpf, nascimento, observacao, endereco);
         } catch (SQLException ex) {
-            Logger.getLogger(FormCadastroLogradouro.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FormCadastroPaciente.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_grdPacienteMouseClicked
+
+    private void addAllListener(){
+        addListenerPais();
+        addListenerEstado();
+        addListenerCidade();
+        addListenerBairro();
+        addListenerLogradouro();
+    }
+                                         
 
     private void preencheGrid() throws SQLException{
         ArrayList<Paciente> pacientes = srvPaciente.getAll();
@@ -579,7 +579,7 @@ public class FormCadastroPaciente extends javax.swing.JFrame {
                         preencheEstado();
                         cmbEstado.setSelectedItem(null);
                     } catch (SQLException ex) {
-                        Logger.getLogger(FormCadastroLogradouro.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(FormCadastroPaciente.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             }
@@ -613,7 +613,7 @@ public class FormCadastroPaciente extends javax.swing.JFrame {
                         preencheCidade();
                         cmbCidade.setSelectedItem(null);
                     } catch (SQLException ex) {
-                        Logger.getLogger(FormCadastroLogradouro.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(FormCadastroPaciente.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             }
@@ -637,7 +637,7 @@ public class FormCadastroPaciente extends javax.swing.JFrame {
                         preencheBairro();
                         cmbBairro.setSelectedItem(null);
                     } catch (SQLException ex) {
-                        Logger.getLogger(FormCadastroLogradouro.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(FormCadastroPaciente.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             }
@@ -661,7 +661,7 @@ public class FormCadastroPaciente extends javax.swing.JFrame {
                         preencheLogradouro();
                         cmbLogradouro.setSelectedItem(null);
                     } catch (SQLException ex) {
-                        Logger.getLogger(FormCadastroLogradouro.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(FormCadastroPaciente.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             }
@@ -685,7 +685,7 @@ public class FormCadastroPaciente extends javax.swing.JFrame {
                         preencheEndereco();
                         cmbEndereco.setSelectedItem(null);
                     } catch (SQLException ex) {
-                        Logger.getLogger(FormCadastroLogradouro.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(FormCadastroPaciente.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             }
@@ -741,7 +741,6 @@ public class FormCadastroPaciente extends javax.swing.JFrame {
     private javax.swing.JFormattedTextField ftxtDataNasc;
     private javax.swing.JFormattedTextField ftxtRG;
     private javax.swing.JTable grdPaciente;
-    private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel17;
@@ -757,8 +756,7 @@ public class FormCadastroPaciente extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JLabel lblMensagem;
     private javax.swing.JTextField txtNome;
     private javax.swing.JTextArea txtObservacao;

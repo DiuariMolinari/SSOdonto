@@ -317,7 +317,7 @@ public class FormCadastroProduto extends javax.swing.JFrame {
                 limpaCombo();
             }
         } catch (SQLException ex) {
-            Logger.getLogger(FormCadastroAtendimento.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FormCadastroProduto.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnAtualizarActionPerformed
 
@@ -330,7 +330,7 @@ public class FormCadastroProduto extends javax.swing.JFrame {
                 limpaCombo();                
             }
         } catch (SQLException ex) {
-            Logger.getLogger(FormCadastroAtendimento.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FormCadastroProduto.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnDeletarActionPerformed
 

@@ -232,7 +232,7 @@ public class FormCadastroUsuario extends javax.swing.JFrame {
             preencheCombo();
             preencheGrid(); 
         } catch (SQLException ex) {
-            Logger.getLogger(FormCadastroAtendimento.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FormCadastroUsuario.class.getName()).log(Level.SEVERE, null, ex);
         } 
     }//GEN-LAST:event_formWindowOpened
 
@@ -276,7 +276,7 @@ public class FormCadastroUsuario extends javax.swing.JFrame {
             limpaCampos();
             preencheCombo();   
         } catch (SQLException ex) {
-            Logger.getLogger(FormCadastroAtendimento.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FormCadastroUsuario.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
 
@@ -300,7 +300,7 @@ public class FormCadastroUsuario extends javax.swing.JFrame {
                 preencheCombo();
             }
         } catch (SQLException ex) {
-            Logger.getLogger(FormCadastroAtendimento.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FormCadastroUsuario.class.getName()).log(Level.SEVERE, null, ex);
         } 
     }//GEN-LAST:event_btnAtualizarActionPerformed
 
@@ -315,7 +315,7 @@ public class FormCadastroUsuario extends javax.swing.JFrame {
                 preencheCombo();
             }
         } catch (SQLException ex) {
-            Logger.getLogger(FormCadastroAtendimento.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FormCadastroUsuario.class.getName()).log(Level.SEVERE, null, ex);
         } 
     }//GEN-LAST:event_btnDeletarActionPerformed
 

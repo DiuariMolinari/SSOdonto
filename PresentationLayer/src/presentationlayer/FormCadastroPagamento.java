@@ -211,7 +211,7 @@ public class FormCadastroPagamento extends javax.swing.JFrame {
             preencheCombo();
             preencheGrid(); 
         } catch (Exception ex) {
-            Logger.getLogger(FormCadastroProcedimento.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FormCadastroPagamento.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_formWindowOpened
 
@@ -243,7 +243,9 @@ public class FormCadastroPagamento extends javax.swing.JFrame {
             lblMensagem.setText(srvPagamento.insert(new Pagamento(0, data.toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), (TipoPagamento)cmbTipoPagamento.getSelectedItem())));
             lblMensagem.setForeground(new Color(0, 102, 0));
             preencheGrid();
+            deselecionaCombo();
             limpaCampos();  
+            preencheCombo();
         } catch (Exception ex) {
             Logger.getLogger(FormCadastroPagamento.class.getName()).log(Level.SEVERE, null, ex);
         }

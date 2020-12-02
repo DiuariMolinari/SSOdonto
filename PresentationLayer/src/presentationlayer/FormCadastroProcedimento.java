@@ -245,8 +245,9 @@ public class FormCadastroProcedimento extends javax.swing.JFrame {
             lblMensagem.setForeground(new Color(0, 102, 0));
             preencheGrid();
             limpaCampos();  
+            preencheCombo();
         } catch (Exception ex) {
-            Logger.getLogger(FormCadastroTipoProcedimento.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FormCadastroProcedimento.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
 
