@@ -94,7 +94,7 @@ public class UsuarioBLL {
 
     //Obter um registro
     public Usuario getById(Usuario usuario) throws Exception {
-        if (usuario.getId() < 0 || usuario.getId() != 0) {
+        if (usuario.getId() < 0 || usuario.getId() == 0) {
             throw new Exception("O ID do usuário deve ser informado.");
         }
 

@@ -142,7 +142,7 @@ public class PacienteBLL {
 
     //Obter um registro
     public Paciente getById(Paciente paciente) throws Exception {
-        if (paciente.getId() < 0 || paciente.getId() != 0) {
+        if (paciente.getId() < 0 || paciente.getId() == 0) {
             throw new Exception("O ID do paciente deve ser informado.");
         }
 

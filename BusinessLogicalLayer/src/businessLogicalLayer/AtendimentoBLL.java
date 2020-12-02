@@ -55,7 +55,7 @@ public class AtendimentoBLL {
 
     //Obter um registro
     public Atendimento getById(Atendimento atendimento) throws Exception {
-        if (atendimento.getId() != 0 || atendimento.getId() < 0) {
+        if (atendimento.getId() == 0 || atendimento.getId() < 0) {
             throw new Exception("O ID do atendimento deve ser informado.");
         }
         return dal.getById(atendimento.getId());

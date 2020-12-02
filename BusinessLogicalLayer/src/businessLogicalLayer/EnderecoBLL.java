@@ -79,7 +79,7 @@ public class EnderecoBLL {
 
     //Obter um registro
     public Endereco getById(Endereco endereco) throws Exception {
-        if (endereco.getId() <= 0) {
+        if (endereco.getId() < 0 || endereco.getId() == 0) {
             throw new Exception("O ID do endereco deve ser informado.");
         }
 

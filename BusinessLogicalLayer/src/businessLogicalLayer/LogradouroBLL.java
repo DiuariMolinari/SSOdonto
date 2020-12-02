@@ -71,7 +71,7 @@ public class LogradouroBLL {
 
     //Obter um registro
     public Logradouro getById(Logradouro logradouro) throws Exception {
-        if (logradouro.getId() < 0 || logradouro.getId() != 0) {
+        if (logradouro.getId() < 0 || logradouro.getId() == 0) {
             throw new Exception("O ID do logradouro deve ser informado.");
         }
 
