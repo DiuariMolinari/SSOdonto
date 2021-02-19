@@ -99,13 +99,13 @@ public class ProcedimentoDAL {
         try 
         {
             ArrayList<Procedimento> procedimentos = new ArrayList<Procedimento>();
-            PreparedStatement pst = conexao.getConexao().prepareStatement("SELECT * FROM Procedimento ORDER BY IDProcedimento", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            PreparedStatement pst = conexao.getConexao().prepareStatement("SELECT * FROM Procedimento ORDER BY idProcedimento", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
             ResultSet rs = pst.executeQuery();
             while (rs.next())
             {
-                TipoProcedimento TipoProcedimento = new TipoProcedimentoDAL().getById(rs.getInt("IDTipoProcedimento"));
+                TipoProcedimento TipoProcedimento = new TipoProcedimentoDAL().getById(rs.getInt("idTipoProcedimento"));
                 ArrayList<Atendimento> atendimentos = getAtendimentos(rs.getInt("idProcedimento"));
-                procedimentos.add(new Procedimento(rs.getInt("IDProcedimento"), rs.getString("NOMEProcedimento"), TipoProcedimento, rs.getString("dsProcedimento"), atendimentos));
+                procedimentos.add(new Procedimento(rs.getInt("idProcedimento"), rs.getString("nomeProcedimento"), TipoProcedimento, rs.getString("dsProcedimento"), atendimentos));
             }
             
             return procedimentos;
