@@ -71,8 +71,6 @@ public class AtendimentoDAL {
         }
     }
     
-   
-    
      public Atendimento getLastRegister() throws SQLException{
         try 
         {
