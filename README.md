@@ -1,2 +1,2 @@
 # Projeto SSOdonto
-Software de odontologia, escrito em java.
+Software de odontologia
